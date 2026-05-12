@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unilever PLM Learning Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --u-blue:#1D6FA0; --u-deep:#0D2B8E; --u-navy:#061A4A;
+  --u-green:#6BB53F; --u-green-dk:#4E8A2A;
+  --u-light:#E8F4FC; --u-lighter:#F4F9FF;
+  --u-white:#FFFFFF; --u-grey:#6B7A99; --u-grey-lt:#DEE6F0;
+  --u-amber:#F5A623; --u-red:#E03E3E;
+  --u-text:#0A1C3E; --u-soft:#4A5878;
+  --sh-sm:0 2px 8px rgba(13,43,142,.08);
+  --sh-md:0 8px 24px rgba(13,43,142,.12);
+  --sh-lg:0 20px 48px rgba(13,43,142,.18);
+  --r:16px; --r-sm:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--u-lighter);color:var(--u-text);min-height:100vh;overflow-x:hidden;}
+
+/* ── LOADING SCREEN ── */
+#scr-loading {
+position:fixed;inset:0;
+background:linear-gradient(135deg,var(–u-navy) 0%,var(–u-deep) 100%);
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+z-index:9999;transition:opacity .5s ease;
+}
+#scr-loading.hide{opacity:0;pointer-events:none;}
+.loading-logo{width:72px;height:72px;background:#fff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-weight:800;font-size:32px;color:var(–u-deep);box-shadow:0 8px 32px rgba(0,0,0,.3);margin-bottom:24px;animation:pulse 1.5s ease infinite;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.loading-title{font-family:‘Playfair Display’,serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
+.loading-sub{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:32px;}
+.loading-bar-wrap{width:240px;height:4px;background:rgba(255,255,255,.15);border-radius:99px;overflow:hidden;}
+.loading-bar{height:100%;background:linear-gradient(90deg,var(–u-green),#9ED96A);border-radius:99px;width:0%;transition:width .4s ease;}
+.loading-status{font-size:12px;color:rgba(255,255,255,.4);margin-top:12px;letter-spacing:.05em;}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;animation:fadeUp .35s ease;}
+.screen.active{display:flex;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── ADMIN LOGIN ── */
+#scr-admin-login{align-items:center;justify-content:center;background:var(–u-navy);}
+.alb{background:#fff;border-radius:var(–r);padding:40px;width:100%;max-width:380px;box-shadow:var(–sh-lg);}
+.alb h2{font-family:‘Playfair Display’,serif;font-size:24px;margin-bottom:5px;}
+.alb p{color:var(–u-soft);font-size:13px;margin-bottom:26px;}
+
+/* ── APP SHELL ── */
+#scr-app{flex-direction:row;}
+
+/* SIDEBAR */
+.sb{width:256px;background:linear-gradient(180deg,var(–u-navy) 0%,#050F2E 100%);display:flex;flex-direction:column;padding:26px 18px;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(0,0,0,.15);}
+.sb-logo{display:flex;align-items:center;gap:11px;padding:0 8px 28px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:22px;}
+.sb-mark{width:38px;height:38px;background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-weight:800;font-size:15px;color:var(–u-deep);}
+.sb-name{color:#fff;font-size:13px;font-weight:600;line-height:1.3;}
+.sb-name span{display:block;font-size:10px;opacity:.45;font-weight:400;text-transform:uppercase;letter-spacing:.08em;}
+.sec-lbl{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:0 10px;margin-bottom:6px;}
+.ni{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:11px;cursor:pointer;color:rgba(255,255,255,.5);font-size:13px;font-weight:500;transition:all .2s;margin-bottom:3px;border:none;background:none;width:100%;text-align:left;font-family:‘Plus Jakarta Sans’,sans-serif;}
+.ni:hover{background:rgba(255,255,255,.07);color:#fff;}
+.ni.active{background:rgba(29,111,160,.35);color:#fff;box-shadow:inset 3px 0 0 var(–u-blue);}
+.ni .ic{font-size:17px;width:20px;flex-shrink:0;}
+.ni .bc{margin-left:auto;background:var(–u-green);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;}
+.sb-sp{flex:1;}
+.sb-user{border-top:1px solid rgba(255,255,255,.08);padding-top:18px;display:flex;align-items:center;gap:11px;}
+.av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(–u-blue),var(–u-green));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0;}
+.ui-name{font-size:13px;font-weight:600;color:#fff;}
+.ui-role{font-size:11px;color:rgba(255,255,255,.38);}
+
+/* MAIN */
+.mc{margin-left:256px;flex:1;min-height:100vh;}
+.tb{background:#fff;border-bottom:1px solid var(–u-grey-lt);padding:15px 38px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(–sh-sm);}
+.tb h2{font-size:19px;font-weight:700;}
+.tb p{font-size:13px;color:var(–u-soft);margin-top:1px;}
+.tb-r{display:flex;align-items:center;gap:10px;}
+.pg{display:none;padding:34px 38px;}
+.pg.active{display:block;}
+
+/* ── CARDS ── */
+.card{background:#fff;border-radius:var(–r);padding:26px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);transition:box-shadow .2s,transform .2s;}
+.card:hover{box-shadow:var(–sh-md);}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:linear-gradient(135deg,var(–u-blue),var(–u-deep));color:#fff;box-shadow:0 4px 12px rgba(13,43,142,.25);}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(13,43,142,.35);}
+.btn-g{background:linear-gradient(135deg,var(–u-green),var(–u-green-dk));color:#fff;}
+.btn-gh{background:var(–u-lighter);color:var(–u-text);border:1.5px solid var(–u-grey-lt);}
+.btn-gh:hover{background:var(–u-light);border-color:var(–u-blue);color:var(–u-blue);}
+.btn-r{background:rgba(224,62,62,.1);color:var(–u-red);border:1.5px solid rgba(224,62,62,.2);}
+.btn-sm{padding:7px 14px;font-size:12px;}
+.btn-full{width:100%;justify-content:center;}
+
+/* ── PILLS ── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:99px;font-size:11px;font-weight:600;}
+.pl-bl{background:rgba(29,111,160,.1);color:var(–u-blue);}
+.pl-gn{background:rgba(107,181,63,.12);color:var(–u-green-dk);}
+.pl-am{background:rgba(245,166,35,.12);color:#C17D0A;}
+.pl-gy{background:var(–u-grey-lt);color:var(–u-grey);}
+.pl-rd{background:rgba(224,62,62,.1);color:var(–u-red);}
+
+/* ── PROGRESS ── */
+.pt{height:7px;background:var(–u-grey-lt);border-radius:99px;overflow:hidden;}
+.pf{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1);}
+.pf-bl{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
+.pf-gn{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
+.pf-am{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
+
+/* ── GRID ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+
+/* ── STAT CARDS ── */
+.sc{background:#fff;border-radius:var(–r);padding:22px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden;}
+.sc::after{content:’’;position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(–r) var(–r) 0 0;}
+.sc.bl::after{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
+.sc.gn::after{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
+.sc.am::after{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
+.sc.dp::after{background:linear-gradient(90deg,var(–u-deep),var(–u-blue));}
+.sc-n{font-family:‘Playfair Display’,serif;font-size:36px;font-weight:700;margin:8px 0 3px;line-height:1;}
+.sc-n.bl{color:var(–u-blue);}.sc-n.gn{color:var(–u-green-dk);}.sc-n.am{color:#C17D0A;}.sc-n.dp{color:var(–u-deep);}
+.sc-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(–u-grey);}
+.sc-s{font-size:12px;color:var(–u-soft);margin-top:2px;}
+
+/* ── MODULE ROW ── */
+.mr{display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:11px;transition:background .15s;cursor:pointer;}
+.mr:hover{background:var(–u-lighter);}
+.mi{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.mi.done{background:rgba(107,181,63,.12);}
+.mi.act{background:rgba(245,166,35,.12);}
+.mi.lck{background:var(–u-lighter);}
+.mt2{flex:1;}
+.mt2 .t{font-size:13px;font-weight:600;}
+.mt2 .s{font-size:11px;color:var(–u-soft);margin-top:1px;}
+
+/* ── TRACK CARDS ── */
+.tc{background:#fff;border-radius:var(–r);padding:26px;box-shadow:var(–sh-sm);border:2px solid transparent;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.tc::before{content:’’;position:absolute;top:0;left:0;right:0;height:5px;}
+.tc.bg::before{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
+.tc.im::before{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
+.tc.ad::before{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
+.tc.su::before{background:linear-gradient(90deg,var(–u-deep),var(–u-blue));}
+.tc:hover{transform:translateY(-4px);box-shadow:var(–sh-lg);}
+.tc.bg:hover{border-color:var(–u-green);}
+.tc.im:hover{border-color:var(–u-blue);}
+.tc.ad:hover{border-color:var(–u-amber);}
+.tc.su:hover{border-color:var(–u-deep);}
+.tc.lkd{opacity:.6;cursor:not-allowed;}
+.tc.lkd:hover{transform:none;box-shadow:var(–sh-sm);}
+
+/* ── VIDEO ── */
+.vw{background:var(–u-navy);border-radius:var(–r);position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;}
+.vw iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.vw-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:linear-gradient(135deg,var(–u-navy),var(–u-deep));}
+.vw-ph .pb{width:68px;height:68px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(–u-blue);box-shadow:0 8px 24px rgba(0,0,0,.3);border:none;cursor:pointer;transition:transform .2s;}
+.vw-ph:hover .pb{transform:scale(1.08);}
+.vw-lbl{color:rgba(255,255,255,.65);font-size:13px;font-weight:500;text-align:center;padding:0 20px;}
+
+/* ── QUIZ ── */
+.qo{display:flex;align-items:center;gap:13px;padding:13px 17px;border-radius:11px;border:2px solid var(–u-grey-lt);cursor:pointer;transition:all .2s;margin-bottom:9px;background:#fff;font-size:14px;}
+.qo:hover{border-color:var(–u-blue);background:var(–u-lighter);}
+.qo.sel{border-color:var(–u-blue);background:rgba(29,111,160,.06);}
+.qo.cor{border-color:var(–u-green);background:rgba(107,181,63,.08);}
+.qo.wrg{border-color:var(–u-red);background:rgba(224,62,62,.06);}
+.ol{width:30px;height:30px;border-radius:8px;background:var(–u-lighter);border:1.5px solid var(–u-grey-lt);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;color:var(–u-soft);}
+.qo.sel .ol{background:var(–u-blue);color:#fff;border-color:var(–u-blue);}
+.qo.cor .ol{background:var(–u-green);color:#fff;border-color:var(–u-green);}
+.qo.wrg .ol{background:var(–u-red);color:#fff;border-color:var(–u-red);}
+.qdots{display:flex;gap:5px;margin-bottom:24px;}
+.qd{height:5px;flex:1;border-radius:99px;background:var(–u-grey-lt);transition:background .3s;}
+.qd.done{background:var(–u-green);}
+.qd.cur{background:var(–u-blue);}
+
+/* ── RESULT ── */
+.rb{border-radius:var(–r);padding:30px;text-align:center;display:none;margin-top:18px;}
+.rb.show{display:block;animation:fadeUp .4s ease;}
+.rb.pass{background:linear-gradient(135deg,rgba(107,181,63,.1),rgba(107,181,63,.03));border:2px solid rgba(107,181,63,.28);}
+.rb.fail{background:linear-gradient(135deg,rgba(224,62,62,.08),rgba(224,62,62,.02));border:2px solid rgba(224,62,62,.2);}
+.rs{font-family:‘Playfair Display’,serif;font-size:46px;font-weight:700;}
+.rs.pass{color:var(–u-green-dk);}.rs.fail{color:var(–u-red);}
+
+/* ── BADGES ── */
+.bdg{background:#fff;border-radius:var(–r);padding:22px;text-align:center;border:2px solid transparent;box-shadow:var(–sh-sm);transition:all .25s;}
+.bdg.earned{border-color:rgba(107,181,63,.28);}
+.bdg.earned:hover{transform:translateY(-3px);box-shadow:var(–sh-md);}
+.bdg.locked{opacity:.42;filter:grayscale(.8);}
+.bdg-ic{font-size:42px;margin-bottom:10px;}
+.bdg-nm{font-size:13px;font-weight:700;margin-bottom:3px;}
+.bdg-ds{font-size:11px;color:var(–u-soft);line-height:1.5;}
+.bdg-dt{font-size:11px;color:var(–u-green-dk);font-weight:600;margin-top:7px;}
+
+/* ── TOAST ── */
+.toast{position:fixed;top:22px;right:22px;background:#fff;border-radius:var(–r);padding:18px 22px;box-shadow:var(–sh-lg);border-left:5px solid var(–u-green);display:none;z-index:9999;max-width:300px;animation:slideIn .4s ease;}
+.toast.show{display:flex;align-items:center;gap:13px;}
+@keyframes slideIn{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
+.toast-ic{font-size:32px;}
+.toast-t strong{display:block;font-size:14px;margin-bottom:2px;}
+.toast-t span{font-size:12px;color:var(–u-soft);}
+
+/* ── PROFILE HERO ── */
+.ph{background:linear-gradient(135deg,var(–u-navy) 0%,var(–u-deep) 100%);border-radius:var(–r);padding:36px;display:flex;align-items:center;gap:26px;color:#fff;position:relative;overflow:hidden;margin-bottom:22px;}
+.ph::before{content:’’;position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(29,111,160,.2);}
+.ph-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(–u-blue),var(–u-green));display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-size:26px;font-weight:700;color:#fff;flex-shrink:0;border:3px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);position:relative;z-index:1;}
+.ph-inf{position:relative;z-index:1;flex:1;}
+.ph-inf h2{font-family:‘Playfair Display’,serif;font-size:24px;font-weight:700;margin-bottom:4px;}
+.ph-inf p{opacity:.65;font-size:13px;margin-bottom:10px;}
+.ph-stats{display:flex;gap:28px;position:relative;z-index:1;}
+.ps-n{font-family:‘Playfair Display’,serif;font-size:26px;font-weight:700;}
+.ps-l{font-size:10px;opacity:.5;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ── TIMELINE ── */
+.tl{display:flex;gap:13px;padding-bottom:20px;position:relative;}
+.tl::before{content:’’;position:absolute;left:16px;top:34px;width:2px;bottom:0;background:var(–u-grey-lt);}
+.tl:last-child::before{display:none;}
+.tl-d{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;z-index:1;}
+.tl-d.done{background:rgba(107,181,63,.12);border:2px solid var(–u-green);}
+.tl-d.pend{background:var(–u-lighter);border:2px solid var(–u-grey-lt);}
+.tl-c{padding-top:5px;}
+.tl-t{font-size:13px;font-weight:600;}
+.tl-s{font-size:11px;color:var(–u-soft);margin-top:1px;}
+.div{height:1px;background:var(–u-grey-lt);margin:16px 0;}
+
+/* ── ADMIN ── */
+#scr-admin{flex-direction:column;}
+.adm-bar{background:var(–u-navy);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.adm-bar h2{font-family:‘Playfair Display’,serif;color:#fff;font-size:20px;}
+.adm-tabs{display:flex;gap:4px;background:rgba(255,255,255,.08);padding:4px;border-radius:10px;}
+.adm-tab{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.55);border:none;background:none;font-family:‘Plus Jakarta Sans’,sans-serif;transition:all .2s;}
+.adm-tab.active{background:#fff;color:var(–u-navy);}
+.adm-body{flex:1;padding:32px;background:var(–u-lighter);}
+.adm-pg{display:none;}.adm-pg.active{display:block;}
+.af{margin-bottom:15px;}
+.af label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;}
+.af input,.af select,.af textarea{width:100%;padding:11px 15px;border:1.5px solid var(–u-grey-lt);border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:13px;color:var(–u-text);outline:none;transition:border-color .2s;background:#fff;}
+.af input:focus,.af select:focus,.af textarea:focus{border-color:var(–u-blue);}
+.af textarea{resize:vertical;min-height:76px;}
+.am-card{background:#fff;border-radius:var(–r);padding:18px 20px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);margin-bottom:10px;display:flex;align-items:center;gap:14px;}
+.am-card .ai{flex:1;}
+.am-card .at{font-size:14px;font-weight:600;margin-bottom:2px;}
+.am-card .as{font-size:12px;color:var(–u-soft);}
+.am-card .aa{display:flex;gap:7px;flex-shrink:0;}
+.utbl{width:100%;border-collapse:collapse;}
+.utbl th{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(–u-grey);padding:10px 14px;border-bottom:2px solid var(–u-grey-lt);text-align:left;}
+.utbl td{padding:12px 14px;border-bottom:1px solid var(–u-grey-lt);font-size:13px;}
+.utbl tr:hover td{background:var(–u-lighter);}
+
+/* ── UTILS ── */
+.row{display:flex;align-items:center;gap:11px;}
+.row.btw{justify-content:space-between;}
+.f1{flex:1;}
+.mt16{margin-top:16px;}
+.mt24{margin-top:24px;}
+.mb16{margin-bottom:16px;}
+.mb24{margin-bottom:24px;}
+.lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(–u-grey);}
+.muted{color:var(–u-soft);font-size:13px;}
+.sec-t{font-family:‘Playfair Display’,serif;font-size:20px;font-weight:700;margin-bottom:16px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(–u-soft);font-weight:600;cursor:pointer;background:none;border:none;font-family:‘Plus Jakarta Sans’,sans-serif;transition:color .2s;margin-bottom:18px;padding:0;}
+.back-btn:hover{color:var(–u-blue);}
+.scrolly{overflow-y:auto;max-height:300px;}
+.scrolly::-webkit-scrollbar{width:4px;}
+.scrolly::-webkit-scrollbar-thumb{background:var(–u-grey-lt);border-radius:99px;}
+.empty{text-align:center;padding:36px;color:var(–u-grey);font-size:13px;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:13px;font-weight:600;margin-bottom:7px;}
+.fg input,.fg select{width:100%;padding:13px 17px;border:1.5px solid var(–u-grey-lt);border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:14px;color:var(–u-text);outline:none;transition:border-color .2s;background:var(–u-lighter);}
+.fg input:focus,.fg select:focus{border-color:var(–u-blue);background:#fff;}
+.btn-login{width:100%;padding:15px;background:linear-gradient(135deg,var(–u-blue),var(–u-deep));color:#fff;border:none;border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(13,43,142,.3);transition:all .2s;}
+.btn-login:hover{transform:translateY(-2px);}
+
+@media(max-width:768px){
+.sb{width:56px;}
+.sb .ni span,.sb .sec-lbl,.sb-user .ui-name,.sb-user .ui-role,.sb-logo .sb-name{display:none;}
+.mc{margin-left:56px;}
+.pg{padding:20px 16px;}
+.g2,.g3,.g4{grid-template-columns:1fr;}
+}
+</style>
+
+</head>
+<body>
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+  <div class="toast-ic" id="t-ic">🏅</div>
+  <div class="toast-t"><strong id="t-title">Achievement!</strong><span id="t-msg">You earned something</span></div>
+</div>
+
+<!-- ══ LOADING SCREEN ══ -->
+
+<div id="scr-loading">
+  <div class="loading-logo">U</div>
+  <div class="loading-title">PLM Learning Hub</div>
+  <div class="loading-sub">Unilever · Loading your profile...</div>
+  <div class="loading-bar-wrap"><div class="loading-bar" id="loading-bar"></div></div>
+  <div class="loading-status" id="loading-status">Connecting to SharePoint...</div>
+</div>
+
+<!-- ══ ADMIN LOGIN ══ -->
+
+<div class="screen" id="scr-admin-login">
+  <div class="alb">
+    <h2>🔐 Admin Panel</h2>
+    <p>Enter the admin password to manage modules, quizzes and view all user progress.</p>
+    <div class="fg"><label>Admin Password</label><input type="password" id="adm-pw" placeholder="Enter password..." onkeydown="if(event.key==='Enter')checkAdminPw()"></div>
+    <div style="background:rgba(224,62,62,.08);border:1.5px solid rgba(224,62,62,.2);color:var(--u-red);border-radius:var(--r-sm);padding:10px 14px;font-size:13px;margin-bottom:14px;display:none;" id="adm-err">Incorrect password.</div>
+    <button class="btn-login" onclick="checkAdminPw()">Access Admin Panel →</button>
+    <div style="text-align:center;margin-top:14px;"><button class="btn btn-gh btn-sm" onclick="exitAdmin()">← Back</button></div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP ══ -->
+
+<div class="screen" id="scr-app">
+  <!-- SIDEBAR -->
+  <nav class="sb">
+    <div class="sb-logo">
+      <div class="sb-mark">U</div>
+      <div class="sb-name">PLM Learning Hub<span>Unilever</span></div>
+    </div>
+    <div class="sec-lbl">Main</div>
+    <button class="ni active" onclick="showPg('dashboard')" id="n-dashboard"><span class="ic">⊞</span><span>Dashboard</span></button>
+    <button class="ni" onclick="showPg('tracks')" id="n-tracks"><span class="ic">◈</span><span>Training Tracks</span></button>
+    <div class="sec-lbl" style="margin-top:14px;">Learning</div>
+    <button class="ni" onclick="showPg('module')" id="n-module"><span class="ic">▷</span><span>Module Player</span></button>
+    <button class="ni" onclick="showPg('quiz')" id="n-quiz"><span class="ic">✎</span><span>Quiz</span></button>
+    <div class="sec-lbl" style="margin-top:14px;">My Profile</div>
+    <button class="ni" onclick="showPg('profile')" id="n-profile"><span class="ic">◉</span><span>Profile & Badges</span><span class="bc" id="sb-bc">0</span></button>
+    <div class="sb-sp"></div>
+    <!-- Admin link -->
+    <button class="ni" onclick="showAdminLogin()" style="margin-bottom:10px;"><span class="ic">🛠</span><span>Admin Panel</span></button>
+    <div class="sb-user">
+      <div class="av" id="sb-av">...</div>
+      <div><div class="ui-name" id="sb-nm">Loading...</div><div class="ui-role" id="sb-rl">Unilever</div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+
+  <div class="mc">
+    <div class="tb">
+      <div><h2 id="pg-title">Dashboard</h2><p id="pg-sub">Welcome — your personalised learning hub</p></div>
+      <div class="tb-r">
+        <div class="pill pl-bl" id="tb-lvl">📚 Learning</div>
+        <div class="pill pl-gn">🏅 <span id="tb-bdg">0</span> Badges</div>
+      </div>
+    </div>
+
+```
+<!-- ═══ DASHBOARD ═══ -->
+<div class="pg active" id="pg-dashboard">
+  <!-- Hero -->
+  <div style="background:linear-gradient(135deg,var(--u-navy),var(--u-deep));border-radius:var(--r);padding:30px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(29,111,160,.2);"></div>
+    <div style="position:absolute;bottom:-60px;left:200px;width:220px;height:220px;border-radius:50%;background:rgba(107,181,63,.07);"></div>
+    <div class="row btw" style="position:relative;z-index:1;">
+      <div style="flex:1;">
+        <div style="font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:7px;">Your Learning Progress</div>
+        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;" id="hero-txt">Loading your progress...</div>
+        <div style="opacity:.65;font-size:13px;margin-bottom:18px;" id="hero-msg">Connecting to your SharePoint profile</div>
+        <div style="background:rgba(255,255,255,.12);border-radius:99px;height:9px;width:340px;max-width:100%;overflow:hidden;">
+          <div id="hero-fill" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--u-green),#9ED96A);width:0%;transition:width 1s ease;"></div>
+        </div>
+        <div style="margin-top:7px;font-size:12px;opacity:.65;" id="hero-pct">0% complete</div>
+      </div>
+      <div style="text-align:center;flex-shrink:0;position:relative;z-index:1;padding-left:20px;">
+        <div style="font-size:58px;">🎯</div>
+        <div class="pill pl-gn" style="margin-top:7px;" id="hero-status">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="g4 mb24">
+    <div class="sc bl"><div class="sc-l">Modules Done</div><div class="sc-n bl" id="st-mod">—</div><div class="sc-s" id="st-mod-s">of — total</div></div>
+    <div class="sc gn"><div class="sc-l">Badges Earned</div><div class="sc-n gn" id="st-bdg">—</div><div class="sc-s">of 6 available</div></div>
+    <div class="sc am"><div class="sc-l">Avg Quiz Score</div><div class="sc-n am" id="st-sc">—</div><div class="sc-s">across all quizzes</div></div>
+    <div class="sc dp"><div class="sc-l">SharePoint</div><div class="sc-n dp" id="st-sp" style="font-size:16px;margin-top:10px;">⏳</div><div class="sc-s" id="st-sp-s">Connecting...</div></div>
+  </div>
+
+  <div class="g2">
+    <!-- Activity -->
+    <div class="card">
+      <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">Recent Activity</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">View all</button></div>
+      <div id="activity-list"><div class="empty">Loading your activity...</div></div>
+      <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
+    </div>
+    <!-- Badges -->
+    <div class="card">
+      <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">My Badges</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">See all</button></div>
+      <div class="g2" style="gap:10px;" id="dash-badges"><div class="empty" style="grid-column:1/-1;">Loading badges...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TRACKS ═══ -->
+<div class="pg" id="pg-tracks">
+  <div class="mb24">
+    <div class="lbl mb16">Training Hub</div>
+    <div class="sec-t" style="font-size:26px;">Choose Your Learning Track</div>
+    <p class="muted">Complete each track in order to unlock the next level and earn your badges.</p>
+  </div>
+  <div class="g2" id="tracks-grid"></div>
+</div>
+
+<!-- ═══ MODULE PLAYER ═══ -->
+<div class="pg" id="pg-module">
+  <button class="back-btn" onclick="showPg('tracks')">← Back to Training Tracks</button>
+  <div class="g2" style="align-items:start;gap:26px;">
+    <div>
+      <div class="row mb16" style="flex-wrap:wrap;gap:7px;" id="mod-pills"></div>
+      <h2 id="mod-title" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:7px;"></h2>
+      <p class="muted mb24" id="mod-desc"></p>
+      <div class="vw" id="mod-video"></div>
+      <div class="card mt16">
+        <div class="row btw" style="margin-bottom:7px;"><span class="lbl">Module Status</span><span style="font-size:12px;color:var(--u-blue);font-weight:600;" id="mod-status-txt">Watch the video, then take the quiz</span></div>
+        <div class="pt"><div class="pf pf-bl" id="mod-prog-bar" style="width:0%"></div></div>
+        <div class="row mt16" style="gap:9px;">
+          <button class="btn btn-gh" style="flex:1;justify-content:center;" onclick="showPg('tracks')">← Tracks</button>
+          <button class="btn btn-p" style="flex:2;justify-content:center;" onclick="showPg('quiz')">Take Quiz →</button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card mb16">
+        <div class="sec-t" style="font-size:15px;">Resources & Downloads</div>
+        <div id="mod-resources"></div>
+      </div>
+      <div style="background:rgba(29,111,160,.05);border:1.5px dashed rgba(29,111,160,.2);border-radius:var(--r);padding:16px;">
+        <div style="font-size:13px;color:var(--u-blue);line-height:1.7;">
+          <strong>🔗 Auto-saved to SharePoint</strong><br>
+          Your progress is automatically saved to the <strong>PLM Hub SharePoint lists</strong> when you pass the quiz. No manual action needed.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div class="pg" id="pg-quiz">
+  <button class="back-btn" onclick="showPg('module')">← Back to Module</button>
+  <div style="max-width:720px;">
+    <div class="row mb16" style="flex-wrap:wrap;gap:7px;">
+      <div class="pill pl-bl">❓ Knowledge Check</div>
+      <div class="pill pl-am" id="q-module-pill">Module Quiz</div>
+    </div>
+    <h2 id="q-heading" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;"></h2>
+    <p class="muted mb24">You need <strong>70% or above</strong> to pass and unlock the next module.</p>
+    <div class="qdots" id="q-dots"></div>
+    <div class="card" id="q-card">
+      <div class="row btw mb24">
+        <div class="lbl">Question <span id="q-num">1</span> of <span id="q-total">?</span></div>
+      </div>
+      <div id="q-text" style="font-size:16px;font-weight:500;line-height:1.65;margin-bottom:22px;"></div>
+      <div id="q-opts"></div>
+      <div id="q-feedback" style="display:none;margin-top:14px;padding:13px 16px;border-radius:10px;font-size:13px;"></div>
+      <div class="row" style="justify-content:flex-end;margin-top:22px;gap:9px;">
+        <button class="btn btn-gh" id="q-prev" onclick="prevQ()">← Previous</button>
+        <button class="btn btn-p" id="q-check" onclick="checkQ()">Check Answer →</button>
+        <button class="btn btn-p" id="q-next" onclick="nextQ()" style="display:none;">Next →</button>
+      </div>
+    </div>
+    <div class="rb pass" id="rb-pass">
+      <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+      <div class="rs pass" id="rb-score-pass">85%</div>
+      <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">You Passed!</h3>
+      <p class="muted mb24">Your score has been saved to SharePoint and the next module is now unlocked.</p>
+      <div class="row" style="justify-content:center;gap:10px;">
+        <button class="btn btn-gh" onclick="showPg('tracks')">Back to Tracks</button>
+        <button class="btn btn-p" onclick="showPg('tracks')">Next Module →</button>
+      </div>
+    </div>
+    <div class="rb fail" id="rb-fail">
+      <div style="font-size:48px;margin-bottom:12px;">😔</div>
+      <div class="rs fail" id="rb-score-fail">55%</div>
+      <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">Not quite!</h3>
+      <p class="muted mb24">You need 70% to pass. Review the module and try again.</p>
+      <div class="row" style="justify-content:center;gap:10px;">
+        <button class="btn btn-gh" onclick="showPg('module')">Review Module</button>
+        <button class="btn btn-p" onclick="resetQuiz()">Retry Quiz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROFILE ═══ -->
+<div class="pg" id="pg-profile">
+  <div class="ph">
+    <div class="ph-av" id="pr-av">...</div>
+    <div class="ph-inf f1">
+      <h2 id="pr-nm">Loading...</h2>
+      <p id="pr-rl">Unilever · PLM Learning Hub</p>
+      <div class="row" style="flex-wrap:wrap;gap:7px;">
+        <div class="pill" style="background:rgba(255,255,255,.15);color:#fff;" id="pr-lvl">📚 Learning</div>
+        <div class="pill" style="background:rgba(107,181,63,.25);color:#9ED96A;">🏅 <span id="pr-bc">0</span> Badges</div>
+      </div>
+    </div>
+    <div class="ph-stats">
+      <div><div class="ps-n" id="pr-pct">0%</div><div class="ps-l">Complete</div></div>
+      <div><div class="ps-n" id="pr-sc">—</div><div class="ps-l">Avg Score</div></div>
+    </div>
+  </div>
+  <div class="g2" style="align-items:start;gap:22px;">
+    <div>
+      <div class="card mb24">
+        <div class="sec-t" style="font-size:17px;">Completed Modules</div>
+        <div class="scrolly" id="pr-modules"><div class="empty">Loading...</div></div>
+        <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-t" style="font-size:17px;">All Badges</div>
+      <div class="g2" style="gap:10px;" id="pr-badges"></div>
+    </div>
+  </div>
+</div>
+```
+
+  </div><!-- /mc -->
+</div><!-- /scr-app -->
+
+<!-- ══ ADMIN PANEL ══ -->
+
+<div class="screen" id="scr-admin">
+  <div class="adm-bar">
+    <div class="row" style="gap:14px;">
+      <div style="width:36px;height:36px;background:#fff;border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:14px;color:var(--u-deep);">U</div>
+      <h2>PLM Admin Panel</h2>
+    </div>
+    <div class="row" style="gap:10px;">
+      <div class="adm-tabs">
+        <button class="adm-tab active" onclick="admTab('modules',this)">📚 Modules</button>
+        <button class="adm-tab" onclick="admTab('quizzes',this)">❓ Quizzes</button>
+        <button class="adm-tab" onclick="admTab('users',this)">👥 Users</button>
+        <button class="adm-tab" onclick="admTab('setup',this)">⚙️ Setup</button>
+      </div>
+      <button class="btn btn-gh btn-sm" onclick="exitAdmin()">← Exit Admin</button>
+    </div>
+  </div>
+  <div class="adm-body">
+
+```
+<!-- MODULES -->
+<div class="adm-pg active" id="adm-modules">
+  <div class="row btw mb24">
+    <div><h3 style="font-size:18px;font-weight:700;">Training Modules</h3><p class="muted">Changes appear instantly for all users.</p></div>
+    <button class="btn btn-p" onclick="showModForm()">+ Add Module</button>
+  </div>
+  <div class="card mb24" id="mod-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+    <div class="sec-t" style="font-size:16px;" id="mod-form-ttl">Add New Module</div>
+    <div class="g2">
+      <div class="af"><label>Module Title</label><input id="mf-title" placeholder="e.g. PLM Overview & Navigation"></div>
+      <div class="af"><label>Track / Level</label>
+        <select id="mf-track"><option value="Beginner">🌱 Beginner</option><option value="Intermediate">⚡ Intermediate</option><option value="Advanced">🔥 Advanced</option><option value="Admin">💎 Admin / Super User</option></select>
+      </div>
+    </div>
+    <div class="af"><label>Description</label><textarea id="mf-desc" placeholder="What will users learn?"></textarea></div>
+    <div class="g2">
+      <div class="af"><label>Microsoft Stream Embed URL</label><input id="mf-video" placeholder="https://web.microsoftstream.com/embed/video/..."></div>
+      <div class="af"><label>Duration</label><input id="mf-dur" placeholder="e.g. 18 mins"></div>
+    </div>
+    <div class="af"><label>PDF Resource URL (GitHub raw link or SharePoint URL)</label><input id="mf-pdf" placeholder="https://..."></div>
+    <div class="af"><label>Order Number</label><input type="number" id="mf-order" value="1" min="1"></div>
+    <div class="row" style="gap:9px;">
+      <button class="btn btn-p" onclick="saveModule()">💾 Save Module</button>
+      <button class="btn btn-gh" onclick="cancelModForm()">Cancel</button>
+    </div>
+  </div>
+  <div id="modules-list"><div class="empty">Loading modules...</div></div>
+</div>
+
+<!-- QUIZZES -->
+<div class="adm-pg" id="adm-quizzes">
+  <div class="row btw mb24">
+    <div><h3 style="font-size:18px;font-weight:700;">Quiz Questions</h3><p class="muted">Add 3–5 questions per module. Pass mark: 70%.</p></div>
+    <button class="btn btn-p" onclick="showQuizForm()">+ Add Question</button>
+  </div>
+  <div class="card mb24" id="quiz-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+    <div class="sec-t" style="font-size:16px;">Add Quiz Question</div>
+    <div class="af"><label>Module</label><select id="qf-mod"></select></div>
+    <div class="af"><label>Question</label><textarea id="qf-q" placeholder="Type your question..."></textarea></div>
+    <div class="g2">
+      <div class="af"><label>Option A</label><input id="qf-a"></div>
+      <div class="af"><label>Option B</label><input id="qf-b"></div>
+      <div class="af"><label>Option C</label><input id="qf-c"></div>
+      <div class="af"><label>Option D</label><input id="qf-d"></div>
+    </div>
+    <div class="af"><label>Correct Answer</label>
+      <select id="qf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
+    </div>
+    <div class="af"><label>Explanation (shown after answer)</label><textarea id="qf-exp" placeholder="Why is this correct?"></textarea></div>
+    <div class="row" style="gap:9px;">
+      <button class="btn btn-p" onclick="saveQuiz()">💾 Save Question</button>
+      <button class="btn btn-gh" onclick="cancelQuizForm()">Cancel</button>
+    </div>
+  </div>
+  <div id="quiz-list"><div class="empty">Loading quiz questions...</div></div>
+</div>
+
+<!-- USERS -->
+<div class="adm-pg" id="adm-users">
+  <div class="row btw mb24">
+    <div><h3 style="font-size:18px;font-weight:700;">User Progress</h3><p class="muted">Live data from SharePoint PLM_UserProgress list.</p></div>
+    <button class="btn btn-gh btn-sm" onclick="loadUsers()">🔄 Refresh</button>
+  </div>
+  <div class="card"><div id="users-table"><div class="empty">Loading user data...</div></div></div>
+</div>
+
+<!-- SETUP -->
+<div class="adm-pg" id="adm-setup">
+  <h3 style="font-size:18px;font-weight:700;margin-bottom:6px;">SharePoint Setup Guide</h3>
+  <p class="muted mb24">Create these 4 lists on your PLM Hub SharePoint site. Go to <strong>Site Contents → New → List</strong> for each one.</p>
+  <div class="g2" style="gap:16px;">
+    <div class="card">
+      <div class="sec-t" style="font-size:15px;">📋 PLM_Modules</div>
+      <div style="font-size:13px;line-height:2;color:var(--u-text);">
+        <strong>Title</strong> — Single line of text<br>
+        <strong>Track</strong> — Choice (Beginner, Intermediate, Advanced, Admin)<br>
+        <strong>Description</strong> — Multiple lines of text<br>
+        <strong>VideoURL</strong> — Hyperlink<br>
+        <strong>Duration</strong> — Single line of text<br>
+        <strong>PDFUrl</strong> — Hyperlink<br>
+        <strong>OrderNumber</strong> — Number<br>
+        <strong>IsActive</strong> — Yes/No
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-t" style="font-size:15px;">📊 PLM_UserProgress</div>
+      <div style="font-size:13px;line-height:2;color:var(--u-text);">
+        <strong>Title</strong> — Single line of text<br>
+        <strong>UserEmail</strong> — Single line of text<br>
+        <strong>UserName</strong> — Single line of text<br>
+        <strong>ModuleTitle</strong> — Single line of text<br>
+        <strong>Completed</strong> — Yes/No<br>
+        <strong>CompletionDate</strong> — Date and Time<br>
+        <strong>TimeSpentMins</strong> — Number
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-t" style="font-size:15px;">✅ PLM_QuizScores</div>
+      <div style="font-size:13px;line-height:2;color:var(--u-text);">
+        <strong>Title</strong> — Single line of text<br>
+        <strong>UserEmail</strong> — Single line of text<br>
+        <strong>UserName</strong> — Single line of text<br>
+        <strong>ModuleTitle</strong> — Single line of text<br>
+        <strong>Score</strong> — Number<br>
+        <strong>Passed</strong> — Yes/No<br>
+        <strong>AttemptDate</strong> — Date and Time
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-t" style="font-size:15px;">🏅 PLM_Badges</div>
+      <div style="font-size:13px;line-height:2;color:var(--u-text);">
+        <strong>Title</strong> — Single line of text<br>
+        <strong>UserEmail</strong> — Single line of text<br>
+        <strong>UserName</strong> — Single line of text<br>
+        <strong>BadgeName</strong> — Single line of text<br>
+        <strong>BadgeIcon</strong> — Single line of text<br>
+        <strong>EarnedDate</strong> — Date and Time
+      </div>
+    </div>
+  </div>
+  <div class="card mt16" style="background:rgba(107,181,63,.05);border:1.5px solid rgba(107,181,63,.2);margin-top:16px;">
+    <div style="font-size:13px;color:var(--u-green-dk);line-height:1.8;">
+      ✅ <strong>How auto-login works:</strong> When this HTML file is embedded inside your SharePoint PLM Hub page using the <strong>Embed web part</strong>, the user is already authenticated with their Unilever M365 account. The portal calls <code>/_api/web/currentuser</code> automatically using their browser session — pulling their exact name and email with zero login steps. No password. No form. Just straight to their personalised dashboard.
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<script>
+// ════════════════════════════
+// CONFIG
+// ════════════════════════════
+const SP_SITE = 'https://unilever.sharepoint.com/sites/PLMHub';
+const ADMIN_PW = 'PLMHub00';
+const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
+
+// ════════════════════════════
+// STATE
+// ════════════════════════════
+let user = { name:'', email:'', initials:'', jobTitle:'' };
+let spOk = false;
+let modules = [];
+let quizData = {};
+let progress = { completedModules:[], badges:[], avgScore:0 };
+let currentModule = null;
+let quiz = { questions:[], current:0, answers:{}, answered:false };
+let editModId = null;
+
+// ════════════════════════════
+// DEFAULT DATA
+// ════════════════════════════
+const DEFAULT_MODULES = [
+  {id:1,title:'PLM Overview & Navigation',track:'Beginner',desc:'Introduction to the PLM system — navigating screens, menus, and the interface.',videoUrl:'',duration:'18 mins',pdfUrl:'',order:1,active:true},
+  {id:2,title:'Understanding Product Records',track:'Beginner',desc:'Learn what a product information record is and how data is structured in PLM.',videoUrl:'',duration:'20 mins',pdfUrl:'',order:2,active:true},
+  {id:3,title:'Creating a Product Record',track:'Beginner',desc:'Step-by-step walkthrough of creating your first product record from scratch.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true},
+  {id:4,title:'Managing Product Attributes',track:'Intermediate',desc:'Deep dive into product attributes, field types, and data validation rules.',videoUrl:'',duration:'25 mins',pdfUrl:'',order:1,active:true},
+  {id:5,title:'Workflow & Approvals',track:'Intermediate',desc:'Submit product records through the approval workflow and manage rejections.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:2,active:true},
+  {id:6,title:'Versioning & History',track:'Intermediate',desc:'Understand version control, audit trails, and how to compare record versions.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true},
+  {id:7,title:'Bulk Data Management',track:'Advanced',desc:'Import and export large datasets, manage bulk updates and data quality.',videoUrl:'',duration:'35 mins',pdfUrl:'',order:1,active:true},
+  {id:8,title:'Integration & API Basics',track:'Advanced',desc:'How PLM connects with other Unilever systems and an introduction to the API.',videoUrl:'',duration:'40 mins',pdfUrl:'',order:2,active:true},
+  {id:9,title:'Advanced Reporting',track:'Advanced',desc:'Build custom reports and dashboards to track product data quality.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:3,active:true},
+  {id:10,title:'User & Permission Management',track:'Admin',desc:'Manage user roles, permissions, and access control across the PLM system.',videoUrl:'',duration:'28 mins',pdfUrl:'',order:1,active:true},
+  {id:11,title:'System Configuration',track:'Admin',desc:'Configure system settings, templates, and default values for your organisation.',videoUrl:'',duration:'35 mins',pdfUrl:'',order:2,active:true},
+  {id:12,title:'Audit & Compliance Tools',track:'Admin',desc:'Use built-in audit tools to monitor activity and ensure compliance.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:3,active:true}
+];
+
+const DEFAULT_QUIZZES = {
+  'PLM Overview & Navigation':[
+    {q:'What does PLM stand for?',opts:{a:'Product Lifecycle Management',b:'Product List Manager',c:'Project Launch Module',d:'Platform Lifecycle Monitor'},correct:'a',exp:'PLM stands for Product Lifecycle Management — it manages product data from creation through to retirement.'},
+    {q:'Where do you find the Product Information Records in the PLM system?',opts:{a:'Finance Module',b:'HR Portal',c:'Product Catalogue',d:'System Settings'},correct:'c',exp:'Product Information Records are found in the Product Catalogue section of the PLM system.'}
+  ],
+  'Workflow & Approvals':[
+    {q:'When a product record is rejected, what is the first step the submitter should take?',opts:{a:'Delete and start again',b:'Review rejection comments and update fields',c:'Escalate to system admin',d:'Resubmit without changes'},correct:'b',exp:'Always review rejection comments first — they explain exactly what needs correcting before resubmitting.'},
+    {q:'Where can you track the status of a submitted approval?',opts:{a:'My Tasks dashboard',b:'Email inbox only',c:'Finance portal',d:'External SharePoint only'},correct:'a',exp:'The My Tasks dashboard shows all pending, approved and rejected submissions in real time.'},
+    {q:'What is the minimum approval required for a new product launch record?',opts:{a:'Team Lead only',b:'Department Head only',c:'Brand Manager and Supply Chain sign-off',d:'No approval required'},correct:'c',exp:'New product launch records require both Brand Manager and Supply Chain sign-off per Unilever policy.'}
+  ]
+};
+
+// ════════════════════════════
+// LOCAL STORAGE
+// ════════════════════════════
+function loadLocal(){
+  try{
+    const p=localStorage.getItem('plm_prog'); if(p) progress={...progress,...JSON.parse(p)};
+    const m=localStorage.getItem('plm_mods'); modules=m?JSON.parse(m):[...DEFAULT_MODULES];
+    const q=localStorage.getItem('plm_quiz'); quizData=q?JSON.parse(q):{...DEFAULT_QUIZZES};
+  }catch(e){modules=[...DEFAULT_MODULES];quizData={...DEFAULT_QUIZZES};}
+}
+function saveLocal(){
+  try{
+    localStorage.setItem('plm_prog',JSON.stringify(progress));
+    localStorage.setItem('plm_mods',JSON.stringify(modules));
+    localStorage.setItem('plm_quiz',JSON.stringify(quizData));
+  }catch(e){}
+}
+
+// ════════════════════════════
+// SHAREPOINT REST API
+// ════════════════════════════
+async function spFetch(path, opts={}){
+  try{
+    const r=await fetch(SP_SITE+path,{...opts,credentials:'include',headers:{...SP_H,...(opts.headers||{})}});
+    if(!r.ok) throw new Error(r.status);
+    return await r.json();
+  }catch(e){return null;}
+}
+
+async function getDigest(){
+  const r=await spFetch('/_api/contextinfo',{method:'POST'});
+  return r?.d?.GetContextWebInformation?.FormDigestValue||null;
+}
+
+async function spGet(list,filter=''){
+  const f=filter?`?$filter=${encodeURIComponent(filter)}`:'?$orderby=Created desc';
+  const r=await spFetch(`/_api/web/lists/getbytitle('${list}')/items${f}`);
+  return r?.d?.results||null;
+}
+
+async function spPost(list,fields){
+  const digest=await getDigest(); if(!digest) return false;
+  const r=await spFetch(`/_api/web/lists/getbytitle('${list}')/items`,{
+    method:'POST',
+    headers:{'X-RequestDigest':digest},
+    body:JSON.stringify({__metadata:{type:`SP.Data.${list}ListItem`},...fields})
+  });
+  return !!r;
+}
+
+async function spPatch(list,id,fields){
+  const digest=await getDigest(); if(!digest) return false;
+  await spFetch(`/_api/web/lists/getbytitle('${list}')/items(${id})`,{
+    method:'POST',
+    headers:{'X-RequestDigest':digest,'X-HTTP-Method':'MERGE','IF-MATCH':'*'},
+    body:JSON.stringify({__metadata:{type:`SP.Data.${list}ListItem`},...fields})
+  });
+  return true;
+}
+
+async function spDel(list,id){
+  const digest=await getDigest(); if(!digest) return false;
+  await spFetch(`/_api/web/lists/getbytitle('${list}')/items(${id})`,{
+    method:'POST',
+    headers:{'X-RequestDigest':digest,'X-HTTP-Method':'DELETE','IF-MATCH':'*'}
+  });
+  return true;
+}
+
+// ════════════════════════════
+// BOOT — AUTO LOGIN
+// ════════════════════════════
+async function boot(){
+  setLoading(10,'Connecting to SharePoint...');
+  loadLocal();
+
+  // Step 1: Get current user from SP session
+  setLoading(30,'Fetching your Unilever profile...');
+  const spUser = await spFetch('/_api/web/currentuser');
+
+  if(spUser?.d){
+    spOk=true;
+    user.name = spUser.d.Title||'Unilever User';
+    user.email = spUser.d.Email||'';
+    user.jobTitle = spUser.d.JobTitle||'Unilever Employee';
+    const parts=user.name.trim().split(' ');
+    user.initials=(parts[0][0]+(parts[1]?parts[1][0]:'')).toUpperCase();
+    setLoading(50,'Loading your training modules...');
+
+    // Step 2: Load modules from SP
+    const spMods=await spGet('PLM_Modules');
+    if(spMods&&spMods.length>0){
+      modules=spMods.map(i=>({id:i.Id,title:i.Title,track:i.Track||'Beginner',desc:i.Description||'',videoUrl:i.VideoURL||'',duration:i.Duration||'',pdfUrl:i.PDFUrl||'',order:i.OrderNumber||1,active:i.IsActive!==false}));
+      saveLocal();
+    } else {
+      // First time: seed SP lists
+      setLoading(55,'Setting up your training data...');
+      for(const m of DEFAULT_MODULES){
+        await spPost('PLM_Modules',{Title:m.title,Track:m.track,Description:m.desc,Duration:m.duration,OrderNumber:m.order,IsActive:true});
+      }
+    }
+
+    setLoading(70,'Loading your progress...');
+    // Step 3: Load personal progress
+    const spProg=await spGet('PLM_UserProgress',`UserEmail eq '${user.email}'`);
+    if(spProg){
+      const completed=spProg.filter(i=>i.Completed).map(i=>i.ModuleTitle);
+      progress.completedModules=[...new Set(completed)];
+    }
+
+    // Step 4: Load quiz scores
+    const spScores=await spGet('PLM_QuizScores',`UserEmail eq '${user.email}'`);
+    if(spScores&&spScores.length>0){
+      const total=spScores.reduce((a,s)=>a+(s.Score||0),0);
+      progress.avgScore=Math.round(total/spScores.length);
+    }
+
+    // Step 5: Load badges
+    const spBadges=await spGet('PLM_Badges',`UserEmail eq '${user.email}'`);
+    if(spBadges) progress.badges=spBadges.map(b=>b.BadgeName);
+
+    saveLocal();
+    updateSPStatus(true);
+
+  } else {
+    // Not in SharePoint — use local storage fallback
+    user.name='Preview User';
+    user.email='preview@unilever.com';
+    user.initials='PU';
+    user.jobTitle='Unilever Employee';
+    updateSPStatus(false);
+  }
+
+  setLoading(90,'Preparing your dashboard...');
+  await new Promise(r=>setTimeout(r,400));
+  setLoading(100,'Ready!');
+  await new Promise(r=>setTimeout(r,300));
+
+  // Hide loading, show app
+  document.getElementById('scr-loading').classList.add('hide');
+  setTimeout(()=>{
+    document.getElementById('scr-loading').style.display='none';
+    document.getElementById('scr-app').classList.add('active');
+    updateUI();
+    renderTracks();
+    renderDashActivity();
+    renderDashBadges();
+  },500);
+}
+
+function setLoading(pct,msg){
+  document.getElementById('loading-bar').style.width=pct+'%';
+  document.getElementById('loading-status').textContent=msg;
+}
+
+function updateSPStatus(ok){
+  const e=document.getElementById('st-sp'), s=document.getElementById('st-sp-s');
+  if(e){e.textContent=ok?'✅ Live':'⚠️ Local';e.className='sc-n '+(ok?'gn':'am');}
+  if(s) s.textContent=ok?'Saving to SharePoint':'Saving locally (embed in SharePoint for full sync)';
+}
+
+// ════════════════════════════
+// UI UPDATE
+// ════════════════════════════
+function updateUI(){
+  const done=progress.completedModules?.length||0;
+  const total=modules.length||12;
+  const pct=Math.round((done/total)*100)||0;
+  const bdgs=progress.badges?.length||0;
+
+  // Sidebar & topbar
+  ['sb-av','pr-av'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=user.initials;});
+  document.getElementById('sb-nm').textContent=user.name;
+  document.getElementById('sb-rl').textContent=user.jobTitle;
+  ['sb-bc','tb-bdg','pr-bc'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=bdgs;});
+  document.getElementById('pr-nm').textContent=user.name;
+  document.getElementById('pr-rl').textContent=(user.jobTitle||'Unilever Employee')+' · Unilever';
+
+  // Hero
+  document.getElementById('hero-txt').textContent=done+' of '+total+' modules complete';
+  document.getElementById('hero-msg').textContent=done===0?'Start your learning journey today! 🚀':done===total?'🎉 You have completed all modules!':'Keep going — you\'re doing great! 🏅';
+  document.getElementById('hero-fill').style.width=pct+'%';
+  document.getElementById('hero-pct').textContent=pct+'% complete';
+  document.getElementById('hero-status').textContent=done===total?'Complete! 🎉':done>0?'On Track':'Getting Started';
+
+  // Stats
+  document.getElementById('st-mod').textContent=done;
+  document.getElementById('st-mod-s').textContent='of '+total+' total';
+  document.getElementById('st-bdg').textContent=bdgs;
+  document.getElementById('st-sc').textContent=progress.avgScore?progress.avgScore+'%':'—';
+
+  // Profile
+  document.getElementById('pr-pct').textContent=pct+'%';
+  document.getElementById('pr-sc').textContent=progress.avgScore?progress.avgScore+'%':'—';
+  document.getElementById('pr-lvl').textContent=getLevel();
+  document.getElementById('tb-lvl').textContent=getLevel();
+
+  renderProfileModules();
+  renderAllBadges();
+}
+
+function getLevel(){
+  const done=progress.completedModules?.length||0;
+  if(done===0) return '🌱 Beginner';
+  const bgDone=modules.filter(m=>m.track==='Beginner').every(m=>progress.completedModules.includes(m.title));
+  const imDone=modules.filter(m=>m.track==='Intermediate').every(m=>progress.completedModules.includes(m.title));
+  const adDone=modules.filter(m=>m.track==='Advanced').every(m=>progress.completedModules.includes(m.title));
+  if(adDone) return '💎 Admin Level';
+  if(imDone) return '🔥 Advanced';
+  if(bgDone) return '⚡ Intermediate';
+  return '🌱 Beginner';
+}
+
+// ════════════════════════════
+// NAVIGATION
+// ════════════════════════════
+const PG_META={
+  dashboard:{title:'Dashboard',sub:'Your personalised learning hub'},
+  tracks:{title:'Training Tracks',sub:'Choose your level and continue your journey'},
+  module:{title:'Module Player',sub:'Watch the video then take the quiz'},
+  quiz:{title:'Knowledge Quiz',sub:'Test your understanding to unlock the next module'},
+  profile:{title:'Profile & Badges',sub:'Your learning history and achievements'}
+};
+function showPg(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  const ni=document.getElementById('n-'+id); if(ni) ni.classList.add('active');
+  const m=PG_META[id]||{};
+  document.getElementById('pg-title').textContent=m.title||'';
+  document.getElementById('pg-sub').textContent=m.sub||'';
+  if(id==='tracks') renderTracks();
+  if(id==='profile'){renderProfileModules();renderAllBadges();}
+  if(id==='quiz'&&currentModule) renderQuiz();
+}
+
+// ════════════════════════════
+// TRACKS
+// ════════════════════════════
+const TRACKS=[
+  {key:'Beginner',emoji:'🌱',cls:'bg',col:'var(--u-green)',pf:'pf-gn'},
+  {key:'Intermediate',emoji:'⚡',cls:'im',col:'var(--u-blue)',pf:'pf-bl'},
+  {key:'Advanced',emoji:'🔥',cls:'ad',col:'#C17D0A',pf:'pf-am'},
+  {key:'Admin',emoji:'💎',cls:'su',col:'var(--u-deep)',pf:'pf-bl',label:'Admin / Super User'}
+];
+
+function isComplete(title){return progress.completedModules?.includes(title);}
+function trackUnlocked(key){
+  const order=['Beginner','Intermediate','Advanced','Admin'];
+  const idx=order.indexOf(key);
+  if(idx===0) return true;
+  return modules.filter(m=>m.track===order[idx-1]&&m.active).every(m=>isComplete(m.title));
+}
+function trackProg(key){
+  const mods=modules.filter(m=>m.track===key&&m.active);
+  return{total:mods.length,done:mods.filter(m=>isComplete(m.title)).length};
+}
+
+function renderTracks(){
+  const grid=document.getElementById('tracks-grid'); if(!grid) return;
+  grid.innerHTML='';
+  TRACKS.forEach(tr=>{
+    const unlocked=trackUnlocked(tr.key);
+    const prog=trackProg(tr.key);
+    const pct=prog.total>0?Math.round(prog.done/prog.total*100):0;
+    const complete=pct===100;
+    const mods=modules.filter(m=>m.track===tr.key&&m.active).sort((a,b)=>a.order-b.order);
+
+    const statusPill=complete?`<div class="pill pl-gn">✓ Complete</div>`:
+      !unlocked?`<div class="pill pl-gy">🔒 Locked</div>`:
+      prog.done>0?`<div class="pill pl-am">In Progress</div>`:
+      `<div class="pill pl-bl">Not Started</div>`;
+
+    const modsHTML=mods.map((m,i)=>{
+      const done=isComplete(m.title);
+      const isNext=unlocked&&!done&&(i===0||isComplete(mods[i-1]?.title));
+      const locked=!unlocked;
+      return`<div class="mr" onclick="${unlocked&&!locked?`openModule(${m.id})`:''}">
+        <div class="mi ${done?'done':isNext?'act':'lck'}">${done?'✅':isNext?'▶️':'🔒'}</div>
+        <div class="mt2">
+          <div class="t" style="${locked?'color:var(--u-grey)':''}">${m.title}</div>
+          <div class="s">${done?'Completed · '+m.duration:isNext?'<span style="color:var(--u-blue);font-weight:600;">▶ Continue here</span>':locked?'Locked':m.duration}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    const btnHTML=!unlocked?
+      `<button class="btn btn-gh btn-full" disabled style="opacity:.5;cursor:not-allowed;">Complete previous track first</button>`:
+      complete?`<button class="btn btn-gh btn-full">✅ Review Modules</button>`:
+      `<button class="btn btn-p btn-full" onclick="openNextModule('${tr.key}')">Continue Learning →</button>`;
+
+    grid.innerHTML+=`<div class="tc ${tr.cls}${!unlocked?' lkd':''}">
+      <div class="row btw mb16"><div style="font-size:38px;">${tr.emoji}</div>${statusPill}</div>
+      <h3 style="font-size:21px;font-weight:700;margin-bottom:3px;">${tr.label||tr.key}</h3>
+      <p class="muted" style="margin-bottom:14px;">${prog.total} modules</p>
+      <div class="pt" style="margin-bottom:5px;"><div class="pf ${tr.pf}" style="width:${pct}%"></div></div>
+      <div class="row btw mb16"><span class="lbl">Progress</span><span style="font-size:12px;font-weight:600;color:${tr.col};">${prog.done}/${prog.total} modules</span></div>
+      <div class="div"></div>
+      ${modsHTML}
+      <div style="margin-top:14px;">${btnHTML}</div>
+    </div>`;
+  });
+}
+
+function openModule(id){
+  currentModule=modules.find(m=>m.id===id); if(!currentModule) return;
+  document.getElementById('mod-pills').innerHTML=`<div class="pill pl-bl">⚡ ${currentModule.track}</div><div class="pill pl-am">📹 ${currentModule.duration||'Module'}</div>`;
+  document.getElementById('mod-title').textContent=currentModule.title;
+  document.getElementById('mod-desc').textContent=currentModule.desc;
+  const vw=document.getElementById('mod-video');
+  if(currentModule.videoUrl){
+    vw.innerHTML=`<iframe src="${currentModule.videoUrl}" allowfullscreen allow="autoplay"></iframe>`;
+  } else {
+    vw.innerHTML=`<div class="vw-ph"><button class="pb">▶</button><div class="vw-lbl">No video added yet.<br>Paste a Microsoft Stream URL in the Admin Panel.</div></div>`;
+  }
+  const res=document.getElementById('mod-resources');
+  res.innerHTML=currentModule.pdfUrl?
+    `<div class="mr" style="border:1.5px solid var(--u-grey-lt);border-radius:11px;">
+      <div style="font-size:22px;">📄</div>
+      <div class="mt2"><div class="t">${currentModule.title} — Reference Guide</div><div class="s">PDF resource</div></div>
+      <a href="${currentModule.pdfUrl}" target="_blank" class="btn btn-gh btn-sm">↓ Open</a>
+    </div>`:
+    `<div class="empty">No resource added yet. Add a PDF URL in the Admin Panel.</div>`;
+  const done=isComplete(currentModule.title);
+  document.getElementById('mod-prog-bar').style.width=done?'100%':'0%';
+  document.getElementById('mod-status-txt').textContent=done?'Module completed ✅':'Watch the video, then take the quiz';
+  showPg('module');
+}
+
+function openNextModule(track){
+  const mods=modules.filter(m=>m.track===track&&m.active).sort((a,b)=>a.order-b.order);
+  const next=mods.find(m=>!isComplete(m.title));
+  if(next) openModule(next.id);
+}
+
+// ════════════════════════════
+// QUIZ
+// ════════════════════════════
+function renderQuiz(){
+  if(!currentModule) return;
+  const qs=quizData[currentModule.title]||[];
+  quiz={questions:qs,current:0,answers:{},answered:false};
+  document.getElementById('q-heading').textContent=currentModule.title+' — Quiz';
+  document.getElementById('q-module-pill').textContent=currentModule.track;
+  document.getElementById('q-total').textContent=qs.length;
+  document.getElementById('rb-pass').classList.remove('show');
+  document.getElementById('rb-fail').classList.remove('show');
+  document.getElementById('q-card').style.display='block';
+  if(qs.length===0){document.getElementById('q-card').innerHTML=`<div class="empty">No quiz questions added yet.<br>Add them in the Admin Panel → Quizzes tab.</div>`;return;}
+  renderQDots(); renderQ();
+}
+
+function renderQDots(){
+  document.getElementById('q-dots').innerHTML=quiz.questions.map((_,i)=>
+    `<div class="qd ${i<quiz.current?'done':i===quiz.current?'cur':''}"></div>`
+  ).join('');
+}
+
+function renderQ(){
+  const q=quiz.questions[quiz.current]; if(!q) return;
+  document.getElementById('q-num').textContent=quiz.current+1;
+  document.getElementById('q-text').innerHTML=q.q;
+  document.getElementById('q-opts').innerHTML=['a','b','c','d'].map(k=>
+    `<div class="qo" onclick="selQ(this,'${k}')" data-opt="${k}"><div class="ol">${k.toUpperCase()}</div>${q.opts[k]}</div>`
+  ).join('');
+  document.getElementById('q-feedback').style.display='none';
+  document.getElementById('q-check').style.display='inline-flex';
+  document.getElementById('q-next').style.display='none';
+  quiz.answered=false;
+}
+
+function selQ(el,opt){
+  if(quiz.answered) return;
+  document.querySelectorAll('.qo').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function checkQ(){
+  if(quiz.answered) return;
+  const sel=document.querySelector('.qo.sel');
+  if(!sel){alert('Please select an answer first.');return;}
+  const q=quiz.questions[quiz.current];
+  const opt=sel.dataset.opt;
+  quiz.answers[quiz.current]=opt;
+  quiz.answered=true;
+  const fb=document.getElementById('q-feedback');
+  fb.style.display='block';
+  if(opt===q.correct){
+    sel.classList.add('cor');
+    fb.style.cssText='display:block;background:rgba(107,181,63,.08);border:1.5px solid rgba(107,181,63,.28);color:var(--u-green-dk);padding:13px 16px;border-radius:10px;font-size:13px;margin-top:14px;';
+    fb.innerHTML=`✅ <strong>Correct!</strong> ${q.exp||''}`;
+  }else{
+    sel.classList.add('wrg');
+    document.querySelector(`[data-opt="${q.correct}"]`).classList.add('cor');
+    fb.style.cssText='display:block;background:rgba(224,62,62,.06);border:1.5px solid rgba(224,62,62,.2);color:var(--u-red);padding:13px 16px;border-radius:10px;font-size:13px;margin-top:14px;';
+    fb.innerHTML=`❌ <strong>Incorrect.</strong> ${q.exp||''}`;
+  }
+  document.getElementById('q-check').style.display='none';
+  if(quiz.current===quiz.questions.length-1) setTimeout(finishQuiz,900);
+  else document.getElementById('q-next').style.display='inline-flex';
+}
+
+function nextQ(){quiz.current++;quiz.answered=false;renderQDots();renderQ();}
+function prevQ(){if(quiz.current>0){quiz.current--;renderQDots();renderQ();}}
+
+async function finishQuiz(){
+  const qs=quiz.questions;
+  const correct=Object.entries(quiz.answers).filter(([i,a])=>a===qs[i].correct).length;
+  const score=Math.round(correct/qs.length*100);
+  const passed=score>=70;
+  document.getElementById('q-card').style.display='none';
+  if(passed){
+    document.getElementById('rb-score-pass').textContent=score+'%';
+    document.getElementById('rb-pass').classList.add('show');
+    if(!progress.completedModules) progress.completedModules=[];
+    if(!progress.completedModules.includes(currentModule.title)){
+      progress.completedModules.push(currentModule.title);
+    }
+    progress.avgScore=score;
+    saveLocal(); updateUI(); renderTracks();
+    document.getElementById('mod-prog-bar').style.width='100%';
+    document.getElementById('mod-status-txt').textContent='Module completed ✅';
+    if(spOk){
+      await spPost('PLM_QuizScores',{Title:`${user.email}-${currentModule.title}`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Score:score,Passed:true,AttemptDate:new Date().toISOString()});
+      await spPost('PLM_UserProgress',{Title:`${user.email}-${currentModule.title}`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Completed:true,CompletionDate:new Date().toISOString()});
+    }
+    await checkBadges();
+    showToast('✅','Module Complete!',`"${currentModule.title}" — ${score}% ✓`);
+  }else{
+    document.getElementById('rb-score-fail').textContent=score+'%';
+    document.getElementById('rb-fail').classList.add('show');
+    if(spOk) await spPost('PLM_QuizScores',{Title:`${user.email}-${currentModule.title}-fail`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Score:score,Passed:false,AttemptDate:new Date().toISOString()});
+  }
+}
+
+function resetQuiz(){
+  document.getElementById('rb-pass').classList.remove('show');
+  document.getElementById('rb-fail').classList.remove('show');
+  document.getElementById('q-card').style.display='block';
+  renderQuiz();
+}
+
+// ════════════════════════════
+// BADGES
+// ════════════════════════════
+const BADGE_DEFS=[
+  {name:'Beginner',icon:'🌱',desc:'Completed all Beginner modules',check:()=>modules.filter(m=>m.track==='Beginner').every(m=>isComplete(m.title))&&modules.filter(m=>m.track==='Beginner').length>0},
+  {name:'Fast Learner',icon:'⚡',desc:'Completed 5 modules',check:()=>(progress.completedModules?.length||0)>=5},
+  {name:'Intermediate',icon:'🔵',desc:'Completed all Intermediate modules',check:()=>modules.filter(m=>m.track==='Intermediate').every(m=>isComplete(m.title))&&modules.filter(m=>m.track==='Intermediate').length>0},
+  {name:'Advanced',icon:'🔥',desc:'Completed all Advanced modules',check:()=>modules.filter(m=>m.track==='Advanced').every(m=>isComplete(m.title))&&modules.filter(m=>m.track==='Advanced').length>0},
+  {name:'Perfect Score',icon:'🎯',desc:'Scored 100% on a quiz',check:()=>(progress.avgScore||0)===100},
+  {name:'PLM Expert',icon:'💎',desc:'Completed all 4 tracks',check:()=>(progress.completedModules?.length||0)>=modules.length&&modules.length>0}
+];
+
+async function checkBadges(){
+  if(!progress.badges) progress.badges=[];
+  for(const b of BADGE_DEFS){
+    if(!progress.badges.includes(b.name)&&b.check()){
+      progress.badges.push(b.name);
+      saveLocal();
+      showToast(b.icon,'Badge Unlocked! '+b.icon,`You earned the ${b.name} badge!`);
+      if(spOk) await spPost('PLM_Badges',{Title:`${user.email}-${b.name}`,UserEmail:user.email,UserName:user.name,BadgeName:b.name,BadgeIcon:b.icon,EarnedDate:new Date().toISOString()});
+      await new Promise(r=>setTimeout(r,1500));
+    }
+  }
+  updateUI();
+}
+
+function renderAllBadges(){
+  const el=document.getElementById('pr-badges'); if(!el) return;
+  el.innerHTML=BADGE_DEFS.map(b=>{
+    const earned=progress.badges?.includes(b.name);
+    return`<div class="bdg ${earned?'earned':'locked'}">
+      <div class="bdg-ic">${b.icon}</div>
+      <div class="bdg-nm">${b.name}</div>
+      <div class="bdg-ds">${b.desc}</div>
+      ${earned?`<div class="bdg-dt">Earned ✓</div>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderDashBadges(){
+  const el=document.getElementById('dash-badges'); if(!el) return;
+  const show=BADGE_DEFS.slice(0,4).map(b=>{
+    const earned=progress.badges?.includes(b.name);
+    return`<div class="bdg ${earned?'earned':'locked'}">
+      <div class="bdg-ic">${b.icon}</div>
+      <div class="bdg-nm">${b.name}</div>
+      <div class="bdg-ds">${b.desc}</div>
+      ${earned?`<div class="bdg-dt">Earned ✓</div>`:''}
+    </div>`;
+  }).join('');
+  el.innerHTML=show;
+}
+
+function renderDashActivity(){
+  const el=document.getElementById('activity-list'); if(!el) return;
+  const completed=progress.completedModules||[];
+  if(completed.length===0){
+    el.innerHTML=`<div class="tl"><div class="tl-d pend">🚀</div><div class="tl-c"><div class="tl-t">Ready to start your PLM journey!</div><div class="tl-s">Click "Continue Learning" to begin</div></div></div>`;
+    return;
+  }
+  const recent=completed.slice(-4).reverse();
+  el.innerHTML=recent.map(title=>`
+    <div class="tl"><div class="tl-d done">✓</div>
+    <div class="tl-c"><div class="tl-t">Completed: ${title}</div>
+    <div class="tl-s">${modules.find(m=>m.title===title)?.track||''} Track</div></div></div>`
+  ).join('');
+}
+
+function renderProfileModules(){
+  const el=document.getElementById('pr-modules'); if(!el) return;
+  const completed=progress.completedModules||[];
+  if(completed.length===0){el.innerHTML=`<div class="empty">No modules completed yet. Start learning! 🎯</div>`;return;}
+  el.innerHTML=completed.map(title=>{
+    const mod=modules.find(m=>m.title===title)||{};
+    return`<div class="mr" style="border:1.5px solid var(--u-grey-lt);border-radius:11px;margin-bottom:8px;">
+      <div class="mi done">✅</div>
+      <div class="mt2"><div class="t">${title}</div><div class="s">${mod.track||''} · ${mod.duration||''}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════
+// TOAST
+// ════════════════════════════
+function showToast(icon,title,msg){
+  document.getElementById('t-ic').textContent=icon;
+  document.getElementById('t-title').textContent=title;
+  document.getElementById('t-msg').textContent=msg;
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4500);
+}
+
+// ════════════════════════════
+// ADMIN
+// ════════════════════════════
+function showAdminLogin(){
+  document.getElementById('scr-app').classList.remove('active');
+  document.getElementById('scr-admin-login').classList.add('active');
+}
+function checkAdminPw(){
+  const pw=document.getElementById('adm-pw').value;
+  const err=document.getElementById('adm-err');
+  if(pw===ADMIN_PW){
+    err.style.display='none';
+    document.getElementById('scr-admin-login').classList.remove('active');
+    document.getElementById('scr-admin').classList.add('active');
+    renderAdminMods(); renderAdminQuiz(); loadUsers();
+  }else{err.style.display='block';}
+}
+function exitAdmin(){
+  document.getElementById('scr-admin').classList.remove('active');
+  document.getElementById('scr-app').classList.add('active');
+  document.getElementById('adm-pw').value='';
+}
+
+function admTab(id,btn){
+  document.querySelectorAll('.adm-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.adm-pg').forEach(p=>p.classList.remove('active'));
+  document.getElementById('adm-'+id).classList.add('active');
+  btn.classList.add('active');
+  if(id==='users') loadUsers();
+  if(id==='quizzes') renderAdminQuiz();
+}
+
+// Admin — Modules
+function renderAdminMods(){
+  const el=document.getElementById('modules-list'); if(!el) return;
+  if(!modules.length){el.innerHTML=`<div class="empty">No modules yet. Add your first one above.</div>`;return;}
+  el.innerHTML=modules.map(m=>`<div class="am-card">
+    <div style="font-size:22px;">${m.track==='Beginner'?'🌱':m.track==='Intermediate'?'⚡':m.track==='Advanced'?'🔥':'💎'}</div>
+    <div class="ai"><div class="at">${m.title}</div><div class="as">${m.track} · ${m.duration||'No duration'} · ${m.videoUrl?'✅ Video added':'⚠️ No video yet'}</div></div>
+    <div class="aa">
+      <button class="btn btn-gh btn-sm" onclick="editMod(${m.id})">✏️ Edit</button>
+      <button class="btn btn-r btn-sm" onclick="delMod(${m.id})">🗑</button>
+    </div>
+  </div>`).join('');
+}
+
+function showModForm(){
+  editModId=null;
+  document.getElementById('mod-form-ttl').textContent='Add New Module';
+  ['mf-title','mf-desc','mf-video','mf-dur','mf-pdf'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mf-order').value=modules.length+1;
+  document.getElementById('mod-form').style.display='block';
+}
+function cancelModForm(){document.getElementById('mod-form').style.display='none';editModId=null;}
+function editMod(id){
+  const m=modules.find(x=>x.id===id); if(!m) return;
+  editModId=id;
+  document.getElementById('mod-form-ttl').textContent='Edit Module';
+  document.getElementById('mf-title').value=m.title;
+  document.getElementById('mf-track').value=m.track;
+  document.getElementById('mf-desc').value=m.desc;
+  document.getElementById('mf-video').value=m.videoUrl||'';
+  document.getElementById('mf-dur').value=m.duration||'';
+  document.getElementById('mf-pdf').value=m.pdfUrl||'';
+  document.getElementById('mf-order').value=m.order||1;
+  document.getElementById('mod-form').style.display='block';
+}
+async function saveModule(){
+  const title=document.getElementById('mf-title').value.trim();
+  if(!title){alert('Please enter a module title.');return;}
+  const data={title,track:document.getElementById('mf-track').value,desc:document.getElementById('mf-desc').value.trim(),videoUrl:document.getElementById('mf-video').value.trim(),duration:document.getElementById('mf-dur').value.trim(),pdfUrl:document.getElementById('mf-pdf').value.trim(),order:parseInt(document.getElementById('mf-order').value)||1,active:true};
+  if(editModId){
+    const idx=modules.findIndex(m=>m.id===editModId);
+    if(idx>-1) modules[idx]={...modules[idx],...data};
+    if(spOk) await spPatch('PLM_Modules',editModId,{Title:data.title,Track:data.track,Description:data.desc,VideoURL:data.videoUrl,Duration:data.duration,PDFUrl:data.pdfUrl,OrderNumber:data.order});
+  }else{
+    const newId=Date.now();
+    modules.push({id:newId,...data});
+    if(spOk) await spPost('PLM_Modules',{Title:data.title,Track:data.track,Description:data.desc,VideoURL:data.videoUrl,Duration:data.duration,PDFUrl:data.pdfUrl,OrderNumber:data.order,IsActive:true});
+  }
+  saveLocal(); cancelModForm(); renderAdminMods();
+  showToast('✅','Module Saved!',`"${title}" saved successfully.`);
+}
+async function delMod(id){
+  const m=modules.find(x=>x.id===id); if(!m||!confirm(`Delete "${m.title}"?`)) return;
+  modules=modules.filter(x=>x.id!==id);
+  if(spOk) await spDel('PLM_Modules',id);
+  saveLocal(); renderAdminMods();
+  showToast('🗑','Deleted',`"${m.title}" removed.`);
+}
+
+// Admin — Quizzes
+function renderAdminQuiz(){
+  const el=document.getElementById('quiz-list'); if(!el) return;
+  const sel=document.getElementById('qf-mod');
+  if(sel) sel.innerHTML=modules.map(m=>`<option value="${m.title}">${m.title}</option>`).join('');
+  let html='';
+  Object.entries(quizData).forEach(([mod,qs])=>{
+    qs.forEach((q,i)=>{
+      html+=`<div class="am-card">
+        <div style="font-size:20px;">❓</div>
+        <div class="ai"><div class="at">${q.q.substring(0,75)}${q.q.length>75?'...':''}</div><div class="as">${mod} · Correct: ${q.correct.toUpperCase()}</div></div>
+        <div class="aa"><button class="btn btn-r btn-sm" onclick="delQuiz('${mod}',${i})">🗑</button></div>
+      </div>`;
+    });
+  });
+  el.innerHTML=html||`<div class="empty">No quiz questions yet. Add your first one above.</div>`;
+}
+function showQuizForm(){
+  const sel=document.getElementById('qf-mod');
+  if(sel) sel.innerHTML=modules.map(m=>`<option value="${m.title}">${m.title}</option>`).join('');
+  document.getElementById('quiz-form').style.display='block';
+}
+function cancelQuizForm(){document.getElementById('quiz-form').style.display='none';}
+function saveQuiz(){
+  const mod=document.getElementById('qf-mod').value;
+  const q=document.getElementById('qf-q').value.trim();
+  const a=document.getElementById('qf-a').value.trim();
+  const b=document.getElementById('qf-b').value.trim();
+  const c=document.getElementById('qf-c').value.trim();
+  const d=document.getElementById('qf-d').value.trim();
+  if(!mod||!q||!a||!b||!c||!d){alert('Please fill in all fields.');return;}
+  if(!quizData[mod]) quizData[mod]=[];
+  quizData[mod].push({q,opts:{a,b,c,d},correct:document.getElementById('qf-cor').value,exp:document.getElementById('qf-exp').value.trim()});
+  saveLocal(); cancelQuizForm(); renderAdminQuiz();
+  showToast('✅','Question Saved!',`Added to "${mod}".`);
+}
+function delQuiz(mod,idx){
+  if(!confirm('Delete this question?')) return;
+  quizData[mod].splice(idx,1);
+  if(!quizData[mod].length) delete quizData[mod];
+  saveLocal(); renderAdminQuiz();
+}
+
+// Admin — Users
+async function loadUsers(){
+  const el=document.getElementById('users-table'); if(!el) return;
+  if(!spOk){
+    el.innerHTML=`<div class="empty">⚠️ Not connected to SharePoint.<br><br>Embed this HTML file inside your SharePoint PLM Hub page using the <strong>Embed web part</strong>. Once embedded, user data from PLM_UserProgress will appear here automatically.</div>`;
+    return;
+  }
+  el.innerHTML='<div class="empty">Loading from SharePoint...</div>';
+  const items=await spGet('PLM_UserProgress');
+  if(!items||!items.length){el.innerHTML='<div class="empty">No user progress recorded yet.</div>';return;}
+  const byUser={};
+  items.forEach(i=>{
+    if(!byUser[i.UserEmail]) byUser[i.UserEmail]={name:i.UserName,email:i.UserEmail,done:0,last:''};
+    if(i.Completed) byUser[i.UserEmail].done++;
+    if(i.CompletionDate>byUser[i.UserEmail].last) byUser[i.UserEmail].last=i.CompletionDate;
+  });
+  el.innerHTML=`<table class="utbl">
+    <thead><tr><th>Name</th><th>Email</th><th>Modules Complete</th><th>Last Active</th><th>Progress</th></tr></thead>
+    <tbody>${Object.values(byUser).map(u=>`<tr>
+      <td><strong>${u.name||'—'}</strong></td><td>${u.email}</td>
+      <td><div class="pill pl-gn">${u.done} / ${modules.length}</div></td>
+      <td>${u.last?new Date(u.last).toLocaleDateString():'—'}</td>
+      <td><div class="pt" style="width:140px;"><div class="pf pf-bl" style="width:${Math.round(u.done/modules.length*100)}%"></div></div></td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+// ════════════════════════════
+// START
+// ════════════════════════════
+boot();
+</script>
+
+</body>
+</html>

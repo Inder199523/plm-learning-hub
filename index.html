@@ -292,7 +292,25 @@ z-index:9999;transition:opacity .5s ease;
   <div class="toast-t"><strong id="t-title">Achievement!</strong><span id="t-msg">You earned something</span></div>
 </div>
 
-<!-- ══ LOADING SCREEN ══ -->
+<!-- ══ NAME PROMPT (GitHub/direct access fallback) ══ -->
+
+<div class="screen" id="scr-name-prompt" style="align-items:center;justify-content:center;background:linear-gradient(135deg,#061A4A,#0D2B8E);">
+  <div style="background:#fff;border-radius:20px;padding:44px;width:100%;max-width:420px;box-shadow:0 20px 48px rgba(0,0,0,.25);text-align:center;">
+    <div style="width:64px;height:64px;background:#1D6FA0;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:28px;color:#fff;margin:0 auto 20px;">U</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:6px;color:#000;">Welcome! 👋</h2>
+    <p style="color:#333;font-size:14px;margin-bottom:28px;line-height:1.6;">Enter your details to personalise your learning experience. Your progress will be saved for next time.</p>
+    <div style="text-align:left;margin-bottom:16px;">
+      <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#000;">Full Name</label>
+      <input id="np-name" type="text" placeholder="e.g. Sarah Johnson" style="width:100%;padding:13px 16px;border:2px solid #C8D6E5;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#000;" onkeydown="if(event.key==='Enter')document.getElementById('np-email').focus()">
+    </div>
+    <div style="text-align:left;margin-bottom:24px;">
+      <label style="display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:#000;">Work Email</label>
+      <input id="np-email" type="email" placeholder="name@unilever.com" style="width:100%;padding:13px 16px;border:2px solid #C8D6E5;border-radius:10px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#000;" onkeydown="if(event.key==='Enter')submitName()">
+    </div>
+    <button onclick="submitName()" style="width:100%;padding:15px;background:linear-gradient(135deg,#1D6FA0,#0D2B8E);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">Start Learning →</button>
+    <p style="margin-top:14px;font-size:11px;color:#666;">🔒 Your details are saved in your browser only</p>
+  </div>
+</div>
 
 <div id="scr-loading">
   <div class="loading-logo">U</div>
@@ -735,6 +753,18 @@ function loadLocal(){
     const p=localStorage.getItem('plm_prog'); if(p) progress={...progress,...JSON.parse(p)};
     const m=localStorage.getItem('plm_mods'); modules=m?JSON.parse(m):[...DEFAULT_MODULES];
     const q=localStorage.getItem('plm_quiz'); quizData=q?JSON.parse(q):{...DEFAULT_QUIZZES};
+    // Restore saved real user if they've logged in before
+    const u=localStorage.getItem('plm_user');
+    if(u){
+      const saved=JSON.parse(u);
+      // Only restore if it's a real user (not a fallback)
+      if(saved.name && saved.email &&
+         saved.name !== 'Unilever User' &&
+         saved.name !== 'Preview User' &&
+         saved.email !== 'user@unilever.com'){
+        user = {...user, ...saved};
+      }
+    }
   }catch(e){modules=[...DEFAULT_MODULES];quizData={...DEFAULT_QUIZZES};}
 }
 function saveLocal(){
@@ -742,6 +772,10 @@ function saveLocal(){
     localStorage.setItem('plm_prog',JSON.stringify(progress));
     localStorage.setItem('plm_mods',JSON.stringify(modules));
     localStorage.setItem('plm_quiz',JSON.stringify(quizData));
+    // Save user if real
+    if(user.name && user.name !== 'Unilever User' && user.name !== 'Preview User'){
+      localStorage.setItem('plm_user',JSON.stringify(user));
+    }
   }catch(e){}
 }
 
@@ -811,7 +845,55 @@ async function spDel(list,id){
 // ════════════════════════════
 async function boot(){
   setLoading(10,'Starting PLM Learning Hub...');
-  loadLocal();
+
+  // ── 1. Read URL parameters first (SharePoint token injection) ──
+  // SharePoint replaces {User.Name} and {User.Email} before opening the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlName = urlParams.get('name');
+  const urlEmail = urlParams.get('email');
+
+  if(urlName && urlEmail &&
+     urlName !== '{User.Name}' &&
+     urlEmail !== '{User.Email}'){
+    // ✅ Got real user from SharePoint URL tokens
+    user.name = decodeURIComponent(urlName);
+    user.email = decodeURIComponent(urlEmail);
+    user.jobTitle = urlParams.get('role') || 'Unilever Employee';
+    const p = user.name.trim().split(' ');
+    user.initials = (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
+    setLoading(80,'Welcome, '+user.name+'!');
+    loadLocal();
+    saveLocal();
+    setTimeout(()=>{
+      document.getElementById('scr-loading').style.display='none';
+      document.getElementById('scr-app').classList.add('active');
+      updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
+    },600);
+    return;
+  }
+    const saved=localStorage.getItem('plm_user');
+    if(saved){
+      const u=JSON.parse(saved);
+      if(!u.name || u.name==='Unilever User' || u.name==='Preview User' || u.email==='user@unilever.com'){
+        localStorage.removeItem('plm_user');
+      }
+    }
+  }catch(e){}
+
+  loadLocal(); // This now also restores saved user
+
+  // If we already have a real saved user → go straight to app
+  if(user.name && user.email &&
+     user.name !== 'Unilever User' &&
+     user.name !== 'Preview User'){
+    setLoading(100,'Welcome back, '+user.name+'!');
+    setTimeout(()=>{
+      document.getElementById('scr-loading').style.display='none';
+      document.getElementById('scr-app').classList.add('active');
+      updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
+    },600);
+    return;
+  }
 
   const hardTimeout = setTimeout(()=>launchApp(false,'timeout'), 8000);
 

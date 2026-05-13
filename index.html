@@ -23,32 +23,54 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:#EEF2F7;color:#000000;min-height:100vh;overflow-x:hidden;}
 
-/* ── GLOBAL TEXT ENFORCEMENT ── */
-/* Everything on white/light backgrounds = black */
-.card, .pg, .mc, .tb, .alb, .adm-body, .am-card { color:#000000; }
-.card *, .pg *, .adm-body *, .am-card * { color:#000000; }
-/* Override specifically for white-on-dark elements */
-.sb *, .ph *, #scr-loading *, #scr-name-prompt .box-inner *,
-.btn-p, .btn-p *, .btn-g, .btn-g *, .av, .loading-title,
-.loading-sub, .loading-status, .rb.pass h3, .rb.fail h3 { color:#ffffff; }
-.btn-p { color:#ffffff !important; }
-.btn-g { color:#ffffff !important; }
-/* Stat numbers keep their colour */
+/* ── GLOBAL FONT FIX — all text black unless on dark background ── */
+p, span, div, h1, h2, h3, h4, label, td, th, li { color:#000000; }
+
+/* Dark background screens — white text */
+#scr-loading p, #scr-loading span, #scr-loading div,
+#scr-loading h1, #scr-loading h2, #scr-loading h3,
+.loading-title, .loading-sub, .loading-status { color:#ffffff !important; }
+
+/* Sidebar — white text */
+.sb p, .sb span, .sb div, .sb h1, .sb h2, .sb h3,
+.sb-name, .sb-name span, .sec-lbl, .ni, .ui-name, .ui-role { color:#ffffff !important; }
+
+/* Profile hero — white text */
+.ph p, .ph span, .ph div, .ph h1, .ph h2, .ph h3 { color:#ffffff !important; }
+
+/* Dashboard hero card — white text */
+#hero-txt, #hero-msg, #hero-pct, #hero-status { color:#ffffff !important; }
+
+/* Buttons — white text */
+.btn-p, .btn-g { color:#ffffff !important; }
+.btn-login { color:#ffffff !important; }
+
+/* Result banners — keep coloured */
+.rs.pass { color:#2A6010 !important; }
+.rs.fail { color:#7B241C !important; }
+
+/* Stat card numbers — keep coloured */
 .sc-n.bl { color:#0D4F7A !important; }
 .sc-n.gn { color:#2A6010 !important; }
 .sc-n.am { color:#6E3500 !important; }
 .sc-n.dp { color:#061A4A !important; }
-/* Pass/fail scores */
-.rs.pass { color:#2A6010 !important; }
-.rs.fail { color:#7B241C !important; }
-/* Quiz feedback */
-.qo.cor { color:#000000 !important; }
-.qo.wrg { color:#000000 !important; }
+
+/* Toast — white text */
+.toast-t strong, .toast-t span { color:#000000 !important; }
+
+/* Admin bar — white */
+.adm-bar h2, .adm-tab { color:#ffffff !important; }
+.adm-tab.active { color:#000000 !important; }
+
+/* Name prompt box — black text */
+#scr-name-prompt h2,
+#scr-name-prompt p,
+#scr-name-prompt label { color:#000000 !important; }
 
 /* ── LOADING SCREEN ── */
 #scr-loading {
 position:fixed;inset:0;
-background:linear-gradient(135deg,var(–u-navy) 0%,var(–u-deep) 100%);
+background:linear-gradient(135deg,#061A4A 0%,#0D2B8E 100%) !important;
 display:flex;flex-direction:column;align-items:center;justify-content:center;
 z-index:9999;transition:opacity .5s ease;
 }
@@ -906,110 +928,94 @@ async function spDel(list,id){
 async function boot(){
   setLoading(10,'Starting PLM Learning Hub...');
 
-  // ── 1. Read URL parameters first (SharePoint token injection) ──
-  // SharePoint replaces {User.Name} and {User.Email} before opening the URL
-  const urlParams = new URLSearchParams(window.location.search);
-  const urlName = urlParams.get('name');
-  const urlEmail = urlParams.get('email');
-
-  if(urlName && urlEmail &&
-     urlName !== '{User.Name}' &&
-     urlEmail !== '{User.Email}'){
-    // ✅ Got real user from SharePoint URL tokens
-    user.name = decodeURIComponent(urlName);
-    user.email = decodeURIComponent(urlEmail);
-    user.jobTitle = urlParams.get('role') || 'Unilever Employee';
-    const p = user.name.trim().split(' ');
-    user.initials = (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
-    setLoading(80,'Welcome, '+user.name+'!');
-    loadLocal();
-    saveLocal();
-    setTimeout(()=>{
-      document.getElementById('scr-loading').style.display='none';
-      document.getElementById('scr-app').classList.add('active');
-      updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
-    },600);
-    return;
-  }
+  // Clear bad saved users
+  try{
     const saved=localStorage.getItem('plm_user');
     if(saved){
       const u=JSON.parse(saved);
-      if(!u.name || u.name==='Unilever User' || u.name==='Preview User' || u.email==='user@unilever.com'){
+      if(!u.name||u.name==='Unilever User'||u.name==='Preview User'||u.email==='user@unilever.com'){
         localStorage.removeItem('plm_user');
       }
     }
   }catch(e){}
 
-  loadLocal(); // This now also restores saved user
+  loadLocal();
 
-  // If we already have a real saved user → go straight to app
-  if(user.name && user.email &&
-     user.name !== 'Unilever User' &&
-     user.name !== 'Preview User'){
-    setLoading(100,'Welcome back, '+user.name+'!');
-    setTimeout(()=>{
-      document.getElementById('scr-loading').style.display='none';
-      document.getElementById('scr-app').classList.add('active');
-      updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
-    },600);
+  // ── 1. Check URL params (SharePoint link injection) ──
+  const urlParams=new URLSearchParams(window.location.search);
+  const urlName=urlParams.get('name');
+  const urlEmail=urlParams.get('email');
+  if(urlName&&urlEmail&&urlName!=='{User.Name}'&&urlEmail!=='{User.Email}'){
+    user.name=decodeURIComponent(urlName);
+    user.email=decodeURIComponent(urlEmail);
+    user.jobTitle=urlParams.get('role')||'Unilever Employee';
+    const p=user.name.trim().split(' ');
+    user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
+    saveLocal();
+    setLoading(100,'Welcome, '+user.name+'!');
+    setTimeout(()=>{ document.getElementById('scr-loading').style.display='none'; document.getElementById('scr-app').classList.add('active'); updateUI();renderTracks();renderDashActivity();renderDashBadges(); },600);
     return;
   }
 
-  const hardTimeout = setTimeout(()=>launchApp(false,'timeout'), 8000);
+  // ── 2. Check saved real user ──
+  if(user.name&&user.email&&user.name!=='Unilever User'&&user.name!=='Preview User'){
+    setLoading(100,'Welcome back, '+user.name+'!');
+    setTimeout(()=>{ document.getElementById('scr-loading').style.display='none'; document.getElementById('scr-app').classList.add('active'); updateUI();renderTracks();renderDashActivity();renderDashBadges(); },600);
+    return;
+  }
 
-  try {
+  // ── 3. Hard 8s timeout guarantee ──
+  const hardTimeout=setTimeout(()=>launchApp(false,'timeout'),8000);
+
+  try{
     setLoading(20,'Detecting your environment...');
 
-    // ── 1. Try Teams SDK first ──
-    const teamsUser = await tryTeamsLogin();
+    // Try Teams SDK
+    const teamsUser=await tryTeamsLogin();
     if(teamsUser){
-      user.name = teamsUser.displayName || teamsUser.userPrincipalName || 'Unilever User';
-      user.email = teamsUser.userPrincipalName || '';
-      user.jobTitle = teamsUser.jobTitle || 'Unilever Employee';
-      const p = user.name.trim().split(' ');
-      user.initials = (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
-      setLoading(80,'Welcome, '+user.name+'!');
+      user.name=teamsUser.displayName||teamsUser.userPrincipalName||'Unilever User';
+      user.email=teamsUser.userPrincipalName||'';
+      user.jobTitle=teamsUser.jobTitle||'Unilever Employee';
+      const p=user.name.trim().split(' ');
+      user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
       saveLocal();
+      setLoading(80,'Welcome, '+user.name+'!');
       clearTimeout(hardTimeout);
       launchApp(false,'teams');
       return;
     }
 
-    // ── 2. Try SharePoint session ──
+    // Try SharePoint session
     setLoading(40,'Checking SharePoint session...');
-    const spUser = await spFetch('/_api/web/currentuser');
+    const spUser=await spFetch('/_api/web/currentuser');
     if(spUser?.d){
-      spOk = true;
-      user.name = spUser.d.Title || 'Unilever User';
-      user.email = spUser.d.Email || '';
-      user.jobTitle = spUser.d.JobTitle || 'Unilever Employee';
-      const p = user.name.trim().split(' ');
-      user.initials = (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
-
+      spOk=true;
+      user.name=spUser.d.Title||'Unilever User';
+      user.email=spUser.d.Email||'';
+      user.jobTitle=spUser.d.JobTitle||'Unilever Employee';
+      const p=user.name.trim().split(' ');
+      user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
       setLoading(60,'Loading your modules...');
-      const spMods = await spGet('PLM_Modules');
-      if(spMods && spMods.length > 0){
-        modules = spMods.map(i=>({id:i.Id,title:i.Title,track:i.Track||'Beginner',desc:i.Description||'',videoUrl:i.VideoURL||'',duration:i.Duration||'',pdfUrl:i.PDFUrl||'',order:i.OrderNumber||1,active:i.IsActive!==false}));
-        saveLocal();
-      }
+      const spMods=await spGet('PLM_Modules');
+      if(spMods&&spMods.length>0){ modules=spMods.map(i=>({id:i.Id,title:i.Title,track:i.Track||'Beginner',desc:i.Description||'',videoUrl:i.VideoURL||'',duration:i.Duration||'',pdfUrl:i.PDFUrl||'',order:i.OrderNumber||1,active:i.IsActive!==false})); saveLocal(); }
       setLoading(75,'Loading your progress...');
-      const spProg = await spGet('PLM_UserProgress',`UserEmail eq '${user.email}'`);
-      if(spProg) progress.completedModules = [...new Set(spProg.filter(i=>i.Completed).map(i=>i.ModuleTitle))];
-      const spScores = await spGet('PLM_QuizScores',`UserEmail eq '${user.email}'`);
-      if(spScores&&spScores.length>0) progress.avgScore = Math.round(spScores.reduce((a,s)=>a+(s.Score||0),0)/spScores.length);
-      const spBadges = await spGet('PLM_Badges',`UserEmail eq '${user.email}'`);
-      if(spBadges) progress.badges = spBadges.map(b=>b.BadgeName);
+      const spProg=await spGet('PLM_UserProgress',`UserEmail eq '${user.email}'`);
+      if(spProg) progress.completedModules=[...new Set(spProg.filter(i=>i.Completed).map(i=>i.ModuleTitle))];
+      const spScores=await spGet('PLM_QuizScores',`UserEmail eq '${user.email}'`);
+      if(spScores&&spScores.length>0) progress.avgScore=Math.round(spScores.reduce((a,s)=>a+(s.Score||0),0)/spScores.length);
+      const spBadges=await spGet('PLM_Badges',`UserEmail eq '${user.email}'`);
+      if(spBadges) progress.badges=spBadges.map(b=>b.BadgeName);
       saveLocal();
       clearTimeout(hardTimeout);
       launchApp(true,'sharepoint');
       return;
     }
 
-    // ── 3. Neither worked — show name prompt ──
+    // Nothing worked — show name prompt
     clearTimeout(hardTimeout);
     launchApp(false,'local');
 
-  } catch(e) {
+  }catch(e){
     clearTimeout(hardTimeout);
     launchApp(false,'local');
   }

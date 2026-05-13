@@ -23,6 +23,28 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:#EEF2F7;color:#000000;min-height:100vh;overflow-x:hidden;}
 
+/* ── GLOBAL TEXT ENFORCEMENT ── */
+/* Everything on white/light backgrounds = black */
+.card, .pg, .mc, .tb, .alb, .adm-body, .am-card { color:#000000; }
+.card *, .pg *, .adm-body *, .am-card * { color:#000000; }
+/* Override specifically for white-on-dark elements */
+.sb *, .ph *, #scr-loading *, #scr-name-prompt .box-inner *,
+.btn-p, .btn-p *, .btn-g, .btn-g *, .av, .loading-title,
+.loading-sub, .loading-status, .rb.pass h3, .rb.fail h3 { color:#ffffff; }
+.btn-p { color:#ffffff !important; }
+.btn-g { color:#ffffff !important; }
+/* Stat numbers keep their colour */
+.sc-n.bl { color:#0D4F7A !important; }
+.sc-n.gn { color:#2A6010 !important; }
+.sc-n.am { color:#6E3500 !important; }
+.sc-n.dp { color:#061A4A !important; }
+/* Pass/fail scores */
+.rs.pass { color:#2A6010 !important; }
+.rs.fail { color:#7B241C !important; }
+/* Quiz feedback */
+.qo.cor { color:#000000 !important; }
+.qo.wrg { color:#000000 !important; }
+
 /* ── LOADING SCREEN ── */
 #scr-loading {
 position:fixed;inset:0;
@@ -703,6 +725,44 @@ const SP_SITE = 'https://unilever.sharepoint.com/sites/PLMHub';
 const ADMIN_PW = 'PLMHub00';
 const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
 
+// ── Power Automate Flow URLs ──
+// Paste your Power Automate HTTP trigger URLs here after creating the flows
+const PA_FLOWS = {
+  saveProgress:  'PASTE_SAVE_PROGRESS_FLOW_URL_HERE',
+  saveScore:     'PASTE_SAVE_SCORE_FLOW_URL_HERE',
+  saveBadge:     'PASTE_SAVE_BADGE_FLOW_URL_HERE',
+  getProgress:   'PASTE_GET_PROGRESS_FLOW_URL_HERE'
+};
+
+// Send data to Power Automate flow (works from anywhere — Teams, GitHub, browser)
+async function paPost(flowUrl, data){
+  if(!flowUrl || flowUrl.startsWith('PASTE_')) return false;
+  try{
+    const r = await fetch(flowUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    return r.ok;
+  }catch(e){ return false; }
+}
+
+// Save data — tries SP first, falls back to Power Automate
+async function saveData(type, data){
+  if(spOk){
+    // Direct SP REST API (when on SharePoint domain)
+    if(type==='progress') return await spPost('PLM_UserProgress', data);
+    if(type==='score') return await spPost('PLM_QuizScores', data);
+    if(type==='badge') return await spPost('PLM_Badges', data);
+  } else {
+    // Power Automate flows (works from Teams/GitHub)
+    if(type==='progress') return await paPost(PA_FLOWS.saveProgress, data);
+    if(type==='score') return await paPost(PA_FLOWS.saveScore, data);
+    if(type==='badge') return await paPost(PA_FLOWS.saveBadge, data);
+  }
+  return false;
+}
+
 // ════════════════════════════
 // STATE
 // ════════════════════════════
@@ -993,14 +1053,34 @@ function launchApp(spConnected, source){
   },500);
 }
 
-function submitName(){
+async function submitName(){
   const name=document.getElementById('np-name').value.trim();
   const email=document.getElementById('np-email').value.trim();
   if(!name||!email){alert('Please enter both your name and email.');return;}
+
+  // Update button to show loading
+  const btn = document.querySelector('#scr-name-prompt button');
+  if(btn){ btn.textContent='Loading your progress...'; btn.disabled=true; }
+
   user.name=name; user.email=email; user.jobTitle='Unilever Employee';
   const p=name.split(' ');
   user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
   saveLocal();
+
+  // Try to load existing progress for this user via PA flow
+  if(PA_FLOWS.getProgress && !PA_FLOWS.getProgress.startsWith('PASTE_')){
+    try{
+      const r = await fetch(PA_FLOWS.getProgress+'?email='+encodeURIComponent(email));
+      if(r.ok){
+        const data = await r.json();
+        if(data.completedModules) progress.completedModules = data.completedModules;
+        if(data.badges) progress.badges = data.badges;
+        if(data.avgScore) progress.avgScore = data.avgScore;
+        saveLocal();
+      }
+    }catch(e){}
+  }
+
   document.getElementById('scr-name-prompt').classList.remove('active');
   document.getElementById('scr-app').classList.add('active');
   updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
@@ -1015,8 +1095,14 @@ function setLoading(pct,msg){
 
 function updateSPStatus(ok){
   const e=document.getElementById('st-sp'), s=document.getElementById('st-sp-s');
-  if(e){e.textContent=ok?'✅ Live':'⚠️ Local';e.className='sc-n '+(ok?'gn':'am');}
-  if(s) s.textContent=ok?'Saving to SharePoint':'Saving locally (embed in SharePoint for full sync)';
+  const paReady = PA_FLOWS.saveProgress && !PA_FLOWS.saveProgress.startsWith('PASTE_');
+  if(e){
+    e.textContent = ok ? '✅ SharePoint' : paReady ? '✅ Power Automate' : '⚠️ Local Only';
+    e.className = 'sc-n ' + (ok||paReady ? 'gn' : 'am');
+  }
+  if(s) s.textContent = ok ? 'Saving directly to SharePoint lists' :
+    paReady ? 'Saving via Power Automate flows' :
+    'Add Power Automate URLs to enable cloud sync';
 }
 
 // ════════════════════════════
@@ -1269,6 +1355,16 @@ async function finishQuiz(){
   const score=Math.round(correct/qs.length*100);
   const passed=score>=70;
   document.getElementById('q-card').style.display='none';
+
+  // Always save score regardless of connection type
+  await saveData('score',{
+    Title:`${user.email}-${currentModule.title}-${Date.now()}`,
+    UserEmail:user.email, UserName:user.name,
+    ModuleTitle:currentModule.title,
+    Score:score, Passed:passed,
+    AttemptDate:new Date().toISOString()
+  });
+
   if(passed){
     document.getElementById('rb-score-pass').textContent=score+'%';
     document.getElementById('rb-pass').classList.add('show');
@@ -1280,16 +1376,21 @@ async function finishQuiz(){
     saveLocal(); updateUI(); renderTracks();
     document.getElementById('mod-prog-bar').style.width='100%';
     document.getElementById('mod-status-txt').textContent='Module completed ✅';
-    if(spOk){
-      await spPost('PLM_QuizScores',{Title:`${user.email}-${currentModule.title}`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Score:score,Passed:true,AttemptDate:new Date().toISOString()});
-      await spPost('PLM_UserProgress',{Title:`${user.email}-${currentModule.title}`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Completed:true,CompletionDate:new Date().toISOString()});
-    }
+
+    // Save progress to SharePoint via PA flow
+    await saveData('progress',{
+      Title:`${user.email}-${currentModule.title}`,
+      UserEmail:user.email, UserName:user.name,
+      ModuleTitle:currentModule.title,
+      Completed:true,
+      CompletionDate:new Date().toISOString()
+    });
+
     await checkBadges();
     showToast('✅','Module Complete!',`"${currentModule.title}" — ${score}% ✓`);
   }else{
     document.getElementById('rb-score-fail').textContent=score+'%';
     document.getElementById('rb-fail').classList.add('show');
-    if(spOk) await spPost('PLM_QuizScores',{Title:`${user.email}-${currentModule.title}-fail`,UserEmail:user.email,UserName:user.name,ModuleTitle:currentModule.title,Score:score,Passed:false,AttemptDate:new Date().toISOString()});
   }
 }
 
@@ -1319,7 +1420,12 @@ async function checkBadges(){
       progress.badges.push(b.name);
       saveLocal();
       showToast(b.icon,'Badge Unlocked! '+b.icon,`You earned the ${b.name} badge!`);
-      if(spOk) await spPost('PLM_Badges',{Title:`${user.email}-${b.name}`,UserEmail:user.email,UserName:user.name,BadgeName:b.name,BadgeIcon:b.icon,EarnedDate:new Date().toISOString()});
+      await saveData('badge',{
+        Title:`${user.email}-${b.name}`,
+        UserEmail:user.email, UserName:user.name,
+        BadgeName:b.name, BadgeIcon:b.icon,
+        EarnedDate:new Date().toISOString()
+      });
       await new Promise(r=>setTimeout(r,1500));
     }
   }

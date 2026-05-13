@@ -336,7 +336,36 @@ z-index:9999;transition:opacity .5s ease;
   <div class="toast-t"><strong id="t-title">Achievement!</strong><span id="t-msg">You earned something</span></div>
 </div>
 
-<!-- ══ NAME PROMPT (GitHub/direct access fallback) ══ -->
+<!-- ══ UPDATE QUIZ MODAL ══ -->
+
+<div id="update-quiz-modal" style="display:none;position:fixed;inset:0;background:rgba(6,26,74,.85);z-index:8000;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+  <div style="background:#fff;border-radius:20px;padding:36px;width:100%;max-width:560px;box-shadow:0 24px 64px rgba(0,0,0,.3);margin:20px;max-height:90vh;overflow-y:auto;">
+    <div class="row btw" style="margin-bottom:16px;">
+      <div class="pill pl-bl" id="uq-version-pill">v2.4</div>
+      <button onclick="closeUpdateQuiz()" style="background:none;border:none;font-size:24px;cursor:pointer;color:#666;line-height:1;">×</button>
+    </div>
+    <h2 id="uq-title" style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:6px;color:#000;"></h2>
+    <p id="uq-desc" style="font-size:13px;color:#444;margin-bottom:20px;line-height:1.7;"></p>
+    <div id="uq-quiz-wrap" style="background:#F0F4F8;border-radius:12px;padding:18px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#1D6FA0;margin-bottom:10px;">Knowledge Check</div>
+      <div id="uq-num" style="font-size:12px;color:#666;margin-bottom:8px;font-weight:600;"></div>
+      <div id="uq-text" style="font-size:15px;font-weight:600;color:#000;margin-bottom:16px;line-height:1.6;"></div>
+      <div id="uq-opts"></div>
+      <div id="uq-feedback" style="display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:13px;"></div>
+    </div>
+    <div class="row" style="gap:10px;justify-content:flex-end;" id="uq-btns">
+      <button class="btn btn-gh" onclick="closeUpdateQuiz()">Cancel</button>
+      <button class="btn btn-p" id="uq-check-btn" onclick="checkUpdateQ()">Check Answer →</button>
+      <button class="btn btn-p" id="uq-next-btn" onclick="nextUpdateQ()" style="display:none;">Next Question →</button>
+    </div>
+    <div id="uq-result" style="display:none;text-align:center;margin-top:20px;padding:28px;border-radius:14px;background:linear-gradient(135deg,rgba(107,181,63,.1),rgba(107,181,63,.04));border:2px solid rgba(107,181,63,.3);">
+      <div style="font-size:44px;margin-bottom:12px;">🎉</div>
+      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#2A6010;margin-bottom:6px;">You're up to date!</div>
+      <p style="font-size:13px;color:#444;margin-bottom:16px;">This update has been marked as understood. Great work!</p>
+      <button class="btn btn-g" onclick="closeUpdateQuiz()">Done ✓</button>
+    </div>
+  </div>
+</div>
 
 <div class="screen" id="scr-name-prompt" style="align-items:center;justify-content:center;background:linear-gradient(135deg,#061A4A,#0D2B8E);">
   <div style="background:#fff;border-radius:20px;padding:44px;width:100%;max-width:420px;box-shadow:0 20px 48px rgba(0,0,0,.25);text-align:center;">
@@ -457,6 +486,20 @@ z-index:9999;transition:opacity .5s ease;
     <div class="card">
       <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">My Badges</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">See all</button></div>
       <div class="g2" style="gap:10px;" id="dash-badges"><div class="empty" style="grid-column:1/-1;">Loading badges...</div></div>
+    </div>
+  </div>
+
+  <!-- ═══ PLM TOOL UPDATES ═══ -->
+  <div style="margin-top:24px;">
+    <div class="row btw mb16">
+      <div>
+        <div class="sec-t" style="margin-bottom:4px;font-size:20px;">🆕 PLM Tool Updates</div>
+        <p class="muted">Stay up to date with the latest changes to the PLM tool. Complete each update quiz to confirm your understanding.</p>
+      </div>
+      <div id="updates-status-badge" class="pill pl-gn" style="font-size:13px;padding:8px 16px;flex-shrink:0;">✅ Up to Date</div>
+    </div>
+    <div id="updates-timeline">
+      <div class="empty">Loading updates...</div>
     </div>
   </div>
 </div>
@@ -599,6 +642,7 @@ z-index:9999;transition:opacity .5s ease;
       <div class="adm-tabs">
         <button class="adm-tab active" onclick="admTab('modules',this)">📚 Modules</button>
         <button class="adm-tab" onclick="admTab('quizzes',this)">❓ Quizzes</button>
+        <button class="adm-tab" onclick="admTab('updates',this)">🆕 Updates</button>
         <button class="adm-tab" onclick="admTab('users',this)">👥 Users</button>
         <button class="adm-tab" onclick="admTab('setup',this)">⚙️ Setup</button>
       </div>
@@ -663,6 +707,54 @@ z-index:9999;transition:opacity .5s ease;
     </div>
   </div>
   <div id="quiz-list"><div class="empty">Loading quiz questions...</div></div>
+</div>
+
+<!-- UPDATES -->
+<div class="adm-pg" id="adm-updates">
+  <div class="row btw mb24">
+    <div><h3 style="font-size:18px;font-weight:700;">PLM Tool Updates</h3><p class="muted">Add updates that appear on the dashboard. Each update has a mini-quiz users must pass.</p></div>
+    <button class="btn btn-p" onclick="showUpdateForm()">+ Add Update</button>
+  </div>
+  <!-- Add Update Form -->
+  <div class="card mb24" id="update-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+    <div class="sec-t" style="font-size:16px;" id="update-form-ttl">Add New Update</div>
+    <div class="g2">
+      <div class="af"><label>Version (e.g. v2.4)</label><input id="uf-version" placeholder="v2.4"></div>
+      <div class="af"><label>Date (e.g. 13 May 2026)</label><input id="uf-date" placeholder="13 May 2026"></div>
+    </div>
+    <div class="af"><label>Update Title</label><input id="uf-title" placeholder="e.g. New Bulk Upload Feature"></div>
+    <div class="af"><label>Description (what changed and why it matters)</label><textarea id="uf-desc" placeholder="Describe the update in plain language..."></textarea></div>
+    <div class="af"><label>Category</label>
+      <select id="uf-cat">
+        <option value="New Feature">🆕 New Feature</option>
+        <option value="Improvement">⚡ Improvement</option>
+        <option value="Bug Fix">🐛 Bug Fix</option>
+        <option value="Important">⚠️ Important</option>
+      </select>
+    </div>
+    <div class="af"><label>Mandatory? (users must complete quiz to proceed)</label>
+      <select id="uf-mandatory"><option value="true">Yes — Mandatory</option><option value="false">No — Optional</option></select>
+    </div>
+    <div style="background:#F0F4F8;border-radius:12px;padding:16px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:700;color:#000;margin-bottom:12px;">Mini-Quiz Question</div>
+      <div class="af"><label>Question</label><textarea id="uf-q" placeholder="e.g. Where can you find the new bulk upload feature?"></textarea></div>
+      <div class="g2">
+        <div class="af"><label>Option A</label><input id="uf-a" placeholder="Option A"></div>
+        <div class="af"><label>Option B</label><input id="uf-b" placeholder="Option B"></div>
+        <div class="af"><label>Option C</label><input id="uf-c" placeholder="Option C"></div>
+        <div class="af"><label>Option D</label><input id="uf-d" placeholder="Option D"></div>
+      </div>
+      <div class="af"><label>Correct Answer</label>
+        <select id="uf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
+      </div>
+      <div class="af"><label>Explanation</label><input id="uf-exp" placeholder="Why is this the correct answer?"></div>
+    </div>
+    <div class="row" style="gap:9px;">
+      <button class="btn btn-p" onclick="saveUpdate()">💾 Save Update</button>
+      <button class="btn btn-gh" onclick="cancelUpdateForm()">Cancel</button>
+    </div>
+  </div>
+  <div id="updates-admin-list"><div class="empty">No updates yet. Add your first update above.</div></div>
 </div>
 
 <!-- USERS -->
@@ -1463,6 +1555,9 @@ function renderDashBadges(){
     </div>`;
   }).join('');
   el.innerHTML=show;
+  // Render updates timeline every time dashboard loads
+  loadUpdates();
+  renderUpdatesTimeline();
 }
 
 function renderDashActivity(){
@@ -1535,6 +1630,7 @@ function admTab(id,btn){
   btn.classList.add('active');
   if(id==='users') loadUsers();
   if(id==='quizzes') renderAdminQuiz();
+  if(id==='updates') renderAdminUpdates();
 }
 
 // Admin — Modules
@@ -1663,6 +1759,298 @@ async function loadUsers(){
       <td>${u.last?new Date(u.last).toLocaleDateString():'—'}</td>
       <td><div class="pt" style="width:140px;"><div class="pf pf-bl" style="width:${Math.round(u.done/modules.length*100)}%"></div></div></td>
     </tr>`).join('')}</tbody></table>`;
+}
+
+// ════════════════════════════
+// UPDATES SYSTEM
+// ════════════════════════════
+let plmUpdates = [];
+let updateReadStatus = {}; // { updateId: true/false }
+let currentUpdateQuiz = { update:null, current:0, answers:{}, answered:false };
+let editUpdateId = null;
+
+const CAT_STYLES = {
+  'New Feature': { bg:'#D5EDBA', color:'#2A6010', icon:'🆕' },
+  'Improvement': { bg:'#D0E8F5', color:'#0A3D62', icon:'⚡' },
+  'Bug Fix':     { bg:'#FADBD8', color:'#7B241C', icon:'🐛' },
+  'Important':   { bg:'#FDEBD0', color:'#6E3500', icon:'⚠️' }
+};
+
+function loadUpdates(){
+  try{
+    const u=localStorage.getItem('plm_updates'); if(u) plmUpdates=JSON.parse(u);
+    const r=localStorage.getItem('plm_update_read'); if(r) updateReadStatus=JSON.parse(r);
+  }catch(e){}
+  if(plmUpdates.length===0){
+    // Default sample updates
+    plmUpdates=[
+      {id:1,version:'v2.4',title:'New Bulk Upload Feature',date:'10 May 2026',desc:'You can now upload up to 500 product records at once using the new Bulk Upload tool found under Tools → Bulk Operations. This significantly reduces the time needed for large data entry tasks.',category:'New Feature',mandatory:true,quiz:[{q:'Where can you find the new Bulk Upload feature?',opts:{a:'Home → Dashboard',b:'Products → Import',c:'Tools → Bulk Operations',d:'Settings → Data'},correct:'c',exp:'The Bulk Upload feature is located under Tools → Bulk Operations in the main navigation.'}]},
+      {id:2,version:'v2.3',title:'Approval Workflow Simplified',date:'28 Apr 2026',desc:'The approval process for product records has been streamlined from 5 steps to 3 steps. The new flow is: Submit → Review → Final Approval. This reduces turnaround time by up to 40%.',category:'Improvement',mandatory:true,quiz:[{q:'How many steps does the new approval workflow have?',opts:{a:'5 steps',b:'4 steps',c:'3 steps',d:'2 steps'},correct:'c',exp:'The new workflow has 3 steps: Submit → Review → Final Approval.'}]},
+      {id:3,version:'v2.2',title:'Attribute Validation Bug Fix',date:'15 Apr 2026',desc:'Fixed an issue where mandatory attribute fields were not being flagged correctly during record creation. All mandatory fields now show a clear red border and error message when left empty.',category:'Bug Fix',mandatory:false,quiz:[{q:'What was fixed in v2.2?',opts:{a:'Login issues',b:'Mandatory field validation',c:'Report exports',d:'Search filters'},correct:'b',exp:'Version 2.2 fixed the mandatory attribute field validation that was not flagging empty required fields.'}]}
+    ];
+    saveUpdates();
+  }
+}
+
+function saveUpdates(){
+  try{
+    localStorage.setItem('plm_updates',JSON.stringify(plmUpdates));
+    localStorage.setItem('plm_update_read',JSON.stringify(updateReadStatus));
+  }catch(e){}
+}
+
+function isUpdateRead(id){ return updateReadStatus[id]===true; }
+
+function getPendingCount(){ return plmUpdates.filter(u=>!isUpdateRead(u.id)).length; }
+
+function renderUpdatesTimeline(){
+  const el=document.getElementById('updates-timeline'); if(!el) return;
+  const badge=document.getElementById('updates-status-badge');
+  const pending=getPendingCount();
+
+  // Update status badge
+  if(badge){
+    if(pending===0){
+      badge.className='pill pl-gn';
+      badge.textContent='✅ Up to Date';
+    } else {
+      badge.className='pill pl-rd';
+      badge.textContent=`🔴 ${pending} Update${pending>1?'s':''} Pending`;
+    }
+  }
+
+  // Also update hero status
+  const heroStatus=document.getElementById('hero-status');
+  if(heroStatus && pending>0){
+    heroStatus.style.background='rgba(192,57,43,.15)';
+    heroStatus.style.color='#7B241C';
+    heroStatus.textContent=`🔴 ${pending} Update${pending>1?'s':''} Pending`;
+  }
+
+  if(plmUpdates.length===0){
+    el.innerHTML=`<div class="empty">No PLM tool updates yet. Admin can add updates in the Admin Panel.</div>`;
+    return;
+  }
+
+  el.innerHTML = plmUpdates.map((upd,idx)=>{
+    const read = isUpdateRead(upd.id);
+    const cat = CAT_STYLES[upd.category]||CAT_STYLES['New Feature'];
+    const isLast = idx===plmUpdates.length-1;
+
+    return `
+    <div style="display:flex;gap:0;margin-bottom:${isLast?'0':'0'};">
+      <!-- Timeline line + dot -->
+      <div style="display:flex;flex-direction:column;align-items:center;margin-right:18px;flex-shrink:0;">
+        <div style="width:44px;height:44px;border-radius:50%;background:${read?'#D5EDBA':'#D0E8F5'};border:3px solid ${read?'#6BB53F':'#1D6FA0'};display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">
+          ${read?'✅':cat.icon}
+        </div>
+        ${!isLast?`<div style="width:2px;flex:1;background:#C8D6E5;min-height:24px;margin:4px 0;"></div>`:''}
+      </div>
+      <!-- Card -->
+      <div style="flex:1;background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(13,43,142,.08);border:1.5px solid ${read?'rgba(107,181,63,.25)':'rgba(29,111,160,.15)'};margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;">
+          <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#000;">${upd.version}</span>
+          <span style="background:${cat.bg};color:${cat.color};font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;">${cat.icon} ${upd.category}</span>
+          <span style="font-size:12px;color:#666;margin-left:auto;">${upd.date}</span>
+          ${upd.mandatory?`<span style="background:#FDEBD0;color:#6E3500;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;text-transform:uppercase;letter-spacing:.06em;">Mandatory</span>`:''}
+        </div>
+        <div style="font-size:15px;font-weight:700;color:#000;margin-bottom:6px;">${upd.title}</div>
+        <div style="font-size:13px;color:#333;line-height:1.7;margin-bottom:14px;">${upd.desc}</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${read
+            ? `<div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#2A6010;"><span>✅</span> Completed — You're up to date on this change</div>`
+            : `<button class="btn btn-p btn-sm" onclick="openUpdateQuiz(${upd.id})">📖 Read & Take Quiz →</button>
+               ${upd.mandatory?`<span style="font-size:12px;color:#6E3500;font-weight:600;">⚠️ Required</span>`:''}`
+          }
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Update Quiz ──
+function openUpdateQuiz(id){
+  const upd=plmUpdates.find(u=>u.id===id); if(!upd) return;
+  currentUpdateQuiz={update:upd,current:0,answers:{},answered:false};
+
+  document.getElementById('uq-version-pill').textContent=upd.version;
+  document.getElementById('uq-title').textContent=upd.title;
+  document.getElementById('uq-desc').textContent=upd.desc;
+  document.getElementById('uq-result').style.display='none';
+  document.getElementById('uq-quiz-wrap').style.display='block';
+  document.getElementById('uq-btns').style.display='flex';
+
+  renderUpdateQ();
+  const modal=document.getElementById('update-quiz-modal');
+  modal.style.display='flex';
+}
+
+function renderUpdateQ(){
+  const q=currentUpdateQuiz.update.quiz[currentUpdateQuiz.current];
+  const total=currentUpdateQuiz.update.quiz.length;
+  document.getElementById('uq-num').textContent=`Question ${currentUpdateQuiz.current+1} of ${total}`;
+  document.getElementById('uq-text').textContent=q.q;
+  document.getElementById('uq-opts').innerHTML=['a','b','c','d'].map(k=>
+    `<div onclick="selUpdateQ(this,'${k}')" data-opt="${k}" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;border:2px solid #C8D6E5;cursor:pointer;margin-bottom:8px;background:#fff;font-size:14px;font-weight:600;color:#000;transition:all .2s;">
+      <div style="width:28px;height:28px;border-radius:7px;background:#EEF2F7;border:1.5px solid #C8D6E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">${k.toUpperCase()}</div>
+      ${q.opts[k]}
+    </div>`
+  ).join('');
+  document.getElementById('uq-feedback').style.display='none';
+  document.getElementById('uq-check-btn').style.display='inline-flex';
+  document.getElementById('uq-next-btn').style.display='none';
+  currentUpdateQuiz.answered=false;
+}
+
+function selUpdateQ(el,opt){
+  if(currentUpdateQuiz.answered) return;
+  document.querySelectorAll('#uq-opts > div').forEach(o=>{
+    o.style.borderColor='#C8D6E5'; o.style.background='#fff';
+  });
+  el.style.borderColor='#1D6FA0'; el.style.background='rgba(29,111,160,.06)';
+  el._selectedOpt=opt;
+}
+
+function checkUpdateQ(){
+  if(currentUpdateQuiz.answered) return;
+  const opts=document.querySelectorAll('#uq-opts > div');
+  const sel=[...opts].find(o=>o.style.borderColor==='rgb(29, 111, 160)'||o.style.borderColor==='#1D6FA0');
+  if(!sel){alert('Please select an answer.');return;}
+  const opt=sel.dataset.opt||sel._selectedOpt;
+  const q=currentUpdateQuiz.update.quiz[currentUpdateQuiz.current];
+  currentUpdateQuiz.answers[currentUpdateQuiz.current]=opt;
+  currentUpdateQuiz.answered=true;
+
+  const fb=document.getElementById('uq-feedback');
+  fb.style.display='block';
+
+  // Mark correct/wrong visually
+  opts.forEach(o=>{
+    const o_opt=o.dataset.opt;
+    if(o_opt===q.correct){o.style.borderColor='#6BB53F';o.style.background='rgba(107,181,63,.08)';}
+    else if(o_opt===opt&&opt!==q.correct){o.style.borderColor='#C0392B';o.style.background='rgba(192,57,43,.06)';}
+  });
+
+  if(opt===q.correct){
+    fb.style.cssText='display:block;background:rgba(107,181,63,.1);border:1.5px solid rgba(107,181,63,.3);color:#2A6010;padding:12px 14px;border-radius:10px;font-size:13px;';
+    fb.innerHTML=`✅ <strong>Correct!</strong> ${q.exp||''}`;
+  } else {
+    fb.style.cssText='display:block;background:rgba(192,57,43,.08);border:1.5px solid rgba(192,57,43,.2);color:#7B241C;padding:12px 14px;border-radius:10px;font-size:13px;';
+    fb.innerHTML=`❌ <strong>Incorrect.</strong> ${q.exp||''}`;
+  }
+
+  document.getElementById('uq-check-btn').style.display='none';
+  const isLast=currentUpdateQuiz.current===currentUpdateQuiz.update.quiz.length-1;
+  if(isLast) setTimeout(finishUpdateQuiz,800);
+  else document.getElementById('uq-next-btn').style.display='inline-flex';
+}
+
+function nextUpdateQ(){
+  currentUpdateQuiz.current++;
+  currentUpdateQuiz.answered=false;
+  renderUpdateQ();
+}
+
+function finishUpdateQuiz(){
+  // Mark update as read regardless of score (they engaged with it)
+  const id=currentUpdateQuiz.update.id;
+  updateReadStatus[id]=true;
+  saveUpdates();
+
+  document.getElementById('uq-quiz-wrap').style.display='none';
+  document.getElementById('uq-btns').style.display='none';
+  document.getElementById('uq-result').style.display='block';
+
+  // Refresh timeline
+  renderUpdatesTimeline();
+  showToast('🆕','Update Completed!',`You're now up to date on ${currentUpdateQuiz.update.version}`);
+}
+
+function closeUpdateQuiz(){
+  document.getElementById('update-quiz-modal').style.display='none';
+}
+
+// ── Admin Updates ──
+function renderAdminUpdates(){
+  const el=document.getElementById('updates-admin-list'); if(!el) return;
+  if(!plmUpdates.length){el.innerHTML=`<div class="empty">No updates yet. Add your first update above.</div>`;return;}
+  el.innerHTML=plmUpdates.map(u=>{
+    const cat=CAT_STYLES[u.category]||CAT_STYLES['New Feature'];
+    return`<div class="am-card">
+      <div style="font-size:22px;">${cat.icon}</div>
+      <div class="ai">
+        <div class="at">${u.version} — ${u.title}</div>
+        <div class="as">${u.date} · ${u.category} · ${u.mandatory?'Mandatory':'Optional'} · ${u.quiz.length} quiz question${u.quiz.length!==1?'s':''}</div>
+      </div>
+      <div class="aa">
+        <button class="btn btn-gh btn-sm" onclick="editUpdate(${u.id})">✏️ Edit</button>
+        <button class="btn btn-r btn-sm" onclick="deleteUpdate(${u.id})">🗑</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showUpdateForm(){
+  editUpdateId=null;
+  document.getElementById('update-form-ttl').textContent='Add New Update';
+  ['uf-version','uf-date','uf-title','uf-desc','uf-q','uf-a','uf-b','uf-c','uf-d','uf-exp'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('uf-mandatory').value='true';
+  document.getElementById('update-form').style.display='block';
+}
+function cancelUpdateForm(){document.getElementById('update-form').style.display='none';editUpdateId=null;}
+
+function editUpdate(id){
+  const u=plmUpdates.find(x=>x.id===id); if(!u) return;
+  editUpdateId=id;
+  document.getElementById('update-form-ttl').textContent='Edit Update';
+  document.getElementById('uf-version').value=u.version;
+  document.getElementById('uf-date').value=u.date;
+  document.getElementById('uf-title').value=u.title;
+  document.getElementById('uf-desc').value=u.desc;
+  document.getElementById('uf-cat').value=u.category;
+  document.getElementById('uf-mandatory').value=String(u.mandatory);
+  if(u.quiz&&u.quiz[0]){
+    document.getElementById('uf-q').value=u.quiz[0].q;
+    document.getElementById('uf-a').value=u.quiz[0].opts.a;
+    document.getElementById('uf-b').value=u.quiz[0].opts.b;
+    document.getElementById('uf-c').value=u.quiz[0].opts.c;
+    document.getElementById('uf-d').value=u.quiz[0].opts.d;
+    document.getElementById('uf-cor').value=u.quiz[0].correct;
+    document.getElementById('uf-exp').value=u.quiz[0].exp||'';
+  }
+  document.getElementById('update-form').style.display='block';
+}
+
+function saveUpdate(){
+  const version=document.getElementById('uf-version').value.trim();
+  const title=document.getElementById('uf-title').value.trim();
+  const date=document.getElementById('uf-date').value.trim();
+  const desc=document.getElementById('uf-desc').value.trim();
+  const q=document.getElementById('uf-q').value.trim();
+  const a=document.getElementById('uf-a').value.trim();
+  const b=document.getElementById('uf-b').value.trim();
+  const c=document.getElementById('uf-c').value.trim();
+  const d=document.getElementById('uf-d').value.trim();
+  if(!version||!title||!date||!desc||!q||!a||!b||!c||!d){alert('Please fill in all fields including the quiz question.');return;}
+  const upd={
+    id:editUpdateId||Date.now(),
+    version,title,date,desc,
+    category:document.getElementById('uf-cat').value,
+    mandatory:document.getElementById('uf-mandatory').value==='true',
+    quiz:[{q,opts:{a,b,c,d},correct:document.getElementById('uf-cor').value,exp:document.getElementById('uf-exp').value.trim()}]
+  };
+  if(editUpdateId){ const idx=plmUpdates.findIndex(u=>u.id===editUpdateId); if(idx>-1) plmUpdates[idx]=upd; }
+  else plmUpdates.unshift(upd); // newest first
+  saveUpdates(); cancelUpdateForm(); renderAdminUpdates();
+  showToast('✅','Update Saved!',`"${title}" added to the dashboard.`);
+}
+
+function deleteUpdate(id){
+  const u=plmUpdates.find(x=>x.id===id);
+  if(!u||!confirm(`Delete "${u.title}"?`)) return;
+  plmUpdates=plmUpdates.filter(x=>x.id!==id);
+  delete updateReadStatus[id];
+  saveUpdates(); renderAdminUpdates(); renderUpdatesTimeline();
 }
 
 // ════════════════════════════

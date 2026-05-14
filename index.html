@@ -835,7 +835,7 @@ z-index:9999;transition:opacity .5s ease;
 // ════════════════════════════
 // CONFIG
 // ════════════════════════════
-const SP_SITE = 'https://unilever.sharepoint.com/sites/PLMHub';
+const SP_SITE = 'https://unilever.sharepoint.com/sites/TestSiteHUB';
 const ADMIN_PW = 'PLMHub00';
 const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
 
@@ -962,7 +962,9 @@ async function spFetch(path, opts={}){
   try{
     const controller = new AbortController();
     const timeout = setTimeout(()=>controller.abort(), 5000);
-    const r = await fetch(SP_SITE+path, {
+    // Always use full SP_SITE URL — never relative (app is hosted on GitHub)
+    const fullUrl = path.startsWith('http') ? path : SP_SITE + path;
+    const r = await fetch(fullUrl, {
       ...opts,
       credentials:'include',
       signal: controller.signal,

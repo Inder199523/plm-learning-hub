@@ -1139,16 +1139,53 @@ async function boot(){
   try{
     setLoading(20,'Detecting your environment...');
 
-    // ── Try Power Automate Get User (works from anywhere) ──
+    // ── Try Power Automate Get User ──
+    // First get email from SP session, then look up their profile
     setLoading(25,'Getting your Unilever profile...');
-    const paUser = await paGet(PA_FLOWS.getUser);
-    if(paUser && paUser.name && paUser.email){
-      applyUser(paUser.name, paUser.email, paUser.jobTitle||'Unilever Employee');
-      setLoading(80,'Welcome, '+user.name+'!');
-      saveLocal();
-      clearTimeout(hardTimeout);
-      launchApp(false,'pa');
-      return;
+
+    // Step 1: Get email from SP session (works in iframe)
+    let callerEmail = null;
+    try{
+      const spU = await fetch(SP_SITE+'/_api/web/currentuser',{
+        headers:{'Accept':'application/json;odata=verbose'},
+        credentials:'include',
+        signal: AbortSignal.timeout(5000)
+      });
+      if(spU.ok){
+        const spData = await spU.json();
+        callerEmail = spData?.d?.Email || null;
+      }
+    }catch(e){}
+
+    // Step 2: Use that email to get full profile from PA flow
+    if(callerEmail){
+      const paUser = await paGet(PA_FLOWS.getUser + '&email=' + encodeURIComponent(callerEmail));
+      if(paUser && paUser.name && paUser.email){
+        applyUser(paUser.name, paUser.email, paUser.jobTitle||'Unilever Employee');
+        setLoading(80,'Welcome, '+user.name+'!');
+        saveLocal();
+        clearTimeout(hardTimeout);
+        launchApp(false,'pa');
+        return;
+      }
+      // SP gave us email but PA flow failed — use SP data directly
+      try{
+        const spU2 = await fetch(SP_SITE+'/_api/web/currentuser',{
+          headers:{'Accept':'application/json;odata=verbose'},
+          credentials:'include'
+        });
+        if(spU2.ok){
+          const d = await spU2.json();
+          if(d?.d?.Email){
+            applyUser(d.d.Title||d.d.Email, d.d.Email, 'Unilever Employee');
+            setLoading(80,'Welcome, '+user.name+'!');
+            spOk=true; saveLocal();
+            clearTimeout(hardTimeout);
+            launchApp(true,'sharepoint');
+            return;
+          }
+        }
+      }catch(e){}
     }
 
     // ── Try postMessage from SharePoint parent ──

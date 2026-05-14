@@ -840,13 +840,23 @@ const ADMIN_PW = 'PLMHub00';
 const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
 
 // ── Power Automate Flow URLs ──
-// Paste your Power Automate HTTP trigger URLs here after creating the flows
 const PA_FLOWS = {
+  getUser:       'https://defaultf66fae025d36495bbfe078a6ff9f8e.6e.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5c5ce00e502e4cd1b28da1b48eeb9ad1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=wF6pm0Wo9JWRABdhvnC11Q9gpjvO7bLwq0zYhYg5jw0',
+  getProgress:   'PASTE_GET_PROGRESS_FLOW_URL_HERE',
   saveProgress:  'PASTE_SAVE_PROGRESS_FLOW_URL_HERE',
   saveScore:     'PASTE_SAVE_SCORE_FLOW_URL_HERE',
-  saveBadge:     'PASTE_SAVE_BADGE_FLOW_URL_HERE',
-  getProgress:   'PASTE_GET_PROGRESS_FLOW_URL_HERE'
+  saveBadge:     'PASTE_SAVE_BADGE_FLOW_URL_HERE'
 };
+
+// GET request to PA flow
+async function paGet(flowUrl){
+  if(!flowUrl||flowUrl.startsWith('PASTE_')) return null;
+  try{
+    const r=await fetch(flowUrl,{method:'GET'});
+    if(!r.ok) return null;
+    return await r.json();
+  }catch(e){ return null; }
+}
 
 // Send data to Power Automate flow (works from anywhere — Teams, GitHub, browser)
 async function paPost(flowUrl, data){
@@ -861,20 +871,23 @@ async function paPost(flowUrl, data){
   }catch(e){ return false; }
 }
 
-// Save data — tries SP first, falls back to Power Automate
+// Save data — tries SP first, then postMessage to parent, then PA flows
 async function saveData(type, data){
   if(spOk){
-    // Direct SP REST API (when on SharePoint domain)
+    // Direct SP REST API (same domain)
     if(type==='progress') return await spPost('PLM_UserProgress', data);
     if(type==='score') return await spPost('PLM_QuizScores', data);
     if(type==='badge') return await spPost('PLM_Badges', data);
   } else {
-    // Power Automate flows (works from Teams/GitHub)
-    if(type==='progress') return await paPost(PA_FLOWS.saveProgress, data);
-    if(type==='score') return await paPost(PA_FLOWS.saveScore, data);
-    if(type==='badge') return await paPost(PA_FLOWS.saveBadge, data);
+    // Send to SharePoint parent page via postMessage
+    // Parent page handles the actual SP write on same domain
+    sendToParent('PLM_SAVE', { saveType: type, data });
+    // Also try PA flows as backup
+    if(type==='progress') await paPost(PA_FLOWS.saveProgress, data);
+    if(type==='score') await paPost(PA_FLOWS.saveScore, data);
+    if(type==='badge') await paPost(PA_FLOWS.saveBadge, data);
   }
-  return false;
+  return true;
 }
 
 // ════════════════════════════
@@ -1017,6 +1030,71 @@ async function spDel(list,id){
 }
 
 // ════════════════════════════
+// POST MESSAGE LISTENER
+// SharePoint parent page sends user details
+// into this iframe via postMessage
+// ════════════════════════════
+let postMessageUser = null;
+let postMessageResolver = null;
+
+window.addEventListener('message', function(event){
+  // Only accept messages from SharePoint
+  if(!event.origin.includes('sharepoint.com') &&
+     !event.origin.includes('microsoft.com')) return;
+
+  const data = event.data;
+  if(data && data.type === 'PLM_USER' && data.name && data.email){
+    postMessageUser = data;
+    // If boot is waiting for this, resolve it
+    if(postMessageResolver){
+      postMessageResolver(data);
+      postMessageResolver = null;
+    }
+    // If app already loaded with name prompt, auto-login now
+    if(document.getElementById('scr-name-prompt')?.classList.contains('active')){
+      applyUser(data.name, data.email, data.jobTitle||'Unilever Employee');
+      document.getElementById('scr-name-prompt').classList.remove('active');
+      document.getElementById('scr-app').classList.add('active');
+      updateUI(); renderTracks(); renderDashActivity(); renderDashBadges();
+    }
+  }
+
+  // Also accept SP data (progress/scores) sent from parent
+  if(data && data.type === 'PLM_SP_DATA'){
+    if(data.progress) progress.completedModules = data.progress;
+    if(data.badges) progress.badges = data.badges;
+    if(data.avgScore) progress.avgScore = data.avgScore;
+    saveLocal(); updateUI();
+  }
+});
+
+// Wait for postMessage from parent (max 3 seconds)
+function waitForPostMessage(){
+  return new Promise(resolve => {
+    if(postMessageUser){ resolve(postMessageUser); return; }
+    postMessageResolver = resolve;
+    setTimeout(()=>{ if(postMessageResolver){ postMessageResolver(null); postMessageResolver=null; }}, 3000);
+  });
+}
+
+// Send a message TO the parent SharePoint page
+// (for saving data via parent's SP session)
+function sendToParent(type, data){
+  try{
+    window.parent.postMessage({ type, ...data }, 'https://unilever.sharepoint.com');
+  }catch(e){}
+}
+
+function applyUser(name, email, jobTitle){
+  user.name = name;
+  user.email = email;
+  user.jobTitle = jobTitle || 'Unilever Employee';
+  const p = name.trim().split(' ');
+  user.initials = (p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
+  saveLocal();
+}
+
+// ════════════════════════════
 // BOOT — AUTO LOGIN
 // ════════════════════════════
 async function boot(){
@@ -1035,17 +1113,12 @@ async function boot(){
 
   loadLocal();
 
-  // ── 1. Check URL params (SharePoint link injection) ──
+  // ── 1. Check URL params ──
   const urlParams=new URLSearchParams(window.location.search);
   const urlName=urlParams.get('name');
   const urlEmail=urlParams.get('email');
   if(urlName&&urlEmail&&urlName!=='{User.Name}'&&urlEmail!=='{User.Email}'){
-    user.name=decodeURIComponent(urlName);
-    user.email=decodeURIComponent(urlEmail);
-    user.jobTitle=urlParams.get('role')||'Unilever Employee';
-    const p=user.name.trim().split(' ');
-    user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
-    saveLocal();
+    applyUser(decodeURIComponent(urlName), decodeURIComponent(urlEmail), urlParams.get('role')||'Unilever Employee');
     setLoading(100,'Welcome, '+user.name+'!');
     setTimeout(()=>{ document.getElementById('scr-loading').style.display='none'; document.getElementById('scr-app').classList.add('active'); updateUI();renderTracks();renderDashActivity();renderDashBadges(); },600);
     return;
@@ -1054,6 +1127,8 @@ async function boot(){
   // ── 2. Check saved real user ──
   if(user.name&&user.email&&user.name!=='Unilever User'&&user.name!=='Preview User'){
     setLoading(100,'Welcome back, '+user.name+'!');
+    // Ask parent for fresh SP data
+    sendToParent('PLM_GET_DATA', { email: user.email });
     setTimeout(()=>{ document.getElementById('scr-loading').style.display='none'; document.getElementById('scr-app').classList.add('active'); updateUI();renderTracks();renderDashActivity();renderDashBadges(); },600);
     return;
   }
@@ -1064,31 +1139,50 @@ async function boot(){
   try{
     setLoading(20,'Detecting your environment...');
 
-    // Try Teams SDK
+    // ── Try Power Automate Get User (works from anywhere) ──
+    setLoading(25,'Getting your Unilever profile...');
+    const paUser = await paGet(PA_FLOWS.getUser);
+    if(paUser && paUser.name && paUser.email){
+      applyUser(paUser.name, paUser.email, paUser.jobTitle||'Unilever Employee');
+      setLoading(80,'Welcome, '+user.name+'!');
+      saveLocal();
+      clearTimeout(hardTimeout);
+      launchApp(false,'pa');
+      return;
+    }
+
+    // ── Try postMessage from SharePoint parent ──
+    setLoading(35,'Waiting for SharePoint session...');
+    // Tell parent we need user info
+    sendToParent('PLM_READY', {});
+    const pmUser = await waitForPostMessage();
+    if(pmUser){
+      applyUser(pmUser.name, pmUser.email, pmUser.jobTitle);
+      setLoading(80,'Welcome, '+user.name+'!');
+      // Ask parent to load SP data for this user
+      sendToParent('PLM_GET_DATA', { email: user.email });
+      clearTimeout(hardTimeout);
+      launchApp(true,'sharepoint');
+      return;
+    }
+
+    // ── Try Teams SDK ──
+    setLoading(35,'Checking Teams session...');
     const teamsUser=await tryTeamsLogin();
     if(teamsUser){
-      user.name=teamsUser.displayName||teamsUser.userPrincipalName||'Unilever User';
-      user.email=teamsUser.userPrincipalName||'';
-      user.jobTitle=teamsUser.jobTitle||'Unilever Employee';
-      const p=user.name.trim().split(' ');
-      user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
-      saveLocal();
+      applyUser(teamsUser.displayName||teamsUser.userPrincipalName, teamsUser.userPrincipalName, teamsUser.jobTitle);
       setLoading(80,'Welcome, '+user.name+'!');
       clearTimeout(hardTimeout);
       launchApp(false,'teams');
       return;
     }
 
-    // Try SharePoint session
-    setLoading(40,'Checking SharePoint session...');
+    // ── Try direct SP API (works if same domain) ──
+    setLoading(50,'Checking SharePoint session...');
     const spUser=await spFetch('/_api/web/currentuser');
     if(spUser?.d){
       spOk=true;
-      user.name=spUser.d.Title||'Unilever User';
-      user.email=spUser.d.Email||'';
-      user.jobTitle=spUser.d.JobTitle||'Unilever Employee';
-      const p=user.name.trim().split(' ');
-      user.initials=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();
+      applyUser(spUser.d.Title||'Unilever User', spUser.d.Email||'', spUser.d.JobTitle||'Unilever Employee');
       setLoading(60,'Loading your modules...');
       const spMods=await spGet('PLM_Modules');
       if(spMods&&spMods.length>0){ modules=spMods.map(i=>({id:i.Id,title:i.Title,track:i.Track||'Beginner',desc:i.Description||'',videoUrl:i.VideoURL||'',duration:i.Duration||'',pdfUrl:i.PDFUrl||'',order:i.OrderNumber||1,active:i.IsActive!==false})); saveLocal(); }
@@ -1134,7 +1228,6 @@ function tryTeamsLogin(){
 function launchApp(spConnected, source){
   updateSPStatus(spConnected);
   if(source==='local'||source==='timeout'){
-    // Show lightweight name prompt instead of full login screen
     setLoading(100,'Almost there...');
     setTimeout(()=>{
       document.getElementById('scr-loading').style.display='none';
@@ -1142,7 +1235,10 @@ function launchApp(spConnected, source){
     },400);
     return;
   }
-  setLoading(100, source==='teams'?'✅ Signed in via Microsoft Teams':'✅ Signed in via SharePoint');
+  const msg = source==='teams' ? '✅ Signed in via Microsoft Teams' :
+              source==='pa' ? '✅ Signed in via Unilever M365' :
+              '✅ Signed in via SharePoint';
+  setLoading(100, msg);
   setTimeout(()=>{
     document.getElementById('scr-loading').classList.add('hide');
     setTimeout(()=>{

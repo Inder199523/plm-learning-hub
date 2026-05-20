@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -69,18 +68,18 @@ p, span, div, h1, h2, h3, h4, label, td, th, li { color:#000000; }
 
 /* ── LOADING SCREEN ── */
 #scr-loading {
-position:fixed;inset:0;
-background:linear-gradient(135deg,#061A4A 0%,#0D2B8E 100%) !important;
-display:flex;flex-direction:column;align-items:center;justify-content:center;
-z-index:9999;transition:opacity .5s ease;
+  position:fixed;inset:0;
+  background:linear-gradient(135deg,#061A4A 0%,#0D2B8E 100%) !important;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:opacity .5s ease;
 }
 #scr-loading.hide{opacity:0;pointer-events:none;}
-.loading-logo{width:72px;height:72px;background:#fff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-weight:800;font-size:32px;color:var(–u-deep);box-shadow:0 8px 32px rgba(0,0,0,.3);margin-bottom:24px;animation:pulse 1.5s ease infinite;}
+.loading-logo{width:72px;height:72px;background:#fff;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:32px;color:var(--u-deep);box-shadow:0 8px 32px rgba(0,0,0,.3);margin-bottom:24px;animation:pulse 1.5s ease infinite;}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.loading-title{font-family:‘Playfair Display’,serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
+.loading-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;}
 .loading-sub{font-size:14px;color:rgba(255,255,255,.9);margin-bottom:32px;font-weight:600;}
 .loading-bar-wrap{width:240px;height:5px;background:rgba(255,255,255,.2);border-radius:99px;overflow:hidden;}
-.loading-bar{height:100%;background:linear-gradient(90deg,var(–u-green),#9ED96A);border-radius:99px;width:0%;transition:width .4s ease;}
+.loading-bar{height:100%;background:linear-gradient(90deg,var(--u-green),#9ED96A);border-radius:99px;width:0%;transition:width .4s ease;}
 .loading-status{font-size:13px;color:rgba(255,255,255,.8);margin-top:12px;letter-spacing:.03em;font-weight:500;}
 
 /* ── SCREENS ── */
@@ -89,9 +88,9 @@ z-index:9999;transition:opacity .5s ease;
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── ADMIN LOGIN ── */
-#scr-admin-login{align-items:center;justify-content:center;background:var(–u-navy);}
-.alb{background:#fff;border-radius:var(–r);padding:40px;width:100%;max-width:380px;box-shadow:var(–sh-lg);}
-.alb h2{font-family:‘Playfair Display’,serif;font-size:24px;margin-bottom:5px;}
+#scr-admin-login{align-items:center;justify-content:center;background:var(--u-navy);}
+.alb{background:#fff;border-radius:var(--r);padding:40px;width:100%;max-width:380px;box-shadow:var(--sh-lg);}
+.alb h2{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:5px;}
 .alb p{color:#111111;font-size:13px;margin-bottom:26px;}
 
 /* ── APP SHELL ── */
@@ -100,11 +99,11 @@ z-index:9999;transition:opacity .5s ease;
 /* SIDEBAR */
 .sb{width:256px;background:#000000;display:flex;flex-direction:column;padding:26px 18px;position:fixed;top:0;left:0;bottom:0;z-index:100;box-shadow:4px 0 24px rgba(0,0,0,.5);}
 .sb-logo{display:flex;align-items:center;gap:11px;padding:0 8px 28px;border-bottom:2px solid rgba(255,255,255,.2);margin-bottom:22px;}
-.sb-mark{width:38px;height:38px;background:#1D6FA0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-weight:800;font-size:15px;color:#fff;}
+.sb-mark{width:38px;height:38px;background:#1D6FA0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:15px;color:#fff;}
 .sb-name{color:#ffffff;font-size:14px;font-weight:800;line-height:1.3;}
 .sb-name span{display:block;font-size:11px;color:#ffffff;font-weight:600;text-transform:uppercase;letter-spacing:.08em;opacity:.8;}
 .sec-lbl{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;padding:0 10px;margin-bottom:6px;opacity:.9;}
-.ni{display:flex;align-items:center;gap:11px;padding:12px 14px;border-radius:11px;cursor:pointer;color:#ffffff;font-size:14px;font-weight:700;transition:all .2s;margin-bottom:3px;border:none;background:none;width:100%;text-align:left;font-family:‘Plus Jakarta Sans’,sans-serif;}
+.ni{display:flex;align-items:center;gap:11px;padding:12px 14px;border-radius:11px;cursor:pointer;color:#ffffff;font-size:14px;font-weight:700;transition:all .2s;margin-bottom:3px;border:none;background:none;width:100%;text-align:left;font-family:'Plus Jakarta Sans',sans-serif;}
 .ni:hover{background:rgba(255,255,255,.2);color:#ffffff;}
 .ni.active{background:#1D6FA0;color:#ffffff;}
 .ni .ic{font-size:17px;width:20px;flex-shrink:0;}
@@ -117,7 +116,7 @@ z-index:9999;transition:opacity .5s ease;
 
 /* MAIN */
 .mc{margin-left:256px;flex:1;min-height:100vh;}
-.tb{background:#fff;border-bottom:1px solid var(–u-grey-lt);padding:15px 38px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(–sh-sm);}
+.tb{background:#fff;border-bottom:1px solid var(--u-grey-lt);padding:15px 38px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--sh-sm);}
 .tb h2{font-size:19px;font-weight:800;color:#000000;}
 .tb p{font-size:13px;color:#111111;margin-top:1px;font-weight:600;}
 .tb-r{display:flex;align-items:center;gap:10px;}
@@ -125,17 +124,17 @@ z-index:9999;transition:opacity .5s ease;
 .pg.active{display:block;}
 
 /* ── CARDS ── */
-.card{background:#fff;border-radius:var(–r);padding:26px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);transition:box-shadow .2s,transform .2s;}
-.card:hover{box-shadow:var(–sh-md);}
+.card{background:#fff;border-radius:var(--r);padding:26px;box-shadow:var(--sh-sm);border:1px solid rgba(0,0,0,.04);transition:box-shadow .2s,transform .2s;}
+.card:hover{box-shadow:var(--sh-md);}
 
 /* ── BUTTONS ── */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
-.btn-p{background:linear-gradient(135deg,var(–u-blue),var(–u-deep));color:#fff;box-shadow:0 4px 12px rgba(13,43,142,.25);}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;}
+.btn-p{background:linear-gradient(135deg,var(--u-blue),var(--u-deep));color:#fff;box-shadow:0 4px 12px rgba(13,43,142,.25);}
 .btn-p:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(13,43,142,.35);}
-.btn-g{background:linear-gradient(135deg,var(–u-green),var(–u-green-dk));color:#fff;}
-.btn-gh{background:var(–u-lighter);color:#000000;border:1.5px solid var(–u-grey-lt);}
-.btn-gh:hover{background:var(–u-light);border-color:var(–u-blue);color:var(–u-blue);}
-.btn-r{background:rgba(224,62,62,.1);color:var(–u-red);border:1.5px solid rgba(224,62,62,.2);}
+.btn-g{background:linear-gradient(135deg,var(--u-green),var(--u-green-dk));color:#fff;}
+.btn-gh{background:var(--u-lighter);color:#000000;border:1.5px solid var(--u-grey-lt);}
+.btn-gh:hover{background:var(--u-light);border-color:var(--u-blue);color:var(--u-blue);}
+.btn-r{background:rgba(224,62,62,.1);color:var(--u-red);border:1.5px solid rgba(224,62,62,.2);}
 .btn-sm{padding:7px 14px;font-size:12px;}
 .btn-full{width:100%;justify-content:center;}
 
@@ -148,11 +147,11 @@ z-index:9999;transition:opacity .5s ease;
 .pl-rd{background:#FADBD8;color:#000000;border:1.5px solid #F1948A;}
 
 /* ── PROGRESS ── */
-.pt{height:7px;background:var(–u-grey-lt);border-radius:99px;overflow:hidden;}
+.pt{height:7px;background:var(--u-grey-lt);border-radius:99px;overflow:hidden;}
 .pf{height:100%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1);}
-.pf-bl{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
-.pf-gn{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
-.pf-am{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
+.pf-bl{background:linear-gradient(90deg,var(--u-blue),#3AABDE);}
+.pf-gn{background:linear-gradient(90deg,var(--u-green),#9ED96A);}
+.pf-am{background:linear-gradient(90deg,var(--u-amber),#F7C97A);}
 
 /* ── GRID ── */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
@@ -160,78 +159,78 @@ z-index:9999;transition:opacity .5s ease;
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
 
 /* ── STAT CARDS ── */
-.sc{background:#fff;border-radius:var(–r);padding:22px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden;}
-.sc::after{content:’’;position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(–r) var(–r) 0 0;}
-.sc.bl::after{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
-.sc.gn::after{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
-.sc.am::after{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
-.sc.dp::after{background:linear-gradient(90deg,var(–u-deep),var(–u-blue));}
-.sc-n{font-family:‘Playfair Display’,serif;font-size:36px;font-weight:800;margin:8px 0 3px;line-height:1;}
+.sc{background:#fff;border-radius:var(--r);padding:22px;box-shadow:var(--sh-sm);border:1px solid rgba(0,0,0,.04);position:relative;overflow:hidden;}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:var(--r) var(--r) 0 0;}
+.sc.bl::after{background:linear-gradient(90deg,var(--u-blue),#3AABDE);}
+.sc.gn::after{background:linear-gradient(90deg,var(--u-green),#9ED96A);}
+.sc.am::after{background:linear-gradient(90deg,var(--u-amber),#F7C97A);}
+.sc.dp::after{background:linear-gradient(90deg,var(--u-deep),var(--u-blue));}
+.sc-n{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;margin:8px 0 3px;line-height:1;}
 .sc-n.bl{color:#000000;}.sc-n.gn{color:#000000;}.sc-n.am{color:#000000;}.sc-n.dp{color:#000000;}
 .sc-l{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#111111;}
 .sc-s{font-size:13px;color:#111111;margin-top:2px;font-weight:500;}
 
 /* ── MODULE ROW ── */
 .mr{display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:11px;transition:background .15s;cursor:pointer;}
-.mr:hover{background:var(–u-lighter);}
+.mr:hover{background:var(--u-lighter);}
 .mi{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .mi.done{background:rgba(107,181,63,.12);}
 .mi.act{background:rgba(245,166,35,.12);}
-.mi.lck{background:var(–u-lighter);}
+.mi.lck{background:var(--u-lighter);}
 .mt2{flex:1;}
 .mt2 .t{font-size:13px;font-weight:700;color:#000000;}
 .mt2 .s{font-size:12px;color:#111111;margin-top:1px;font-weight:500;}
 
 /* ── TRACK CARDS ── */
-.tc{background:#fff;border-radius:var(–r);padding:26px;box-shadow:var(–sh-sm);border:2px solid transparent;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
-.tc::before{content:’’;position:absolute;top:0;left:0;right:0;height:5px;}
-.tc.bg::before{background:linear-gradient(90deg,var(–u-green),#9ED96A);}
-.tc.im::before{background:linear-gradient(90deg,var(–u-blue),#3AABDE);}
-.tc.ad::before{background:linear-gradient(90deg,var(–u-amber),#F7C97A);}
-.tc.su::before{background:linear-gradient(90deg,var(–u-deep),var(–u-blue));}
-.tc:hover{transform:translateY(-4px);box-shadow:var(–sh-lg);}
-.tc.bg:hover{border-color:var(–u-green);}
-.tc.im:hover{border-color:var(–u-blue);}
-.tc.ad:hover{border-color:var(–u-amber);}
-.tc.su:hover{border-color:var(–u-deep);}
+.tc{background:#fff;border-radius:var(--r);padding:26px;box-shadow:var(--sh-sm);border:2px solid transparent;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.tc::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;}
+.tc.bg::before{background:linear-gradient(90deg,var(--u-green),#9ED96A);}
+.tc.im::before{background:linear-gradient(90deg,var(--u-blue),#3AABDE);}
+.tc.ad::before{background:linear-gradient(90deg,var(--u-amber),#F7C97A);}
+.tc.su::before{background:linear-gradient(90deg,var(--u-deep),var(--u-blue));}
+.tc:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);}
+.tc.bg:hover{border-color:var(--u-green);}
+.tc.im:hover{border-color:var(--u-blue);}
+.tc.ad:hover{border-color:var(--u-amber);}
+.tc.su:hover{border-color:var(--u-deep);}
 .tc.lkd{opacity:.6;cursor:not-allowed;}
-.tc.lkd:hover{transform:none;box-shadow:var(–sh-sm);}
+.tc.lkd:hover{transform:none;box-shadow:var(--sh-sm);}
 
 /* ── VIDEO ── */
-.vw{background:var(–u-navy);border-radius:var(–r);position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;}
+.vw{background:var(--u-navy);border-radius:var(--r);overflow:hidden;width:100%;aspect-ratio:16/9;position:relative;}
 .vw iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
-.vw-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:linear-gradient(135deg,var(–u-navy),var(–u-deep));}
-.vw-ph .pb{width:68px;height:68px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(–u-blue);box-shadow:0 8px 24px rgba(0,0,0,.3);border:none;cursor:pointer;transition:transform .2s;}
+.vw-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:linear-gradient(135deg,var(--u-navy),var(--u-deep));}
+.vw-ph .pb{width:68px;height:68px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--u-blue);box-shadow:0 8px 24px rgba(0,0,0,.3);border:none;cursor:pointer;transition:transform .2s;}
 .vw-ph:hover .pb{transform:scale(1.08);}
 .vw-lbl{color:rgba(255,255,255,.65);font-size:13px;font-weight:500;text-align:center;padding:0 20px;}
 
 /* ── QUIZ ── */
 .qo{display:flex;align-items:center;gap:13px;padding:13px 17px;border-radius:11px;border:2px solid #B0BDD0;cursor:pointer;transition:all .2s;margin-bottom:9px;background:#fff;font-size:14px;font-weight:600;color:#000000;}
-.qo:hover{border-color:var(–u-blue);background:#D0E8F5;}
-.qo.sel{border-color:var(–u-blue);background:#D0E8F5;}
+.qo:hover{border-color:var(--u-blue);background:#D0E8F5;}
+.qo.sel{border-color:var(--u-blue);background:#D0E8F5;}
 .qo.cor{border-color:#000000;background:#D5EDBA;color:#000000;}
 .qo.wrg{border-color:#000000;background:#FADBD8;color:#000000;}
 .ol{width:32px;height:32px;border-radius:8px;background:#EEF2F7;border:2px solid #B0BDD0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;color:#000000;}
-.qo.sel .ol{background:var(–u-blue);color:#fff;border-color:var(–u-blue);}
+.qo.sel .ol{background:var(--u-blue);color:#fff;border-color:var(--u-blue);}
 .qo.cor .ol{background:#2A6010;color:#fff;border-color:#000000;}
 .qo.wrg .ol{background:#7B241C;color:#fff;border-color:#000000;}
 .qdots{display:flex;gap:5px;margin-bottom:24px;}
-.qd{height:5px;flex:1;border-radius:99px;background:var(–u-grey-lt);transition:background .3s;}
-.qd.done{background:var(–u-green);}
-.qd.cur{background:var(–u-blue);}
+.qd{height:5px;flex:1;border-radius:99px;background:var(--u-grey-lt);transition:background .3s;}
+.qd.done{background:var(--u-green);}
+.qd.cur{background:var(--u-blue);}
 
 /* ── RESULT ── */
-.rb{border-radius:var(–r);padding:30px;text-align:center;display:none;margin-top:18px;}
+.rb{border-radius:var(--r);padding:30px;text-align:center;display:none;margin-top:18px;}
 .rb.show{display:block;animation:fadeUp .4s ease;}
 .rb.pass{background:linear-gradient(135deg,rgba(107,181,63,.1),rgba(107,181,63,.03));border:2px solid rgba(107,181,63,.28);}
 .rb.fail{background:linear-gradient(135deg,rgba(224,62,62,.08),rgba(224,62,62,.02));border:2px solid rgba(224,62,62,.2);}
-.rs{font-family:‘Playfair Display’,serif;font-size:46px;font-weight:700;}
-.rs.pass{color:var(–u-green-dk);}.rs.fail{color:var(–u-red);}
+.rs{font-family:'Playfair Display',serif;font-size:46px;font-weight:700;}
+.rs.pass{color:var(--u-green-dk);}.rs.fail{color:var(--u-red);}
 
 /* ── BADGES ── */
-.bdg{background:#fff;border-radius:var(–r);padding:22px;text-align:center;border:2px solid transparent;box-shadow:var(–sh-sm);transition:all .25s;}
+.bdg{background:#fff;border-radius:var(--r);padding:22px;text-align:center;border:2px solid transparent;box-shadow:var(--sh-sm);transition:all .25s;}
 .bdg.earned{border-color:rgba(107,181,63,.28);}
-.bdg.earned:hover{transform:translateY(-3px);box-shadow:var(–sh-md);}
+.bdg.earned:hover{transform:translateY(-3px);box-shadow:var(--sh-md);}
 .bdg.locked{opacity:.42;filter:grayscale(.8);}
 .bdg-ic{font-size:42px;margin-bottom:10px;}
 .bdg-nm{font-size:13px;font-weight:800;margin-bottom:3px;color:#000000;}
@@ -239,7 +238,7 @@ z-index:9999;transition:opacity .5s ease;
 .bdg-dt{font-size:11px;color:#000000;font-weight:700;margin-top:7px;}
 
 /* ── TOAST ── */
-.toast{position:fixed;top:22px;right:22px;background:#fff;border-radius:var(–r);padding:18px 22px;box-shadow:var(–sh-lg);border-left:5px solid var(–u-green);display:none;z-index:9999;max-width:300px;animation:slideIn .4s ease;}
+.toast{position:fixed;top:22px;right:22px;background:#fff;border-radius:var(--r);padding:18px 22px;box-shadow:var(--sh-lg);border-left:5px solid var(--u-green);display:none;z-index:9999;max-width:300px;animation:slideIn .4s ease;}
 .toast.show{display:flex;align-items:center;gap:13px;}
 @keyframes slideIn{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
 .toast-ic{font-size:32px;}
@@ -247,23 +246,23 @@ z-index:9999;transition:opacity .5s ease;
 .toast-t span{font-size:12px;color:#111111;}
 
 /* ── PROFILE HERO ── */
-.ph{background:linear-gradient(135deg,var(–u-navy) 0%,var(–u-deep) 100%);border-radius:var(–r);padding:36px;display:flex;align-items:center;gap:26px;color:#fff;position:relative;overflow:hidden;margin-bottom:22px;}
-.ph::before{content:’’;position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(29,111,160,.2);}
-.ph-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(–u-blue),var(–u-green));display:flex;align-items:center;justify-content:center;font-family:‘Playfair Display’,serif;font-size:26px;font-weight:700;color:#fff;flex-shrink:0;border:3px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);position:relative;z-index:1;}
+.ph{background:linear-gradient(135deg,var(--u-navy) 0%,var(--u-deep) 100%);border-radius:var(--r);padding:36px;display:flex;align-items:center;gap:26px;color:#fff;position:relative;overflow:hidden;margin-bottom:22px;}
+.ph::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;border-radius:50%;background:rgba(29,111,160,.2);}
+.ph-av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,var(--u-blue),var(--u-green));display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:#fff;flex-shrink:0;border:3px solid rgba(255,255,255,.28);box-shadow:0 8px 24px rgba(0,0,0,.3);position:relative;z-index:1;}
 .ph-inf{position:relative;z-index:1;flex:1;}
-.ph-inf h2{font-family:‘Playfair Display’,serif;font-size:24px;font-weight:700;margin-bottom:4px;}
+.ph-inf h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:4px;}
 .ph-inf p{opacity:.65;font-size:13px;margin-bottom:10px;}
 .ph-stats{display:flex;gap:28px;position:relative;z-index:1;}
-.ps-n{font-family:‘Playfair Display’,serif;font-size:26px;font-weight:700;}
+.ps-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;}
 .ps-l{font-size:10px;opacity:.5;text-transform:uppercase;letter-spacing:.08em;}
 
 /* ── TIMELINE ── */
 .tl{display:flex;gap:13px;padding-bottom:20px;position:relative;}
-.tl::before{content:’’;position:absolute;left:16px;top:34px;width:2px;bottom:0;background:var(–u-grey-lt);}
+.tl::before{content:'';position:absolute;left:16px;top:34px;width:2px;bottom:0;background:var(--u-grey-lt);}
 .tl:last-child::before{display:none;}
 .tl-d{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;z-index:1;}
-.tl-d.done{background:rgba(107,181,63,.12);border:2px solid var(–u-green);}
-.tl-d.pend{background:var(–u-lighter);border:2px solid var(–u-grey-lt);}
+.tl-d.done{background:rgba(107,181,63,.12);border:2px solid var(--u-green);}
+.tl-d.pend{background:var(--u-lighter);border:2px solid var(--u-grey-lt);}
 .tl-c{padding-top:5px;}
 .tl-t{font-size:13px;font-weight:700;color:#000000;}
 .tl-s{font-size:12px;color:#111111;margin-top:1px;font-weight:500;}
@@ -271,19 +270,19 @@ z-index:9999;transition:opacity .5s ease;
 
 /* ── ADMIN ── */
 #scr-admin{flex-direction:column;}
-.adm-bar{background:var(–u-navy);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
-.adm-bar h2{font-family:‘Playfair Display’,serif;color:#fff;font-size:20px;}
+.adm-bar{background:var(--u-navy);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;}
+.adm-bar h2{font-family:'Playfair Display',serif;color:#fff;font-size:20px;}
 .adm-tabs{display:flex;gap:4px;background:rgba(255,255,255,.08);padding:4px;border-radius:10px;}
-.adm-tab{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.55);border:none;background:none;font-family:‘Plus Jakarta Sans’,sans-serif;transition:all .2s;}
-.adm-tab.active{background:#fff;color:var(–u-navy);}
-.adm-body{flex:1;padding:32px;background:var(–u-lighter);}
+.adm-tab{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.55);border:none;background:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s;}
+.adm-tab.active{background:#fff;color:var(--u-navy);}
+.adm-body{flex:1;padding:32px;background:var(--u-lighter);}
 .adm-pg{display:none;}.adm-pg.active{display:block;}
 .af{margin-bottom:15px;}
 .af label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;}
-.af input,.af select,.af textarea{width:100%;padding:11px 15px;border:1.5px solid var(–u-grey-lt);border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:13px;color:#000000;outline:none;transition:border-color .2s;background:#fff;}
-.af input:focus,.af select:focus,.af textarea:focus{border-color:var(–u-blue);}
+.af input,.af select,.af textarea{width:100%;padding:11px 15px;border:1.5px solid var(--u-grey-lt);border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:#000000;outline:none;transition:border-color .2s;background:#fff;}
+.af input:focus,.af select:focus,.af textarea:focus{border-color:var(--u-blue);}
 .af textarea{resize:vertical;min-height:76px;}
-.am-card{background:#fff;border-radius:var(–r);padding:18px 20px;box-shadow:var(–sh-sm);border:1px solid rgba(0,0,0,.04);margin-bottom:10px;display:flex;align-items:center;gap:14px;}
+.am-card{background:#fff;border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh-sm);border:1px solid rgba(0,0,0,.04);margin-bottom:10px;display:flex;align-items:center;gap:14px;}
 .am-card .ai{flex:1;}
 .am-card .at{font-size:14px;font-weight:700;margin-bottom:2px;color:#000000;}
 .am-card .as{font-size:13px;color:#111111;font-weight:500;}
@@ -303,8 +302,8 @@ z-index:9999;transition:opacity .5s ease;
 .mb24{margin-bottom:24px;}
 .lbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#000000;}
 .muted{color:#111111;font-size:14px;font-weight:500;}
-.sec-t{font-family:‘Playfair Display’,serif;font-size:20px;font-weight:700;margin-bottom:16px;color:#000000;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#000000;font-weight:700;cursor:pointer;background:none;border:none;font-family:‘Plus Jakarta Sans’,sans-serif;transition:color .2s;margin-bottom:18px;padding:0;}
+.sec-t{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;color:#000000;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#000000;font-weight:700;cursor:pointer;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:color .2s;margin-bottom:18px;padding:0;}
 .back-btn:hover{color:#000000;}
 .scrolly{overflow-y:auto;max-height:300px;}
 .scrolly::-webkit-scrollbar{width:4px;}
@@ -312,32 +311,29 @@ z-index:9999;transition:opacity .5s ease;
 .empty{text-align:center;padding:36px;color:#111111;font-size:14px;font-weight:600;}
 .fg{margin-bottom:16px;}
 .fg label{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:#000000;}
-.fg input,.fg select{width:100%;padding:13px 17px;border:2px solid #B0BDD0;border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:14px;color:#000000;outline:none;transition:border-color .2s;background:#fff;font-weight:500;}
-.fg input:focus,.fg select:focus{border-color:var(–u-blue);}
-.btn-login{width:100%;padding:15px;background:linear-gradient(135deg,var(–u-blue),var(–u-deep));color:#fff;border:none;border-radius:var(–r-sm);font-family:‘Plus Jakarta Sans’,sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(13,43,142,.3);transition:all .2s;}
+.fg input,.fg select{width:100%;padding:13px 17px;border:2px solid #B0BDD0;border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:#000000;outline:none;transition:border-color .2s;background:#fff;font-weight:500;}
+.fg input:focus,.fg select:focus{border-color:var(--u-blue);}
+.btn-login{width:100%;padding:15px;background:linear-gradient(135deg,var(--u-blue),var(--u-deep));color:#fff;border:none;border-radius:var(--r-sm);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(13,43,142,.3);transition:all .2s;}
 .btn-login:hover{transform:translateY(-2px);}
 
 @media(max-width:768px){
-.sb{width:56px;}
-.sb .ni span,.sb .sec-lbl,.sb-user .ui-name,.sb-user .ui-role,.sb-logo .sb-name{display:none;}
-.mc{margin-left:56px;}
-.pg{padding:20px 16px;}
-.g2,.g3,.g4{grid-template-columns:1fr;}
+  .sb{width:56px;}
+  .sb .ni span,.sb .sec-lbl,.sb-user .ui-name,.sb-user .ui-role,.sb-logo .sb-name{display:none;}
+  .mc{margin-left:56px;}
+  .pg{padding:20px 16px;}
+  .g2,.g3,.g4{grid-template-columns:1fr;}
 }
 </style>
-
 </head>
 <body>
 
 <!-- TOAST -->
-
 <div class="toast" id="toast">
   <div class="toast-ic" id="t-ic">🏅</div>
   <div class="toast-t"><strong id="t-title">Achievement!</strong><span id="t-msg">You earned something</span></div>
 </div>
 
 <!-- ══ UPDATE QUIZ MODAL ══ -->
-
 <div id="update-quiz-modal" style="display:none;position:fixed;inset:0;background:rgba(6,26,74,.85);z-index:8000;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
   <div style="background:#fff;border-radius:20px;padding:36px;width:100%;max-width:560px;box-shadow:0 24px 64px rgba(0,0,0,.3);margin:20px;max-height:90vh;overflow-y:auto;">
     <div class="row btw" style="margin-bottom:16px;">
@@ -367,6 +363,7 @@ z-index:9999;transition:opacity .5s ease;
   </div>
 </div>
 
+
 <div class="screen" id="scr-name-prompt" style="align-items:center;justify-content:center;background:linear-gradient(135deg,#061A4A,#0D2B8E);">
   <div style="background:#fff;border-radius:20px;padding:44px;width:100%;max-width:420px;box-shadow:0 20px 48px rgba(0,0,0,.25);text-align:center;">
     <div style="width:64px;height:64px;background:#1D6FA0;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:800;font-size:28px;color:#fff;margin:0 auto 20px;">U</div>
@@ -394,7 +391,6 @@ z-index:9999;transition:opacity .5s ease;
 </div>
 
 <!-- ══ ADMIN LOGIN ══ -->
-
 <div class="screen" id="scr-admin-login">
   <div class="alb">
     <h2>🔐 Admin Panel</h2>
@@ -407,7 +403,6 @@ z-index:9999;transition:opacity .5s ease;
 </div>
 
 <!-- ══ MAIN APP ══ -->
-
 <div class="screen" id="scr-app">
   <!-- SIDEBAR -->
   <nav class="sb">
@@ -418,11 +413,13 @@ z-index:9999;transition:opacity .5s ease;
     <div class="sec-lbl">Main</div>
     <button class="ni active" onclick="showPg('dashboard')" id="n-dashboard"><span class="ic">⊞</span><span>Dashboard</span></button>
     <button class="ni" onclick="showPg('tracks')" id="n-tracks"><span class="ic">◈</span><span>Training Tracks</span></button>
+    <button class="ni" onclick="showPg('library')" id="n-library"><span class="ic">📂</span><span>Content Library</span></button>
     <div class="sec-lbl" style="margin-top:14px;">Learning</div>
     <button class="ni" onclick="showPg('module')" id="n-module"><span class="ic">▷</span><span>Module Player</span></button>
     <button class="ni" onclick="showPg('quiz')" id="n-quiz"><span class="ic">✎</span><span>Quiz</span></button>
     <div class="sec-lbl" style="margin-top:14px;">My Profile</div>
     <button class="ni" onclick="showPg('profile')" id="n-profile"><span class="ic">◉</span><span>Profile & Badges</span><span class="bc" id="sb-bc">0</span></button>
+    <button class="ni" onclick="showPg('faq')" id="n-faq"><span class="ic">💬</span><span>FAQ</span></button>
     <div class="sb-sp"></div>
     <!-- Admin link -->
     <button class="ni" onclick="showAdminLogin()" style="margin-bottom:10px;"><span class="ic">🛠</span><span>Admin Panel</span></button>
@@ -433,7 +430,6 @@ z-index:9999;transition:opacity .5s ease;
   </nav>
 
   <!-- MAIN CONTENT -->
-
   <div class="mc">
     <div class="tb">
       <div><h2 id="pg-title">Dashboard</h2><p id="pg-sub">Welcome — your personalised learning hub</p></div>
@@ -443,195 +439,271 @@ z-index:9999;transition:opacity .5s ease;
       </div>
     </div>
 
-```
-<!-- ═══ DASHBOARD ═══ -->
-<div class="pg active" id="pg-dashboard">
-  <!-- Hero -->
-  <div style="background:linear-gradient(135deg,var(--u-navy),var(--u-deep));border-radius:var(--r);padding:30px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden;">
-    <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(29,111,160,.2);"></div>
-    <div style="position:absolute;bottom:-60px;left:200px;width:220px;height:220px;border-radius:50%;background:rgba(107,181,63,.07);"></div>
-    <div class="row btw" style="position:relative;z-index:1;">
-      <div style="flex:1;">
-        <div style="font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:7px;">Your Learning Progress</div>
-        <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;" id="hero-txt">Loading your progress...</div>
-        <div style="opacity:.65;font-size:13px;margin-bottom:18px;" id="hero-msg">Connecting to your SharePoint profile</div>
-        <div style="background:rgba(255,255,255,.12);border-radius:99px;height:9px;width:340px;max-width:100%;overflow:hidden;">
-          <div id="hero-fill" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--u-green),#9ED96A);width:0%;transition:width 1s ease;"></div>
+    <!-- ═══ DASHBOARD ═══ -->
+    <div class="pg active" id="pg-dashboard">
+      <!-- Hero -->
+      <div style="background:linear-gradient(135deg,var(--u-navy),var(--u-deep));border-radius:var(--r);padding:30px;color:#fff;margin-bottom:22px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:rgba(29,111,160,.2);"></div>
+        <div style="position:absolute;bottom:-60px;left:200px;width:220px;height:220px;border-radius:50%;background:rgba(107,181,63,.07);"></div>
+        <div class="row btw" style="position:relative;z-index:1;">
+          <div style="flex:1;">
+            <div style="font-size:12px;opacity:.6;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:7px;">Your Learning Progress</div>
+            <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;" id="hero-txt">Loading your progress...</div>
+            <div style="opacity:.65;font-size:13px;margin-bottom:18px;" id="hero-msg">Connecting to your SharePoint profile</div>
+            <div style="background:rgba(255,255,255,.12);border-radius:99px;height:9px;width:340px;max-width:100%;overflow:hidden;">
+              <div id="hero-fill" style="height:100%;border-radius:99px;background:linear-gradient(90deg,var(--u-green),#9ED96A);width:0%;transition:width 1s ease;"></div>
+            </div>
+            <div style="margin-top:7px;font-size:12px;opacity:.65;" id="hero-pct">0% complete</div>
+          </div>
+          <div style="text-align:center;flex-shrink:0;position:relative;z-index:1;padding-left:20px;">
+            <div style="font-size:58px;">🎯</div>
+            <div class="pill pl-gn" style="margin-top:7px;" id="hero-status">Loading...</div>
+          </div>
         </div>
-        <div style="margin-top:7px;font-size:12px;opacity:.65;" id="hero-pct">0% complete</div>
       </div>
-      <div style="text-align:center;flex-shrink:0;position:relative;z-index:1;padding-left:20px;">
-        <div style="font-size:58px;">🎯</div>
-        <div class="pill pl-gn" style="margin-top:7px;" id="hero-status">Loading...</div>
+
+      <!-- Stats -->
+      <div class="g4 mb24">
+        <div class="sc bl"><div class="sc-l">Modules Done</div><div class="sc-n bl" id="st-mod">—</div><div class="sc-s" id="st-mod-s">of — total</div></div>
+        <div class="sc gn"><div class="sc-l">Badges Earned</div><div class="sc-n gn" id="st-bdg">—</div><div class="sc-s">of 6 available</div></div>
+        <div class="sc am"><div class="sc-l">Avg Quiz Score</div><div class="sc-n am" id="st-sc">—</div><div class="sc-s">across all quizzes</div></div>
+        <div class="sc dp"><div class="sc-l">SharePoint</div><div class="sc-n dp" id="st-sp" style="font-size:16px;margin-top:10px;">⏳</div><div class="sc-s" id="st-sp-s">Connecting...</div></div>
       </div>
-    </div>
-  </div>
 
-  <!-- Stats -->
-  <div class="g4 mb24">
-    <div class="sc bl"><div class="sc-l">Modules Done</div><div class="sc-n bl" id="st-mod">—</div><div class="sc-s" id="st-mod-s">of — total</div></div>
-    <div class="sc gn"><div class="sc-l">Badges Earned</div><div class="sc-n gn" id="st-bdg">—</div><div class="sc-s">of 6 available</div></div>
-    <div class="sc am"><div class="sc-l">Avg Quiz Score</div><div class="sc-n am" id="st-sc">—</div><div class="sc-s">across all quizzes</div></div>
-    <div class="sc dp"><div class="sc-l">SharePoint</div><div class="sc-n dp" id="st-sp" style="font-size:16px;margin-top:10px;">⏳</div><div class="sc-s" id="st-sp-s">Connecting...</div></div>
-  </div>
-
-  <div class="g2">
-    <!-- Activity -->
-    <div class="card">
-      <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">Recent Activity</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">View all</button></div>
-      <div id="activity-list"><div class="empty">Loading your activity...</div></div>
-      <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
-    </div>
-    <!-- Badges -->
-    <div class="card">
-      <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">My Badges</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">See all</button></div>
-      <div class="g2" style="gap:10px;" id="dash-badges"><div class="empty" style="grid-column:1/-1;">Loading badges...</div></div>
-    </div>
-  </div>
-
-  <!-- ═══ PLM TOOL UPDATES ═══ -->
-  <div style="margin-top:24px;">
-    <div class="row btw mb16">
-      <div>
-        <div class="sec-t" style="margin-bottom:4px;font-size:20px;">🆕 PLM Tool Updates</div>
-        <p class="muted">Stay up to date with the latest changes to the PLM tool. Complete each update quiz to confirm your understanding.</p>
+      <div class="g2">
+        <!-- Activity -->
+        <div class="card">
+          <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">Recent Activity</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">View all</button></div>
+          <div id="activity-list"><div class="empty">Loading your activity...</div></div>
+          <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
+        </div>
+        <!-- Badges -->
+        <div class="card">
+          <div class="row btw mb16"><div class="sec-t" style="margin-bottom:0;font-size:17px;">My Badges</div><button class="btn btn-gh btn-sm" onclick="showPg('profile')">See all</button></div>
+          <div class="g2" style="gap:10px;" id="dash-badges"><div class="empty" style="grid-column:1/-1;">Loading badges...</div></div>
+        </div>
       </div>
-      <div id="updates-status-badge" class="pill pl-gn" style="font-size:13px;padding:8px 16px;flex-shrink:0;">✅ Up to Date</div>
-    </div>
-    <div id="updates-timeline">
-      <div class="empty">Loading updates...</div>
-    </div>
-  </div>
-</div>
 
-<!-- ═══ TRACKS ═══ -->
-<div class="pg" id="pg-tracks">
-  <div class="mb24">
-    <div class="lbl mb16">Training Hub</div>
-    <div class="sec-t" style="font-size:26px;">Choose Your Learning Track</div>
-    <p class="muted">Complete each track in order to unlock the next level and earn your badges.</p>
-  </div>
-  <div class="g2" id="tracks-grid"></div>
-</div>
-
-<!-- ═══ MODULE PLAYER ═══ -->
-<div class="pg" id="pg-module">
-  <button class="back-btn" onclick="showPg('tracks')">← Back to Training Tracks</button>
-  <div class="g2" style="align-items:start;gap:26px;">
-    <div>
-      <div class="row mb16" style="flex-wrap:wrap;gap:7px;" id="mod-pills"></div>
-      <h2 id="mod-title" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:7px;"></h2>
-      <p class="muted mb24" id="mod-desc"></p>
-      <div class="vw" id="mod-video"></div>
-      <div class="card mt16">
-        <div class="row btw" style="margin-bottom:7px;"><span class="lbl">Module Status</span><span style="font-size:12px;color:var(--u-blue);font-weight:600;" id="mod-status-txt">Watch the video, then take the quiz</span></div>
-        <div class="pt"><div class="pf pf-bl" id="mod-prog-bar" style="width:0%"></div></div>
-        <div class="row mt16" style="gap:9px;">
-          <button class="btn btn-gh" style="flex:1;justify-content:center;" onclick="showPg('tracks')">← Tracks</button>
-          <button class="btn btn-p" style="flex:2;justify-content:center;" onclick="showPg('quiz')">Take Quiz →</button>
+      <!-- ═══ PLM TOOL UPDATES ═══ -->
+      <div style="margin-top:24px;">
+        <div class="row btw mb16">
+          <div>
+            <div class="sec-t" style="margin-bottom:4px;font-size:20px;">🆕 PLM Tool Updates</div>
+            <p class="muted">Stay up to date with the latest changes to the PLM tool. Complete each update quiz to confirm your understanding.</p>
+          </div>
+          <div id="updates-status-badge" class="pill pl-gn" style="font-size:13px;padding:8px 16px;flex-shrink:0;">✅ Up to Date</div>
+        </div>
+        <div id="updates-timeline">
+          <div class="empty">Loading updates...</div>
         </div>
       </div>
     </div>
-    <div>
-      <div class="card mb16">
-        <div class="sec-t" style="font-size:15px;">Resources & Downloads</div>
-        <div id="mod-resources"></div>
+
+    <!-- ═══ TRACKS ═══ -->
+    <div class="pg" id="pg-tracks">
+      <div class="mb24">
+        <div class="lbl mb16">Training Hub</div>
+        <div class="sec-t" style="font-size:26px;">Choose Your Learning Track</div>
+        <p class="muted">Complete each track in order to unlock the next level and earn your badges.</p>
       </div>
-      <div style="background:rgba(29,111,160,.05);border:1.5px dashed rgba(29,111,160,.2);border-radius:var(--r);padding:16px;">
-        <div style="font-size:13px;color:var(--u-blue);line-height:1.7;">
-          <strong>🔗 Auto-saved to SharePoint</strong><br>
-          Your progress is automatically saved to the <strong>PLM Hub SharePoint lists</strong> when you pass the quiz. No manual action needed.
+      <div class="g2" id="tracks-grid"></div>
+    </div>
+
+    <!-- ═══ MODULE PLAYER ═══ -->
+    <div class="pg" id="pg-module">
+      <button class="back-btn" onclick="showPg('tracks')">← Back to Training Tracks</button>
+      <div class="g2" style="align-items:start;gap:26px;">
+        <div>
+          <div class="row mb16" style="flex-wrap:wrap;gap:7px;" id="mod-pills"></div>
+          <h2 id="mod-title" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:7px;"></h2>
+          <p class="muted mb24" id="mod-desc"></p>
+          <div class="vw" id="mod-video"></div>
+          <div class="card mt16">
+            <div class="row btw" style="margin-bottom:7px;"><span class="lbl">Module Status</span><span style="font-size:12px;color:var(--u-blue);font-weight:600;" id="mod-status-txt">Watch the video, then take the quiz</span></div>
+            <div class="pt"><div class="pf pf-bl" id="mod-prog-bar" style="width:0%"></div></div>
+            <div class="row mt16" style="gap:9px;">
+              <button class="btn btn-gh" style="flex:1;justify-content:center;" onclick="showPg('tracks')">← Tracks</button>
+              <button class="btn btn-p" style="flex:2;justify-content:center;" onclick="showPg('quiz')">Take Quiz →</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card mb16">
+            <div class="sec-t" style="font-size:15px;">Resources & Downloads</div>
+            <div id="mod-resources"></div>
+          </div>
+          <div style="background:rgba(29,111,160,.05);border:1.5px dashed rgba(29,111,160,.2);border-radius:var(--r);padding:16px;">
+            <div style="font-size:13px;color:var(--u-blue);line-height:1.7;">
+              <strong>🔗 Auto-saved to SharePoint</strong><br>
+              Your progress is automatically saved to the <strong>PLM Hub SharePoint lists</strong> when you pass the quiz. No manual action needed.
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ═══ QUIZ ═══ -->
-<div class="pg" id="pg-quiz">
-  <button class="back-btn" onclick="showPg('module')">← Back to Module</button>
-  <div style="max-width:720px;">
-    <div class="row mb16" style="flex-wrap:wrap;gap:7px;">
-      <div class="pill pl-bl">❓ Knowledge Check</div>
-      <div class="pill pl-am" id="q-module-pill">Module Quiz</div>
-    </div>
-    <h2 id="q-heading" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;"></h2>
-    <p class="muted mb24">You need <strong>70% or above</strong> to pass and unlock the next module.</p>
-    <div class="qdots" id="q-dots"></div>
-    <div class="card" id="q-card">
-      <div class="row btw mb24">
-        <div class="lbl">Question <span id="q-num">1</span> of <span id="q-total">?</span></div>
+    <!-- ═══ QUIZ ═══ -->
+    <div class="pg" id="pg-quiz">
+      <button class="back-btn" onclick="showPg('module')">← Back to Module</button>
+      <div style="max-width:720px;">
+        <div class="row mb16" style="flex-wrap:wrap;gap:7px;">
+          <div class="pill pl-bl">❓ Knowledge Check</div>
+          <div class="pill pl-am" id="q-module-pill">Module Quiz</div>
+        </div>
+        <h2 id="q-heading" style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:5px;"></h2>
+        <p class="muted mb24">You need <strong>70% or above</strong> to pass and unlock the next module.</p>
+        <div class="qdots" id="q-dots"></div>
+        <div class="card" id="q-card">
+          <div class="row btw mb24">
+            <div class="lbl">Question <span id="q-num">1</span> of <span id="q-total">?</span></div>
+          </div>
+          <div id="q-text" style="font-size:16px;font-weight:500;line-height:1.65;margin-bottom:22px;"></div>
+          <div id="q-opts"></div>
+          <div id="q-feedback" style="display:none;margin-top:14px;padding:13px 16px;border-radius:10px;font-size:13px;"></div>
+          <div class="row" style="justify-content:flex-end;margin-top:22px;gap:9px;">
+            <button class="btn btn-gh" id="q-prev" onclick="prevQ()">← Previous</button>
+            <button class="btn btn-p" id="q-check" onclick="checkQ()">Check Answer →</button>
+            <button class="btn btn-p" id="q-next" onclick="nextQ()" style="display:none;">Next →</button>
+          </div>
+        </div>
+        <div class="rb pass" id="rb-pass">
+          <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+          <div class="rs pass" id="rb-score-pass">85%</div>
+          <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">You Passed!</h3>
+          <p class="muted mb24">Your score has been saved to SharePoint and the next module is now unlocked.</p>
+          <div class="row" style="justify-content:center;gap:10px;">
+            <button class="btn btn-gh" onclick="showPg('tracks')">Back to Tracks</button>
+            <button class="btn btn-p" onclick="showPg('tracks')">Next Module →</button>
+          </div>
+        </div>
+        <div class="rb fail" id="rb-fail">
+          <div style="font-size:48px;margin-bottom:12px;">😔</div>
+          <div class="rs fail" id="rb-score-fail">55%</div>
+          <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">Not quite!</h3>
+          <p class="muted mb24">You need 70% to pass. Review the module and try again.</p>
+          <div class="row" style="justify-content:center;gap:10px;">
+            <button class="btn btn-gh" onclick="showPg('module')">Review Module</button>
+            <button class="btn btn-p" onclick="resetQuiz()">Retry Quiz</button>
+          </div>
+        </div>
       </div>
-      <div id="q-text" style="font-size:16px;font-weight:500;line-height:1.65;margin-bottom:22px;"></div>
-      <div id="q-opts"></div>
-      <div id="q-feedback" style="display:none;margin-top:14px;padding:13px 16px;border-radius:10px;font-size:13px;"></div>
-      <div class="row" style="justify-content:flex-end;margin-top:22px;gap:9px;">
-        <button class="btn btn-gh" id="q-prev" onclick="prevQ()">← Previous</button>
-        <button class="btn btn-p" id="q-check" onclick="checkQ()">Check Answer →</button>
-        <button class="btn btn-p" id="q-next" onclick="nextQ()" style="display:none;">Next →</button>
-      </div>
     </div>
-    <div class="rb pass" id="rb-pass">
-      <div style="font-size:48px;margin-bottom:12px;">🎉</div>
-      <div class="rs pass" id="rb-score-pass">85%</div>
-      <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">You Passed!</h3>
-      <p class="muted mb24">Your score has been saved to SharePoint and the next module is now unlocked.</p>
-      <div class="row" style="justify-content:center;gap:10px;">
-        <button class="btn btn-gh" onclick="showPg('tracks')">Back to Tracks</button>
-        <button class="btn btn-p" onclick="showPg('tracks')">Next Module →</button>
-      </div>
-    </div>
-    <div class="rb fail" id="rb-fail">
-      <div style="font-size:48px;margin-bottom:12px;">😔</div>
-      <div class="rs fail" id="rb-score-fail">55%</div>
-      <h3 style="margin:10px 0 5px;font-family:'Playfair Display',serif;font-size:22px;">Not quite!</h3>
-      <p class="muted mb24">You need 70% to pass. Review the module and try again.</p>
-      <div class="row" style="justify-content:center;gap:10px;">
-        <button class="btn btn-gh" onclick="showPg('module')">Review Module</button>
-        <button class="btn btn-p" onclick="resetQuiz()">Retry Quiz</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- ═══ PROFILE ═══ -->
-<div class="pg" id="pg-profile">
-  <div class="ph">
-    <div class="ph-av" id="pr-av">...</div>
-    <div class="ph-inf f1">
-      <h2 id="pr-nm">Loading...</h2>
-      <p id="pr-rl">Unilever · PLM Learning Hub</p>
-      <div class="row" style="flex-wrap:wrap;gap:7px;">
-        <div class="pill" style="background:rgba(255,255,255,.15);color:#fff;" id="pr-lvl">📚 Learning</div>
-        <div class="pill" style="background:rgba(107,181,63,.25);color:#9ED96A;">🏅 <span id="pr-bc">0</span> Badges</div>
+    <!-- ═══ PROFILE ═══ -->
+    <div class="pg" id="pg-profile">
+      <div class="ph">
+        <div class="ph-av" id="pr-av">...</div>
+        <div class="ph-inf f1">
+          <h2 id="pr-nm">Loading...</h2>
+          <p id="pr-rl">Unilever · PLM Learning Hub</p>
+          <div class="row" style="flex-wrap:wrap;gap:7px;">
+            <div class="pill" style="background:rgba(255,255,255,.15);color:#fff;" id="pr-lvl">📚 Learning</div>
+            <div class="pill" style="background:rgba(107,181,63,.25);color:#9ED96A;">🏅 <span id="pr-bc">0</span> Badges</div>
+          </div>
+        </div>
+        <div class="ph-stats">
+          <div><div class="ps-n" id="pr-pct">0%</div><div class="ps-l">Complete</div></div>
+          <div><div class="ps-n" id="pr-sc">—</div><div class="ps-l">Avg Score</div></div>
+        </div>
+      </div>
+      <div class="g2" style="align-items:start;gap:22px;">
+        <div>
+          <!-- Role Card -->
+          <div class="card mb24">
+            <div class="sec-t" style="font-size:17px;">My PIT Role</div>
+            <div id="pr-role-display">
+              <div class="empty">No role selected yet</div>
+            </div>
+            <button class="btn btn-gh btn-full mt16" onclick="showPg('tracks');setTimeout(()=>selectRole(''),100)">Change Role</button>
+          </div>
+          <div class="card mb24">
+            <div class="sec-t" style="font-size:17px;">Completed Modules</div>
+            <div class="scrolly" id="pr-modules"><div class="empty">Loading...</div></div>
+            <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-t" style="font-size:17px;">All Badges</div>
+          <div class="g2" style="gap:10px;" id="pr-badges"></div>
+        </div>
       </div>
     </div>
-    <div class="ph-stats">
-      <div><div class="ps-n" id="pr-pct">0%</div><div class="ps-l">Complete</div></div>
-      <div><div class="ps-n" id="pr-sc">—</div><div class="ps-l">Avg Score</div></div>
+
+    <!-- ═══ FAQ ═══ -->
+    <div class="pg" id="pg-faq">
+      <div class="mb24">
+        <div class="lbl mb16">Help & Support</div>
+        <div class="sec-t" style="font-size:26px;">Frequently Asked Questions</div>
+        <p class="muted">Find answers to common questions about the PIT tool. Can't find what you're looking for? Contact your PLM Administrator.</p>
+      </div>
+      <!-- Search -->
+      <div style="margin-bottom:24px;">
+        <input type="text" id="faq-search" placeholder="🔍 Search questions..." oninput="filterFAQs(this.value)"
+          style="width:100%;max-width:500px;padding:13px 18px;border:2px solid #C8D6E5;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#000;">
+      </div>
+      <!-- Category tabs -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;" id="faq-cats"></div>
+      <!-- FAQ list -->
+      <div id="faq-list" style="max-width:800px;"></div>
     </div>
-  </div>
-  <div class="g2" style="align-items:start;gap:22px;">
-    <div>
-      <div class="card mb24">
-        <div class="sec-t" style="font-size:17px;">Completed Modules</div>
-        <div class="scrolly" id="pr-modules"><div class="empty">Loading...</div></div>
-        <button class="btn btn-p btn-full mt16" onclick="showPg('tracks')">Continue Learning →</button>
+
+    <!-- ═══ CONTENT LIBRARY ═══ -->
+    <div class="pg" id="pg-library">
+      <div class="mb24">
+        <div class="lbl mb16">PLM Hub Resources</div>
+        <div class="sec-t" style="font-size:26px;">Content Library</div>
+        <p class="muted">Browse and search all training materials, videos, presentations and documents from the PLM Hub.</p>
+      </div>
+
+      <!-- Search + Filter Bar -->
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;align-items:center;">
+        <input type="text" id="lib-search" placeholder="🔍 Search content..." oninput="filterLibrary()"
+          style="flex:1;min-width:200px;padding:13px 18px;border:2px solid #C8D6E5;border-radius:12px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;color:#000;">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;" id="lib-type-filters">
+          <button onclick="setLibFilter('all')" id="lf-all" class="btn btn-p btn-sm">All</button>
+          <button onclick="setLibFilter('folder')" id="lf-folder" class="btn btn-gh btn-sm">📁 Folders</button>
+          <button onclick="setLibFilter('video')" id="lf-video" class="btn btn-gh btn-sm">🎥 Videos</button>
+          <button onclick="setLibFilter('ppt')" id="lf-ppt" class="btn btn-gh btn-sm">📊 Presentations</button>
+          <button onclick="setLibFilter('pdf')" id="lf-pdf" class="btn btn-gh btn-sm">📄 PDFs</button>
+          <button onclick="setLibFilter('doc')" id="lf-doc" class="btn btn-gh btn-sm">📝 Documents</button>
+          <button onclick="setLibFilter('other')" id="lf-other" class="btn btn-gh btn-sm">🔗 Other</button>
+        </div>
+        <button onclick="loadLibrary()" class="btn btn-gh btn-sm">🔄 Refresh</button>
+      </div>
+
+      <!-- Breadcrumb -->
+      <div id="lib-breadcrumb" style="display:flex;align-items:center;gap:6px;font-size:13px;color:#666;margin-bottom:16px;flex-wrap:wrap;"></div>
+
+      <!-- Stats bar -->
+      <div id="lib-stats" style="font-size:13px;color:#666;margin-bottom:16px;"></div>
+
+      <!-- Content grid -->
+      <div id="lib-content">
+        <div class="empty">
+          <div style="font-size:48px;margin-bottom:16px;">📂</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px;color:#000;">Loading PLM Hub Resources...</div>
+          <div style="color:#666;">Connecting to SharePoint</div>
+        </div>
+      </div>
+
+      <!-- Inline video player -->
+      <div id="lib-video-player" style="display:none;position:fixed;inset:0;background:rgba(6,26,74,.9);z-index:8000;align-items:center;justify-content:center;backdrop-filter:blur(4px);">
+        <div style="width:90%;max-width:900px;background:#000;border-radius:16px;overflow:hidden;position:relative;">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:#061A4A;">
+            <div id="lib-video-title" style="font-size:14px;font-weight:600;color:#fff;"></div>
+            <button onclick="closeLibVideo()" style="background:none;border:none;color:#fff;font-size:22px;cursor:pointer;line-height:1;">×</button>
+          </div>
+          <div style="position:relative;padding-top:56.25%;">
+            <iframe id="lib-video-frame" style="position:absolute;inset:0;width:100%;height:100%;border:none;" allowfullscreen allow="autoplay; fullscreen"></iframe>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card">
-      <div class="sec-t" style="font-size:17px;">All Badges</div>
-      <div class="g2" style="gap:10px;" id="pr-badges"></div>
-    </div>
-  </div>
-</div>
-```
 
   </div><!-- /mc -->
 </div><!-- /scr-app -->
 
 <!-- ══ ADMIN PANEL ══ -->
-
 <div class="screen" id="scr-admin">
   <div class="adm-bar">
     <div class="row" style="gap:14px;">
@@ -643,6 +715,7 @@ z-index:9999;transition:opacity .5s ease;
         <button class="adm-tab active" onclick="admTab('modules',this)">📚 Modules</button>
         <button class="adm-tab" onclick="admTab('quizzes',this)">❓ Quizzes</button>
         <button class="adm-tab" onclick="admTab('updates',this)">🆕 Updates</button>
+        <button class="adm-tab" onclick="admTab('faqs',this)">💬 FAQs</button>
         <button class="adm-tab" onclick="admTab('users',this)">👥 Users</button>
         <button class="adm-tab" onclick="admTab('setup',this)">⚙️ Setup</button>
       </div>
@@ -651,182 +724,212 @@ z-index:9999;transition:opacity .5s ease;
   </div>
   <div class="adm-body">
 
-```
-<!-- MODULES -->
-<div class="adm-pg active" id="adm-modules">
-  <div class="row btw mb24">
-    <div><h3 style="font-size:18px;font-weight:700;">Training Modules</h3><p class="muted">Changes appear instantly for all users.</p></div>
-    <button class="btn btn-p" onclick="showModForm()">+ Add Module</button>
-  </div>
-  <div class="card mb24" id="mod-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
-    <div class="sec-t" style="font-size:16px;" id="mod-form-ttl">Add New Module</div>
-    <div class="g2">
-      <div class="af"><label>Module Title</label><input id="mf-title" placeholder="e.g. PLM Overview & Navigation"></div>
-      <div class="af"><label>Track / Level</label>
-        <select id="mf-track"><option value="Beginner">🌱 Beginner</option><option value="Intermediate">⚡ Intermediate</option><option value="Advanced">🔥 Advanced</option><option value="Admin">💎 Admin / Super User</option></select>
+    <!-- MODULES -->
+    <div class="adm-pg active" id="adm-modules">
+      <div class="row btw mb24">
+        <div><h3 style="font-size:18px;font-weight:700;">Training Modules</h3><p class="muted">Changes appear instantly for all users.</p></div>
+        <button class="btn btn-p" onclick="showModForm()">+ Add Module</button>
       </div>
+      <div class="card mb24" id="mod-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+        <div class="sec-t" style="font-size:16px;" id="mod-form-ttl">Add New Module</div>
+        <div class="g2">
+          <div class="af"><label>Module Title</label><input id="mf-title" placeholder="e.g. PLM Overview & Navigation"></div>
+          <div class="af"><label>Track / Level</label>
+            <select id="mf-track"><option value="Beginner">🌱 Beginner</option><option value="Intermediate">⚡ Intermediate</option><option value="Advanced">🔥 Advanced</option><option value="Admin">💎 Admin / Super User</option></select>
+          </div>
+        </div>
+        <div class="af"><label>Description</label><textarea id="mf-desc" placeholder="What will users learn?"></textarea></div>
+        <div class="g2">
+          <div class="af"><label>Microsoft Stream Embed URL</label><input id="mf-video" placeholder="https://web.microsoftstream.com/embed/video/..."></div>
+          <div class="af"><label>Duration</label><input id="mf-dur" placeholder="e.g. 18 mins"></div>
+        </div>
+        <div class="af"><label>PDF Resource URL (GitHub raw link or SharePoint URL)</label><input id="mf-pdf" placeholder="https://..."></div>
+        <div class="af"><label>Order Number</label><input type="number" id="mf-order" value="1" min="1"></div>
+        <div class="row" style="gap:9px;">
+          <button class="btn btn-p" onclick="saveModule()">💾 Save Module</button>
+          <button class="btn btn-gh" onclick="cancelModForm()">Cancel</button>
+        </div>
+      </div>
+      <div id="modules-list"><div class="empty">Loading modules...</div></div>
     </div>
-    <div class="af"><label>Description</label><textarea id="mf-desc" placeholder="What will users learn?"></textarea></div>
-    <div class="g2">
-      <div class="af"><label>Microsoft Stream Embed URL</label><input id="mf-video" placeholder="https://web.microsoftstream.com/embed/video/..."></div>
-      <div class="af"><label>Duration</label><input id="mf-dur" placeholder="e.g. 18 mins"></div>
-    </div>
-    <div class="af"><label>PDF Resource URL (GitHub raw link or SharePoint URL)</label><input id="mf-pdf" placeholder="https://..."></div>
-    <div class="af"><label>Order Number</label><input type="number" id="mf-order" value="1" min="1"></div>
-    <div class="row" style="gap:9px;">
-      <button class="btn btn-p" onclick="saveModule()">💾 Save Module</button>
-      <button class="btn btn-gh" onclick="cancelModForm()">Cancel</button>
-    </div>
-  </div>
-  <div id="modules-list"><div class="empty">Loading modules...</div></div>
-</div>
 
-<!-- QUIZZES -->
-<div class="adm-pg" id="adm-quizzes">
-  <div class="row btw mb24">
-    <div><h3 style="font-size:18px;font-weight:700;">Quiz Questions</h3><p class="muted">Add 3–5 questions per module. Pass mark: 70%.</p></div>
-    <button class="btn btn-p" onclick="showQuizForm()">+ Add Question</button>
-  </div>
-  <div class="card mb24" id="quiz-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
-    <div class="sec-t" style="font-size:16px;">Add Quiz Question</div>
-    <div class="af"><label>Module</label><select id="qf-mod"></select></div>
-    <div class="af"><label>Question</label><textarea id="qf-q" placeholder="Type your question..."></textarea></div>
-    <div class="g2">
-      <div class="af"><label>Option A</label><input id="qf-a"></div>
-      <div class="af"><label>Option B</label><input id="qf-b"></div>
-      <div class="af"><label>Option C</label><input id="qf-c"></div>
-      <div class="af"><label>Option D</label><input id="qf-d"></div>
+    <!-- QUIZZES -->
+    <div class="adm-pg" id="adm-quizzes">
+      <div class="row btw mb24">
+        <div><h3 style="font-size:18px;font-weight:700;">Quiz Questions</h3><p class="muted">Add 3–5 questions per module. Pass mark: 70%.</p></div>
+        <button class="btn btn-p" onclick="showQuizForm()">+ Add Question</button>
+      </div>
+      <div class="card mb24" id="quiz-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+        <div class="sec-t" style="font-size:16px;">Add Quiz Question</div>
+        <div class="af"><label>Module</label><select id="qf-mod"></select></div>
+        <div class="af"><label>Question</label><textarea id="qf-q" placeholder="Type your question..."></textarea></div>
+        <div class="g2">
+          <div class="af"><label>Option A</label><input id="qf-a"></div>
+          <div class="af"><label>Option B</label><input id="qf-b"></div>
+          <div class="af"><label>Option C</label><input id="qf-c"></div>
+          <div class="af"><label>Option D</label><input id="qf-d"></div>
+        </div>
+        <div class="af"><label>Correct Answer</label>
+          <select id="qf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
+        </div>
+        <div class="af"><label>Explanation (shown after answer)</label><textarea id="qf-exp" placeholder="Why is this correct?"></textarea></div>
+        <div class="row" style="gap:9px;">
+          <button class="btn btn-p" onclick="saveQuiz()">💾 Save Question</button>
+          <button class="btn btn-gh" onclick="cancelQuizForm()">Cancel</button>
+        </div>
+      </div>
+      <div id="quiz-list"><div class="empty">Loading quiz questions...</div></div>
     </div>
-    <div class="af"><label>Correct Answer</label>
-      <select id="qf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
-    </div>
-    <div class="af"><label>Explanation (shown after answer)</label><textarea id="qf-exp" placeholder="Why is this correct?"></textarea></div>
-    <div class="row" style="gap:9px;">
-      <button class="btn btn-p" onclick="saveQuiz()">💾 Save Question</button>
-      <button class="btn btn-gh" onclick="cancelQuizForm()">Cancel</button>
-    </div>
-  </div>
-  <div id="quiz-list"><div class="empty">Loading quiz questions...</div></div>
-</div>
 
-<!-- UPDATES -->
-<div class="adm-pg" id="adm-updates">
-  <div class="row btw mb24">
-    <div><h3 style="font-size:18px;font-weight:700;">PLM Tool Updates</h3><p class="muted">Add updates that appear on the dashboard. Each update has a mini-quiz users must pass.</p></div>
-    <button class="btn btn-p" onclick="showUpdateForm()">+ Add Update</button>
-  </div>
-  <!-- Add Update Form -->
-  <div class="card mb24" id="update-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
-    <div class="sec-t" style="font-size:16px;" id="update-form-ttl">Add New Update</div>
-    <div class="g2">
-      <div class="af"><label>Version (e.g. v2.4)</label><input id="uf-version" placeholder="v2.4"></div>
-      <div class="af"><label>Date (e.g. 13 May 2026)</label><input id="uf-date" placeholder="13 May 2026"></div>
-    </div>
-    <div class="af"><label>Update Title</label><input id="uf-title" placeholder="e.g. New Bulk Upload Feature"></div>
-    <div class="af"><label>Description (what changed and why it matters)</label><textarea id="uf-desc" placeholder="Describe the update in plain language..."></textarea></div>
-    <div class="af"><label>Category</label>
-      <select id="uf-cat">
-        <option value="New Feature">🆕 New Feature</option>
-        <option value="Improvement">⚡ Improvement</option>
-        <option value="Bug Fix">🐛 Bug Fix</option>
-        <option value="Important">⚠️ Important</option>
-      </select>
-    </div>
-    <div class="af"><label>Mandatory? (users must complete quiz to proceed)</label>
-      <select id="uf-mandatory"><option value="true">Yes — Mandatory</option><option value="false">No — Optional</option></select>
-    </div>
-    <div style="background:#F0F4F8;border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-size:13px;font-weight:700;color:#000;margin-bottom:12px;">Mini-Quiz Question</div>
-      <div class="af"><label>Question</label><textarea id="uf-q" placeholder="e.g. Where can you find the new bulk upload feature?"></textarea></div>
-      <div class="g2">
-        <div class="af"><label>Option A</label><input id="uf-a" placeholder="Option A"></div>
-        <div class="af"><label>Option B</label><input id="uf-b" placeholder="Option B"></div>
-        <div class="af"><label>Option C</label><input id="uf-c" placeholder="Option C"></div>
-        <div class="af"><label>Option D</label><input id="uf-d" placeholder="Option D"></div>
+    <!-- UPDATES -->
+    <div class="adm-pg" id="adm-updates">
+      <div class="row btw mb24">
+        <div><h3 style="font-size:18px;font-weight:700;">PLM Tool Updates</h3><p class="muted">Add updates that appear on the dashboard. Each update has a mini-quiz users must pass.</p></div>
+        <button class="btn btn-p" onclick="showUpdateForm()">+ Add Update</button>
       </div>
-      <div class="af"><label>Correct Answer</label>
-        <select id="uf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
+      <!-- Add Update Form -->
+      <div class="card mb24" id="update-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+        <div class="sec-t" style="font-size:16px;" id="update-form-ttl">Add New Update</div>
+        <div class="g2">
+          <div class="af"><label>Version (e.g. v2.4)</label><input id="uf-version" placeholder="v2.4"></div>
+          <div class="af"><label>Date (e.g. 13 May 2026)</label><input id="uf-date" placeholder="13 May 2026"></div>
+        </div>
+        <div class="af"><label>Update Title</label><input id="uf-title" placeholder="e.g. New Bulk Upload Feature"></div>
+        <div class="af"><label>Description (what changed and why it matters)</label><textarea id="uf-desc" placeholder="Describe the update in plain language..."></textarea></div>
+        <div class="af"><label>Category</label>
+          <select id="uf-cat">
+            <option value="New Feature">🆕 New Feature</option>
+            <option value="Improvement">⚡ Improvement</option>
+            <option value="Bug Fix">🐛 Bug Fix</option>
+            <option value="Important">⚠️ Important</option>
+          </select>
+        </div>
+        <div class="af"><label>Mandatory? (users must complete quiz to proceed)</label>
+          <select id="uf-mandatory"><option value="true">Yes — Mandatory</option><option value="false">No — Optional</option></select>
+        </div>
+        <div style="background:#F0F4F8;border-radius:12px;padding:16px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:700;color:#000;margin-bottom:12px;">Mini-Quiz Question</div>
+          <div class="af"><label>Question</label><textarea id="uf-q" placeholder="e.g. Where can you find the new bulk upload feature?"></textarea></div>
+          <div class="g2">
+            <div class="af"><label>Option A</label><input id="uf-a" placeholder="Option A"></div>
+            <div class="af"><label>Option B</label><input id="uf-b" placeholder="Option B"></div>
+            <div class="af"><label>Option C</label><input id="uf-c" placeholder="Option C"></div>
+            <div class="af"><label>Option D</label><input id="uf-d" placeholder="Option D"></div>
+          </div>
+          <div class="af"><label>Correct Answer</label>
+            <select id="uf-cor"><option value="a">A</option><option value="b">B</option><option value="c">C</option><option value="d">D</option></select>
+          </div>
+          <div class="af"><label>Explanation</label><input id="uf-exp" placeholder="Why is this the correct answer?"></div>
+        </div>
+        <div class="row" style="gap:9px;">
+          <button class="btn btn-p" onclick="saveUpdate()">💾 Save Update</button>
+          <button class="btn btn-gh" onclick="cancelUpdateForm()">Cancel</button>
+        </div>
       </div>
-      <div class="af"><label>Explanation</label><input id="uf-exp" placeholder="Why is this the correct answer?"></div>
+      <div id="updates-admin-list"><div class="empty">No updates yet. Add your first update above.</div></div>
     </div>
-    <div class="row" style="gap:9px;">
-      <button class="btn btn-p" onclick="saveUpdate()">💾 Save Update</button>
-      <button class="btn btn-gh" onclick="cancelUpdateForm()">Cancel</button>
-    </div>
-  </div>
-  <div id="updates-admin-list"><div class="empty">No updates yet. Add your first update above.</div></div>
-</div>
 
-<!-- USERS -->
-<div class="adm-pg" id="adm-users">
-  <div class="row btw mb24">
-    <div><h3 style="font-size:18px;font-weight:700;">User Progress</h3><p class="muted">Live data from SharePoint PLM_UserProgress list.</p></div>
-    <button class="btn btn-gh btn-sm" onclick="loadUsers()">🔄 Refresh</button>
-  </div>
-  <div class="card"><div id="users-table"><div class="empty">Loading user data...</div></div></div>
-</div>
+    <!-- FAQs -->
+    <div class="adm-pg" id="adm-faqs">
+      <div class="row btw mb24">
+        <div><h3 style="font-size:18px;font-weight:700;">FAQ Management</h3><p class="muted">Add, edit or delete FAQ questions. Changes appear instantly for all users.</p></div>
+        <button class="btn btn-p" onclick="showFaqForm()">+ Add FAQ</button>
+      </div>
+      <!-- Add/Edit FAQ Form -->
+      <div class="card mb24" id="faq-form" style="display:none;border:2px solid rgba(29,111,160,.2);">
+        <div class="sec-t" style="font-size:16px;" id="faq-form-ttl">Add New FAQ</div>
+        <div class="g2">
+          <div class="af"><label>Category</label>
+            <select id="ff-cat">
+              <option value="Getting Started">Getting Started</option>
+              <option value="Approvals">Approvals</option>
+              <option value="Records">Records</option>
+              <option value="Support">Support</option>
+              <option value="Roles">Roles</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="af"><label>Order (1 = first)</label><input type="number" id="ff-order" value="1" min="1"></div>
+        </div>
+        <div class="af"><label>Question</label><input id="ff-q" placeholder="e.g. How do I access the PIT tool?"></div>
+        <div class="af"><label>Answer</label><textarea id="ff-a" placeholder="Type the full answer here..." style="min-height:100px;"></textarea></div>
+        <div class="row" style="gap:9px;">
+          <button class="btn btn-p" onclick="saveFaq()">💾 Save FAQ</button>
+          <button class="btn btn-gh" onclick="cancelFaqForm()">Cancel</button>
+        </div>
+      </div>
+      <div id="faqs-admin-list"><div class="empty">Loading FAQs...</div></div>
+    </div>
 
-<!-- SETUP -->
-<div class="adm-pg" id="adm-setup">
-  <h3 style="font-size:18px;font-weight:700;margin-bottom:6px;">SharePoint Setup Guide</h3>
-  <p class="muted mb24">Create these 4 lists on your PLM Hub SharePoint site. Go to <strong>Site Contents → New → List</strong> for each one.</p>
-  <div class="g2" style="gap:16px;">
-    <div class="card">
-      <div class="sec-t" style="font-size:15px;">📋 PLM_Modules</div>
-      <div style="font-size:13px;line-height:2;color:#000000;">
-        <strong>Title</strong> — Single line of text<br>
-        <strong>Track</strong> — Choice (Beginner, Intermediate, Advanced, Admin)<br>
-        <strong>Description</strong> — Multiple lines of text<br>
-        <strong>VideoURL</strong> — Hyperlink<br>
-        <strong>Duration</strong> — Single line of text<br>
-        <strong>PDFUrl</strong> — Hyperlink<br>
-        <strong>OrderNumber</strong> — Number<br>
-        <strong>IsActive</strong> — Yes/No
+    <!-- USERS -->
+    <div class="adm-pg" id="adm-users">
+      <div class="row btw mb24">
+        <div><h3 style="font-size:18px;font-weight:700;">User Progress</h3><p class="muted">Live data from SharePoint PLM_UserProgress list.</p></div>
+        <button class="btn btn-gh btn-sm" onclick="loadUsers()">🔄 Refresh</button>
+      </div>
+      <div class="card"><div id="users-table"><div class="empty">Loading user data...</div></div></div>
+    </div>
+
+    <!-- SETUP -->
+    <div class="adm-pg" id="adm-setup">
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:6px;">SharePoint Setup Guide</h3>
+      <p class="muted mb24">Create these 4 lists on your PLM Hub SharePoint site. Go to <strong>Site Contents → New → List</strong> for each one.</p>
+      <div class="g2" style="gap:16px;">
+        <div class="card">
+          <div class="sec-t" style="font-size:15px;">📋 PLM_Modules</div>
+          <div style="font-size:13px;line-height:2;color:#000000;">
+            <strong>Title</strong> — Single line of text<br>
+            <strong>Track</strong> — Choice (Beginner, Intermediate, Advanced, Admin)<br>
+            <strong>Description</strong> — Multiple lines of text<br>
+            <strong>VideoURL</strong> — Hyperlink<br>
+            <strong>Duration</strong> — Single line of text<br>
+            <strong>PDFUrl</strong> — Hyperlink<br>
+            <strong>OrderNumber</strong> — Number<br>
+            <strong>IsActive</strong> — Yes/No
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-t" style="font-size:15px;">📊 PLM_UserProgress</div>
+          <div style="font-size:13px;line-height:2;color:#000000;">
+            <strong>Title</strong> — Single line of text<br>
+            <strong>UserEmail</strong> — Single line of text<br>
+            <strong>UserName</strong> — Single line of text<br>
+            <strong>ModuleTitle</strong> — Single line of text<br>
+            <strong>Completed</strong> — Yes/No<br>
+            <strong>CompletionDate</strong> — Date and Time<br>
+            <strong>TimeSpentMins</strong> — Number
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-t" style="font-size:15px;">✅ PLM_QuizScores</div>
+          <div style="font-size:13px;line-height:2;color:#000000;">
+            <strong>Title</strong> — Single line of text<br>
+            <strong>UserEmail</strong> — Single line of text<br>
+            <strong>UserName</strong> — Single line of text<br>
+            <strong>ModuleTitle</strong> — Single line of text<br>
+            <strong>Score</strong> — Number<br>
+            <strong>Passed</strong> — Yes/No<br>
+            <strong>AttemptDate</strong> — Date and Time
+          </div>
+        </div>
+        <div class="card">
+          <div class="sec-t" style="font-size:15px;">🏅 PLM_Badges</div>
+          <div style="font-size:13px;line-height:2;color:#000000;">
+            <strong>Title</strong> — Single line of text<br>
+            <strong>UserEmail</strong> — Single line of text<br>
+            <strong>UserName</strong> — Single line of text<br>
+            <strong>BadgeName</strong> — Single line of text<br>
+            <strong>BadgeIcon</strong> — Single line of text<br>
+            <strong>EarnedDate</strong> — Date and Time
+          </div>
+        </div>
+      </div>
+      <div class="card mt16" style="background:rgba(107,181,63,.05);border:1.5px solid rgba(107,181,63,.2);margin-top:16px;">
+        <div style="font-size:13px;color:var(--u-green-dk);line-height:1.8;">
+          ✅ <strong>How auto-login works:</strong> When this HTML file is embedded inside your SharePoint PLM Hub page using the <strong>Embed web part</strong>, the user is already authenticated with their Unilever M365 account. The portal calls <code>/_api/web/currentuser</code> automatically using their browser session — pulling their exact name and email with zero login steps. No password. No form. Just straight to their personalised dashboard.
+        </div>
       </div>
     </div>
-    <div class="card">
-      <div class="sec-t" style="font-size:15px;">📊 PLM_UserProgress</div>
-      <div style="font-size:13px;line-height:2;color:#000000;">
-        <strong>Title</strong> — Single line of text<br>
-        <strong>UserEmail</strong> — Single line of text<br>
-        <strong>UserName</strong> — Single line of text<br>
-        <strong>ModuleTitle</strong> — Single line of text<br>
-        <strong>Completed</strong> — Yes/No<br>
-        <strong>CompletionDate</strong> — Date and Time<br>
-        <strong>TimeSpentMins</strong> — Number
-      </div>
-    </div>
-    <div class="card">
-      <div class="sec-t" style="font-size:15px;">✅ PLM_QuizScores</div>
-      <div style="font-size:13px;line-height:2;color:#000000;">
-        <strong>Title</strong> — Single line of text<br>
-        <strong>UserEmail</strong> — Single line of text<br>
-        <strong>UserName</strong> — Single line of text<br>
-        <strong>ModuleTitle</strong> — Single line of text<br>
-        <strong>Score</strong> — Number<br>
-        <strong>Passed</strong> — Yes/No<br>
-        <strong>AttemptDate</strong> — Date and Time
-      </div>
-    </div>
-    <div class="card">
-      <div class="sec-t" style="font-size:15px;">🏅 PLM_Badges</div>
-      <div style="font-size:13px;line-height:2;color:#000000;">
-        <strong>Title</strong> — Single line of text<br>
-        <strong>UserEmail</strong> — Single line of text<br>
-        <strong>UserName</strong> — Single line of text<br>
-        <strong>BadgeName</strong> — Single line of text<br>
-        <strong>BadgeIcon</strong> — Single line of text<br>
-        <strong>EarnedDate</strong> — Date and Time
-      </div>
-    </div>
-  </div>
-  <div class="card mt16" style="background:rgba(107,181,63,.05);border:1.5px solid rgba(107,181,63,.2);margin-top:16px;">
-    <div style="font-size:13px;color:var(--u-green-dk);line-height:1.8;">
-      ✅ <strong>How auto-login works:</strong> When this HTML file is embedded inside your SharePoint PLM Hub page using the <strong>Embed web part</strong>, the user is already authenticated with their Unilever M365 account. The portal calls <code>/_api/web/currentuser</code> automatically using their browser session — pulling their exact name and email with zero login steps. No password. No form. Just straight to their personalised dashboard.
-    </div>
-  </div>
-</div>
-```
 
   </div>
 </div>
@@ -835,7 +938,8 @@ z-index:9999;transition:opacity .5s ease;
 // ════════════════════════════
 // CONFIG
 // ════════════════════════════
-const SP_SITE = 'https://unilever.sharepoint.com/sites/TestSiteHUB';
+const SP_SITE = 'https://unilever.sharepoint.com/sites/TestSiteHUB'; // app hosting + data lists
+const SP_CONTENT_SITE = 'https://unilever.sharepoint.com/sites/PLMHub'; // training content library
 const ADMIN_PW = 'PLMHub00';
 const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
 
@@ -893,44 +997,73 @@ async function saveData(type, data){
 // ════════════════════════════
 // STATE
 // ════════════════════════════
-let user = { name:'', email:'', initials:'', jobTitle:'' };
+let user = { name:'', email:'', initials:'', jobTitle:'', pitRole:'' };
 let spOk = false;
 let modules = [];
 let quizData = {};
+let faqs = [];
 let progress = { completedModules:[], badges:[], avgScore:0 };
 let currentModule = null;
 let quiz = { questions:[], current:0, answers:{}, answered:false };
 let editModId = null;
 
 // ════════════════════════════
-// DEFAULT DATA
+// PIT ROLES & DEFAULT DATA
 // ════════════════════════════
+const PIT_ROLES = [
+  {key:'formulator',label:'Formulator',track:'CUC PIRD',emoji:'🧪'},
+  {key:'label_set_approver',label:'Label Set Approver',track:'CUC PIRD',emoji:'✅'},
+  {key:'primary_label_set_approver',label:'Primary Label Set Approver',track:'CUC PIRD',emoji:'⭐'},
+  {key:'consumer_test_label_approver',label:'Consumer Test Label Approver',track:'CUC PIRD',emoji:'🔬'},
+  {key:'product_label_developer',label:'Product Label Developer',track:'CU PIRD',emoji:'🎨'},
+  {key:'product_label_specialist',label:'Product Label Specialist',track:'CU PIRD',emoji:'📋'},
+  {key:'product_label_approver',label:'Product Label Approver',track:'CU PIRD',emoji:'👍'},
+  {key:'pit_dm_sme_approver',label:'PIT DM SME Approver',track:'PIT Data Maintenance',emoji:'🔧'},
+  {key:'pit_dm_language_approver',label:'PIT DM Language Translation Approver',track:'PIT Data Maintenance',emoji:'🌐'}
+];
+
 const DEFAULT_MODULES = [
-  {id:1,title:'PLM Overview & Navigation',track:'Beginner',desc:'Introduction to the PLM system — navigating screens, menus, and the interface.',videoUrl:'',duration:'18 mins',pdfUrl:'',order:1,active:true},
-  {id:2,title:'Understanding Product Records',track:'Beginner',desc:'Learn what a product information record is and how data is structured in PLM.',videoUrl:'',duration:'20 mins',pdfUrl:'',order:2,active:true},
-  {id:3,title:'Creating a Product Record',track:'Beginner',desc:'Step-by-step walkthrough of creating your first product record from scratch.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true},
-  {id:4,title:'Managing Product Attributes',track:'Intermediate',desc:'Deep dive into product attributes, field types, and data validation rules.',videoUrl:'',duration:'25 mins',pdfUrl:'',order:1,active:true},
-  {id:5,title:'Workflow & Approvals',track:'Intermediate',desc:'Submit product records through the approval workflow and manage rejections.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:2,active:true},
-  {id:6,title:'Versioning & History',track:'Intermediate',desc:'Understand version control, audit trails, and how to compare record versions.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true},
-  {id:7,title:'Bulk Data Management',track:'Advanced',desc:'Import and export large datasets, manage bulk updates and data quality.',videoUrl:'',duration:'35 mins',pdfUrl:'',order:1,active:true},
-  {id:8,title:'Integration & API Basics',track:'Advanced',desc:'How PLM connects with other Unilever systems and an introduction to the API.',videoUrl:'',duration:'40 mins',pdfUrl:'',order:2,active:true},
-  {id:9,title:'Advanced Reporting',track:'Advanced',desc:'Build custom reports and dashboards to track product data quality.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:3,active:true},
-  {id:10,title:'User & Permission Management',track:'Admin',desc:'Manage user roles, permissions, and access control across the PLM system.',videoUrl:'',duration:'28 mins',pdfUrl:'',order:1,active:true},
-  {id:11,title:'System Configuration',track:'Admin',desc:'Configure system settings, templates, and default values for your organisation.',videoUrl:'',duration:'35 mins',pdfUrl:'',order:2,active:true},
-  {id:12,title:'Audit & Compliance Tools',track:'Admin',desc:'Use built-in audit tools to monitor activity and ensure compliance.',videoUrl:'',duration:'30 mins',pdfUrl:'',order:3,active:true}
+  // ── SHARED (all roles) ──
+  {id:1,title:'PLM & PIT Overview',track:'Shared',roles:['all'],desc:'Introduction to the PLM system and the PIT tool — what it is, why it matters, and how it fits into Unilever\'s product lifecycle.',videoUrl:'',duration:'15 mins',pdfUrl:'',order:1,active:true},
+  {id:2,title:'Navigating the PIT Tool',track:'Shared',roles:['all'],desc:'Learn how to navigate the PIT tool interface — menus, dashboards, search, and key screens every user needs to know.',videoUrl:'',duration:'18 mins',pdfUrl:'',order:2,active:true},
+  {id:3,title:'Understanding Product Information Records',track:'Shared',roles:['all'],desc:'What is a Product Information Record? Learn the structure, fields and data that make up a PIT record.',videoUrl:'',duration:'20 mins',pdfUrl:'',order:3,active:true},
+  // ── CUC PIRD ──
+  {id:4,title:'Formulator: Creating & Submitting Records',track:'CUC PIRD',roles:['formulator'],desc:'Step-by-step guide for Formulators on creating, completing and submitting product information records in the PIT tool.',videoUrl:'',duration:'25 mins',pdfUrl:'',order:1,active:true},
+  {id:5,title:'Label Set Approval Process',track:'CUC PIRD',roles:['label_set_approver','primary_label_set_approver'],desc:'How to review, approve or reject label sets in the PIT tool. Understanding approval criteria and escalation paths.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:2,active:true},
+  {id:6,title:'Primary Label Set Approver Responsibilities',track:'CUC PIRD',roles:['primary_label_set_approver'],desc:'Advanced approval workflows for Primary Label Set Approvers — managing conflicts, overrides and final sign-off.',videoUrl:'',duration:'20 mins',pdfUrl:'',order:3,active:true},
+  {id:7,title:'Consumer Test Label Approval',track:'CUC PIRD',roles:['consumer_test_label_approver'],desc:'Specific workflows for Consumer Test Label Approvers — criteria, timelines and compliance requirements.',videoUrl:'',duration:'18 mins',pdfUrl:'',order:4,active:true},
+  // ── CU PIRD ──
+  {id:8,title:'Product Label Development in PIT',track:'CU PIRD',roles:['product_label_developer'],desc:'How Product Label Developers create and manage label content in the PIT tool — field requirements and best practices.',videoUrl:'',duration:'28 mins',pdfUrl:'',order:1,active:true},
+  {id:9,title:'Product Label Specialist Workflows',track:'CU PIRD',roles:['product_label_specialist'],desc:'Specialist workflows for managing complex label scenarios, variants and multi-market requirements.',videoUrl:'',duration:'25 mins',pdfUrl:'',order:2,active:true},
+  {id:10,title:'Product Label Approval & Sign-off',track:'CU PIRD',roles:['product_label_approver'],desc:'Review and approval responsibilities for Product Label Approvers — quality checks and final approval process.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true},
+  // ── PIT Data Maintenance ──
+  {id:11,title:'PIT Data Maintenance Overview',track:'PIT Data Maintenance',roles:['pit_dm_sme_approver','pit_dm_language_approver'],desc:'Introduction to data maintenance responsibilities in the PIT tool — what needs maintaining and when.',videoUrl:'',duration:'20 mins',pdfUrl:'',order:1,active:true},
+  {id:12,title:'SME Approval for Data Changes',track:'PIT Data Maintenance',roles:['pit_dm_sme_approver'],desc:'How PIT DM SME Approvers review, validate and approve data change requests in the PIT tool.',videoUrl:'',duration:'25 mins',pdfUrl:'',order:2,active:true},
+  {id:13,title:'Language Translation Approval',track:'PIT Data Maintenance',roles:['pit_dm_language_approver'],desc:'Managing translation approval workflows — reviewing translated content, quality standards and approval process.',videoUrl:'',duration:'22 mins',pdfUrl:'',order:3,active:true}
 ];
 
 const DEFAULT_QUIZZES = {
-  'PLM Overview & Navigation':[
-    {q:'What does PLM stand for?',opts:{a:'Product Lifecycle Management',b:'Product List Manager',c:'Project Launch Module',d:'Platform Lifecycle Monitor'},correct:'a',exp:'PLM stands for Product Lifecycle Management — it manages product data from creation through to retirement.'},
-    {q:'Where do you find the Product Information Records in the PLM system?',opts:{a:'Finance Module',b:'HR Portal',c:'Product Catalogue',d:'System Settings'},correct:'c',exp:'Product Information Records are found in the Product Catalogue section of the PLM system.'}
+  'PLM & PIT Overview':[
+    {q:'What does PIT stand for in the context of Unilever\'s PLM system?',opts:{a:'Product Information Tool',b:'Product Integration Terminal',c:'Process Input Tracker',d:'Product Index Table'},correct:'a',exp:'PIT stands for Product Information Tool — the key tool within PLM for managing product information records.'},
+    {q:'What is the primary purpose of the PIT tool?',opts:{a:'Manage employee timesheets',b:'Track supply chain shipments',c:'Manage product information records through their lifecycle',d:'Handle customer complaints'},correct:'c',exp:'The PIT tool manages product information records — ensuring accurate product data throughout the product lifecycle.'}
   ],
-  'Workflow & Approvals':[
-    {q:'When a product record is rejected, what is the first step the submitter should take?',opts:{a:'Delete and start again',b:'Review rejection comments and update fields',c:'Escalate to system admin',d:'Resubmit without changes'},correct:'b',exp:'Always review rejection comments first — they explain exactly what needs correcting before resubmitting.'},
-    {q:'Where can you track the status of a submitted approval?',opts:{a:'My Tasks dashboard',b:'Email inbox only',c:'Finance portal',d:'External SharePoint only'},correct:'a',exp:'The My Tasks dashboard shows all pending, approved and rejected submissions in real time.'},
-    {q:'What is the minimum approval required for a new product launch record?',opts:{a:'Team Lead only',b:'Department Head only',c:'Brand Manager and Supply Chain sign-off',d:'No approval required'},correct:'c',exp:'New product launch records require both Brand Manager and Supply Chain sign-off per Unilever policy.'}
+  'Label Set Approval Process':[
+    {q:'When reviewing a label set, what should you check first?',opts:{a:'Font size and colour',b:'Completeness of all mandatory fields',c:'Number of pages',d:'File format'},correct:'b',exp:'Always check completeness and accuracy of mandatory fields first before proceeding with approval.'},
+    {q:'If a label set has an error, what should you do?',opts:{a:'Approve and add a note',b:'Ignore minor errors',c:'Reject with clear comments explaining the issue',d:'Delete the record'},correct:'c',exp:'Reject with clear, specific comments so the submitter knows exactly what to fix.'}
+  ],
+  'Formulator: Creating & Submitting Records':[
+    {q:'What is the first step when creating a new product information record as a Formulator?',opts:{a:'Submit for approval immediately',b:'Complete all mandatory fields before saving',c:'Wait for manager approval to start',d:'Copy an existing record'},correct:'b',exp:'Always complete all mandatory fields before saving or submitting to avoid rejection.'}
   ]
 };
+
+const DEFAULT_FAQS = [
+  {id:1,question:'How do I access the PIT tool?',answer:'The PIT tool is accessible through the Unilever PLM system. Navigate to the PLM portal and select "Product Information Tool" from the main menu. Ensure you have the correct role assigned by your system administrator.',category:'Getting Started',order:1},
+  {id:2,question:'What do I do if I cannot find a product record?',answer:'First check your search filters — ensure you are searching in the correct category and market. If the record still cannot be found, contact your PLM administrator as the record may not have been created yet or you may not have access permissions.',category:'Getting Started',order:2},
+  {id:3,question:'How long does the approval process typically take?',answer:'Standard approval timelines: Label Set Approver — 2 business days, Primary Label Set Approver — 3 business days, Consumer Test Label — 5 business days. Urgent requests can be escalated through your line manager.',category:'Approvals',order:3},
+  {id:4,question:'What happens if I reject a record?',answer:'When you reject a record, the submitter receives an automatic notification. They can see your rejection comments in the record\'s history. Always provide clear, specific comments explaining what needs to be corrected.',category:'Approvals',order:4},
+  {id:5,question:'Can I edit a record after it has been submitted?',answer:'Once submitted for approval, records cannot be edited unless they are rejected back to you. If you need to make urgent changes, contact the approver to reject the record so you can make corrections.',category:'Records',order:5},
+  {id:6,question:'Who do I contact for technical issues with the PIT tool?',answer:'For technical issues, contact the PLM Help Desk via the ServiceNow portal. For urgent issues blocking business-critical work, escalate directly to your PLM System Administrator.',category:'Support',order:6}
+];
 
 // ════════════════════════════
 // LOCAL STORAGE
@@ -940,27 +1073,23 @@ function loadLocal(){
     const p=localStorage.getItem('plm_prog'); if(p) progress={...progress,...JSON.parse(p)};
     const m=localStorage.getItem('plm_mods'); modules=m?JSON.parse(m):[...DEFAULT_MODULES];
     const q=localStorage.getItem('plm_quiz'); quizData=q?JSON.parse(q):{...DEFAULT_QUIZZES};
-    // Restore saved real user if they've logged in before
+    const f=localStorage.getItem('plm_faqs'); faqs=f?JSON.parse(f):[...DEFAULT_FAQS];
     const u=localStorage.getItem('plm_user');
     if(u){
       const saved=JSON.parse(u);
-      // Only restore if it's a real user (not a fallback)
-      if(saved.name && saved.email &&
-         saved.name !== 'Unilever User' &&
-         saved.name !== 'Preview User' &&
-         saved.email !== 'user@unilever.com'){
-        user = {...user, ...saved};
+      if(saved.name&&saved.email&&saved.name!=='Unilever User'&&saved.name!=='Preview User'&&saved.email!=='user@unilever.com'){
+        user={...user,...saved};
       }
     }
-  }catch(e){modules=[...DEFAULT_MODULES];quizData={...DEFAULT_QUIZZES};}
+  }catch(e){modules=[...DEFAULT_MODULES];quizData={...DEFAULT_QUIZZES};faqs=[...DEFAULT_FAQS];}
 }
 function saveLocal(){
   try{
     localStorage.setItem('plm_prog',JSON.stringify(progress));
     localStorage.setItem('plm_mods',JSON.stringify(modules));
     localStorage.setItem('plm_quiz',JSON.stringify(quizData));
-    // Save user if real
-    if(user.name && user.name !== 'Unilever User' && user.name !== 'Preview User'){
+    localStorage.setItem('plm_faqs',JSON.stringify(faqs));
+    if(user.name&&user.name!=='Unilever User'&&user.name!=='Preview User'){
       localStorage.setItem('plm_user',JSON.stringify(user));
     }
   }catch(e){}
@@ -1139,12 +1268,8 @@ async function boot(){
   try{
     setLoading(20,'Detecting your environment...');
 
-    // ── Try Power Automate Get User ──
-    // First get email from SP session, then look up their profile
+    // ── Get identity from SharePoint session (works in iframe) ──
     setLoading(25,'Getting your Unilever profile...');
-
-    // Step 1: Get email from SP session (works in iframe)
-    let callerEmail = null;
     try{
       const spU = await fetch(SP_SITE+'/_api/web/currentuser',{
         headers:{'Accept':'application/json;odata=verbose'},
@@ -1153,40 +1278,21 @@ async function boot(){
       });
       if(spU.ok){
         const spData = await spU.json();
-        callerEmail = spData?.d?.Email || null;
+        if(spData?.d?.Email){
+          applyUser(
+            spData.d.Title || spData.d.Email,
+            spData.d.Email,
+            spData.d.JobTitle || 'Unilever Employee'
+          );
+          spOk = true;
+          setLoading(80,'Welcome, '+user.name+'!');
+          saveLocal();
+          clearTimeout(hardTimeout);
+          launchApp(true,'sharepoint');
+          return;
+        }
       }
     }catch(e){}
-
-    // Step 2: Use that email to get full profile from PA flow
-    if(callerEmail){
-      const paUser = await paGet(PA_FLOWS.getUser + '&email=' + encodeURIComponent(callerEmail));
-      if(paUser && paUser.name && paUser.email){
-        applyUser(paUser.name, paUser.email, paUser.jobTitle||'Unilever Employee');
-        setLoading(80,'Welcome, '+user.name+'!');
-        saveLocal();
-        clearTimeout(hardTimeout);
-        launchApp(false,'pa');
-        return;
-      }
-      // SP gave us email but PA flow failed — use SP data directly
-      try{
-        const spU2 = await fetch(SP_SITE+'/_api/web/currentuser',{
-          headers:{'Accept':'application/json;odata=verbose'},
-          credentials:'include'
-        });
-        if(spU2.ok){
-          const d = await spU2.json();
-          if(d?.d?.Email){
-            applyUser(d.d.Title||d.d.Email, d.d.Email, 'Unilever Employee');
-            setLoading(80,'Welcome, '+user.name+'!');
-            spOk=true; saveLocal();
-            clearTimeout(hardTimeout);
-            launchApp(true,'sharepoint');
-            return;
-          }
-        }
-      }catch(e){}
-    }
 
     // ── Try postMessage from SharePoint parent ──
     setLoading(35,'Waiting for SharePoint session...');
@@ -1394,11 +1500,13 @@ function getLevel(){
 // NAVIGATION
 // ════════════════════════════
 const PG_META={
-  dashboard:{title:'Dashboard',sub:'Your personalised learning hub'},
-  tracks:{title:'Training Tracks',sub:'Choose your level and continue your journey'},
+  dashboard:{title:'Dashboard',sub:'Your personalised PLM learning hub'},
+  tracks:{title:'Training Tracks',sub:'Your role-based learning journey'},
+  library:{title:'Content Library',sub:'Browse all PLM Hub training materials and resources'},
   module:{title:'Module Player',sub:'Watch the video then take the quiz'},
   quiz:{title:'Knowledge Quiz',sub:'Test your understanding to unlock the next module'},
-  profile:{title:'Profile & Badges',sub:'Your learning history and achievements'}
+  profile:{title:'Profile & Badges',sub:'Your learning history and achievements'},
+  faq:{title:'Frequently Asked Questions',sub:'Find answers to common PIT tool questions'}
 };
 function showPg(id){
   document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
@@ -1409,69 +1517,123 @@ function showPg(id){
   document.getElementById('pg-title').textContent=m.title||'';
   document.getElementById('pg-sub').textContent=m.sub||'';
   if(id==='tracks') renderTracks();
-  if(id==='profile'){renderProfileModules();renderAllBadges();}
+  if(id==='profile'){renderProfileModules();renderAllBadges();renderProfileRole();}
   if(id==='quiz'&&currentModule) renderQuiz();
+  if(id==='faq') renderFAQPage();
+  if(id==='library'&&!libLoaded){ libPath=[]; loadLibrary(null); }
 }
 
 // ════════════════════════════
-// TRACKS
+// TRACKS — ROLE BASED
 // ════════════════════════════
-const TRACKS=[
-  {key:'Beginner',emoji:'🌱',cls:'bg',col:'var(--u-green)',pf:'pf-gn'},
-  {key:'Intermediate',emoji:'⚡',cls:'im',col:'var(--u-blue)',pf:'pf-bl'},
-  {key:'Advanced',emoji:'🔥',cls:'ad',col:'#C17D0A',pf:'pf-am'},
-  {key:'Admin',emoji:'💎',cls:'su',col:'var(--u-deep)',pf:'pf-bl',label:'Admin / Super User'}
+const TRACK_DEFS = [
+  {key:'Shared', label:'Foundation', emoji:'📚', cls:'bg', col:'var(--u-green)', pf:'pf-gn', desc:'Core modules required for all PIT roles', roles:['all']},
+  {key:'CUC PIRD', label:'CUC PIRD Roles', emoji:'🏷️', cls:'im', col:'var(--u-blue)', pf:'pf-bl', desc:'Formulator, Label Set Approver, Primary Label Set Approver, Consumer Test Label Approver', roles:['formulator','label_set_approver','primary_label_set_approver','consumer_test_label_approver']},
+  {key:'CU PIRD', label:'CU PIRD Roles', emoji:'🎨', cls:'ad', col:'#C17D0A', pf:'pf-am', desc:'Product Label Developer, Product Label Specialist, Product Label Approver', roles:['product_label_developer','product_label_specialist','product_label_approver']},
+  {key:'PIT Data Maintenance', label:'PIT Data Maintenance', emoji:'🔧', cls:'su', col:'var(--u-deep)', pf:'pf-bl', desc:'PIT DM SME Approver, PIT DM Language Translation Approver', roles:['pit_dm_sme_approver','pit_dm_language_approver']}
 ];
 
-function isComplete(title){return progress.completedModules?.includes(title);}
-function trackUnlocked(key){
-  const order=['Beginner','Intermediate','Advanced','Admin'];
-  const idx=order.indexOf(key);
-  if(idx===0) return true;
-  return modules.filter(m=>m.track===order[idx-1]&&m.active).every(m=>isComplete(m.title));
+function getUserRole(){ return user.pitRole||''; }
+
+function getModulesForUser(){
+  const role = getUserRole();
+  if(!role) return modules; // show all if no role selected
+  return modules.filter(m=>
+    m.roles&&(m.roles.includes('all')||m.roles.includes(role))
+  );
 }
-function trackProg(key){
-  const mods=modules.filter(m=>m.track===key&&m.active);
-  return{total:mods.length,done:mods.filter(m=>isComplete(m.title)).length};
+
+function isComplete(title){return progress.completedModules?.includes(title);}
+
+function trackUnlocked(trackKey){
+  // Foundation (Shared) always unlocked
+  if(trackKey==='Shared') return true;
+  // Role tracks unlocked after completing all Shared modules
+  const sharedMods = getModulesForUser().filter(m=>m.track==='Shared');
+  return sharedMods.every(m=>isComplete(m.title));
+}
+
+function trackProg(trackKey){
+  const mods = getModulesForUser().filter(m=>m.track===trackKey&&m.active);
+  return{total:mods.length, done:mods.filter(m=>isComplete(m.title)).length};
 }
 
 function renderTracks(){
   const grid=document.getElementById('tracks-grid'); if(!grid) return;
   grid.innerHTML='';
-  TRACKS.forEach(tr=>{
-    const unlocked=trackUnlocked(tr.key);
-    const prog=trackProg(tr.key);
-    const pct=prog.total>0?Math.round(prog.done/prog.total*100):0;
-    const complete=pct===100;
-    const mods=modules.filter(m=>m.track===tr.key&&m.active).sort((a,b)=>a.order-b.order);
 
-    const statusPill=complete?`<div class="pill pl-gn">✓ Complete</div>`:
+  // Show role selector if no role picked yet
+  const role = getUserRole();
+  if(!role){
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px 20px;">
+      <div style="font-size:48px;margin-bottom:16px;">👤</div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px;color:#000;">Select Your PIT Role</h3>
+      <p style="color:#444;font-size:14px;margin-bottom:24px;">Choose your role to see your personalised training track. You can change this later in your Profile.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;max-width:800px;margin:0 auto;">
+        ${PIT_ROLES.map(r=>`
+          <div onclick="selectRole('${r.key}')" style="background:#fff;border-radius:14px;padding:18px;border:2px solid #C8D6E5;cursor:pointer;transition:all .2s;text-align:left;"
+            onmouseover="this.style.borderColor='#1D6FA0';this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.borderColor='#C8D6E5';this.style.transform='translateY(0)'">
+            <div style="font-size:28px;margin-bottom:8px;">${r.emoji}</div>
+            <div style="font-size:13px;font-weight:700;color:#000;margin-bottom:4px;">${r.label}</div>
+            <div style="font-size:11px;color:#666;">${r.track}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+    return;
+  }
+
+  // Show tracks for selected role
+  const userRole = PIT_ROLES.find(r=>r.key===role);
+  const relevantTracks = TRACK_DEFS.filter(tr=>
+    tr.key==='Shared' || tr.roles.includes(role)
+  );
+
+  grid.innerHTML = `<div style="grid-column:1/-1;margin-bottom:20px;">
+    <div style="background:rgba(29,111,160,.06);border:1.5px solid rgba(29,111,160,.2);border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+      <div style="font-size:24px;">${userRole?.emoji||'👤'}</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:#000;">Your Role: ${userRole?.label||role}</div>
+        <div style="font-size:12px;color:#666;">Showing ${relevantTracks.length} tracks with ${getModulesForUser().length} modules relevant to your role</div>
+      </div>
+      <button onclick="selectRole('')" style="margin-left:auto;background:none;border:1.5px solid #C8D6E5;border-radius:8px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;color:#444;">Change Role</button>
+    </div>
+  </div>`;
+
+  relevantTracks.forEach(tr=>{
+    const unlocked = trackUnlocked(tr.key);
+    const prog = trackProg(tr.key);
+    const pct = prog.total>0?Math.round(prog.done/prog.total*100):0;
+    const complete = pct===100;
+    const mods = getModulesForUser().filter(m=>m.track===tr.key&&m.active).sort((a,b)=>a.order-b.order);
+
+    const statusPill = complete?`<div class="pill pl-gn">✓ Complete</div>`:
       !unlocked?`<div class="pill pl-gy">🔒 Locked</div>`:
       prog.done>0?`<div class="pill pl-am">In Progress</div>`:
       `<div class="pill pl-bl">Not Started</div>`;
 
-    const modsHTML=mods.map((m,i)=>{
+    const modsHTML = mods.map((m,i)=>{
       const done=isComplete(m.title);
       const isNext=unlocked&&!done&&(i===0||isComplete(mods[i-1]?.title));
       const locked=!unlocked;
       return`<div class="mr" onclick="${unlocked&&!locked?`openModule(${m.id})`:''}">
         <div class="mi ${done?'done':isNext?'act':'lck'}">${done?'✅':isNext?'▶️':'🔒'}</div>
         <div class="mt2">
-          <div class="t" style="${locked?'color:#111111':''}">${m.title}</div>
-          <div class="s">${done?'Completed · '+m.duration:isNext?'<span style="color:var(--u-blue);font-weight:600;">▶ Continue here</span>':locked?'Locked':m.duration}</div>
+          <div class="t" style="${locked?'color:#888':''}">${m.title}</div>
+          <div class="s">${done?'Completed · '+m.duration:isNext?'<span style="color:var(--u-blue);font-weight:600;">▶ Continue here</span>':locked?'Complete Foundation first':m.duration}</div>
         </div>
       </div>`;
     }).join('');
 
-    const btnHTML=!unlocked?
-      `<button class="btn btn-gh btn-full" disabled style="opacity:.5;cursor:not-allowed;">Complete previous track first</button>`:
+    const btnHTML = !unlocked?
+      `<button class="btn btn-gh btn-full" disabled style="opacity:.5;cursor:not-allowed;">Complete Foundation modules first</button>`:
       complete?`<button class="btn btn-gh btn-full">✅ Review Modules</button>`:
-      `<button class="btn btn-p btn-full" onclick="openNextModule('${tr.key}')">Continue Learning →</button>`;
+      `<button class="btn btn-p btn-full" onclick="openNextModuleInTrack('${tr.key}')">Continue Learning →</button>`;
 
-    grid.innerHTML+=`<div class="tc ${tr.cls}${!unlocked?' lkd':''}">
-      <div class="row btw mb16"><div style="font-size:38px;">${tr.emoji}</div>${statusPill}</div>
-      <h3 style="font-size:21px;font-weight:700;margin-bottom:3px;">${tr.label||tr.key}</h3>
-      <p class="muted" style="margin-bottom:14px;">${prog.total} modules</p>
+    grid.innerHTML += `<div class="tc ${tr.cls}${!unlocked?' lkd':''}">
+      <div class="row btw mb16"><div style="font-size:36px;">${tr.emoji}</div>${statusPill}</div>
+      <h3 style="font-size:19px;font-weight:700;margin-bottom:4px;color:#000;">${tr.label}</h3>
+      <p class="muted" style="margin-bottom:14px;font-size:12px;">${tr.desc}</p>
       <div class="pt" style="margin-bottom:5px;"><div class="pf ${tr.pf}" style="width:${pct}%"></div></div>
       <div class="row btw mb16"><span class="lbl">Progress</span><span style="font-size:12px;font-weight:600;color:${tr.col};">${prog.done}/${prog.total} modules</span></div>
       <div class="div"></div>
@@ -1481,16 +1643,109 @@ function renderTracks(){
   });
 }
 
+function selectRole(roleKey){
+  user.pitRole = roleKey;
+  saveLocal();
+  updateUI();
+  renderTracks();
+  if(roleKey) showToast('👤','Role Selected!',`Your training track is now personalised for your role.`);
+}
+
+function openNextModuleInTrack(trackKey){
+  const mods=getModulesForUser().filter(m=>m.track===trackKey&&m.active).sort((a,b)=>a.order-b.order);
+  const next=mods.find(m=>!isComplete(m.title));
+  if(next) openModule(next.id);
+}
+
 function openModule(id){
   currentModule=modules.find(m=>m.id===id); if(!currentModule) return;
   document.getElementById('mod-pills').innerHTML=`<div class="pill pl-bl">⚡ ${currentModule.track}</div><div class="pill pl-am">📹 ${currentModule.duration||'Module'}</div>`;
   document.getElementById('mod-title').textContent=currentModule.title;
   document.getElementById('mod-desc').textContent=currentModule.desc;
   const vw=document.getElementById('mod-video');
+
   if(currentModule.videoUrl){
-    vw.innerHTML=`<iframe src="${currentModule.videoUrl}" allowfullscreen allow="autoplay"></iframe>`;
+    const url = currentModule.videoUrl.trim();
+
+    // Detect video type and render appropriately
+    let embedHtml = '';
+
+    if(url.includes('microsoftstream.com') || url.includes('web.microsoftstream.com')){
+      // Microsoft Stream — use embed URL format
+      let embedUrl = url;
+      // Convert watch URL to embed URL if needed
+      if(url.includes('/video/') && !url.includes('/embed/')){
+        const videoId = url.match(/\/video\/([a-zA-Z0-9\-]+)/)?.[1];
+        if(videoId) embedUrl = `https://web.microsoftstream.com/embed/video/${videoId}?autoplay=false&showinfo=true`;
+      }
+      embedHtml = `<iframe src="${embedUrl}"
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        style="position:absolute;inset:0;width:100%;height:100%;border:none;"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation">
+      </iframe>`;
+
+    } else if(url.includes('sharepoint.com') && url.includes('/_layouts/') ){
+      // SharePoint hosted video
+      embedHtml = `<iframe src="${url}"
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        style="position:absolute;inset:0;width:100%;height:100%;border:none;"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation">
+      </iframe>`;
+
+    } else if(url.includes('youtube.com') || url.includes('youtu.be')){
+      // YouTube
+      let videoId = '';
+      if(url.includes('watch?v=')) videoId = url.split('watch?v=')[1].split('&')[0];
+      else if(url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
+      else if(url.includes('embed/')) videoId = url.split('embed/')[1].split('?')[0];
+      if(videoId){
+        embedHtml = `<iframe src="https://www.youtube.com/embed/${videoId}?rel=0"
+          allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture"
+          style="position:absolute;inset:0;width:100%;height:100%;border:none;">
+        </iframe>`;
+      }
+
+    } else if(url.includes('vimeo.com')){
+      // Vimeo
+      const videoId = url.split('vimeo.com/')[1]?.split('?')[0];
+      embedHtml = `<iframe src="https://player.vimeo.com/video/${videoId}"
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        style="position:absolute;inset:0;width:100%;height:100%;border:none;">
+      </iframe>`;
+
+    } else {
+      // Generic iframe for any other URL
+      embedHtml = `<iframe src="${url}"
+        allowfullscreen
+        allow="autoplay; fullscreen"
+        style="position:absolute;inset:0;width:100%;height:100%;border:none;"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation">
+      </iframe>`;
+    }
+
+    vw.style.position = 'relative';
+    vw.style.paddingTop = '56.25%'; // 16:9 aspect ratio
+    vw.style.height = '0';
+    vw.innerHTML = embedHtml;
+
+    // Also show a direct link as fallback
+    const linkDiv = document.createElement('div');
+    linkDiv.style.cssText = 'margin-top:10px;font-size:13px;color:#1D6FA0;';
+    linkDiv.innerHTML = `Having trouble viewing? <a href="${url}" target="_blank" style="color:#1D6FA0;font-weight:700;">Open video in new tab →</a>`;
+    vw.parentNode.insertBefore(linkDiv, vw.nextSibling);
+
   } else {
-    vw.innerHTML=`<div class="vw-ph"><button class="pb">▶</button><div class="vw-lbl">No video added yet.<br>Paste a Microsoft Stream URL in the Admin Panel.</div></div>`;
+    vw.style.position = '';
+    vw.style.paddingTop = '';
+    vw.style.height = '';
+    vw.innerHTML=`<div class="vw-ph">
+      <button class="pb">▶</button>
+      <div class="vw-lbl">No video added yet.<br>Paste a Microsoft Stream or YouTube URL in the Admin Panel.</div>
+    </div>`;
   }
   const res=document.getElementById('mod-resources');
   res.innerHTML=currentModule.pdfUrl?
@@ -1766,6 +2021,36 @@ function admTab(id,btn){
   if(id==='users') loadUsers();
   if(id==='quizzes') renderAdminQuiz();
   if(id==='updates') renderAdminUpdates();
+  if(id==='faqs') renderAdminFaqs();
+}
+
+function renderProfileRole(){
+  const el=document.getElementById('pr-role-display'); if(!el) return;
+  const role=getUserRole();
+  if(!role){ el.innerHTML=`<div class="empty">No role selected. Go to Training Tracks to select your role.</div>`; return; }
+  const r=PIT_ROLES.find(x=>x.key===role);
+  if(!r){ el.innerHTML=`<div class="empty">Role not found.</div>`; return; }
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:14px;padding:12px 0;">
+    <div style="font-size:36px;">${r.emoji}</div>
+    <div>
+      <div style="font-size:15px;font-weight:700;color:#000;">${r.label}</div>
+      <div style="font-size:13px;color:#666;margin-top:2px;">${r.track} Track</div>
+    </div>
+  </div>`;
+}
+
+function getLevel(){
+  const role=getUserRole();
+  if(!role) return '👤 No Role Selected';
+  const r=PIT_ROLES.find(x=>x.key===role);
+  const userMods=getModulesForUser();
+  const done=progress.completedModules?.length||0;
+  const total=userMods.length;
+  if(done===0) return r?r.emoji+' '+r.label:'🌱 Getting Started';
+  if(done>=total) return '🏆 Fully Trained';
+  const shared=userMods.filter(m=>m.track==='Shared');
+  const sharedDone=shared.every(m=>isComplete(m.title));
+  return sharedDone?(r?r.emoji+' '+r.label+' — Role Training':'⚡ Role Training'):'📚 Foundation';
 }
 
 // Admin — Modules
@@ -2189,10 +2474,329 @@ function deleteUpdate(id){
 }
 
 // ════════════════════════════
+// CONTENT LIBRARY
+// ════════════════════════════
+const SP_RESOURCES_LIBRARY = 'Resources';
+let libItems = [];
+let libFilter = 'all';
+let libPath = []; // breadcrumb stack [{name, serverRelativeUrl}]
+let libLoaded = false;
+
+function getFileType(item){
+  if(item.FileSystemObjectType===1) return 'folder';
+  const name=(item.FileLeafRef||item.Name||'').toLowerCase();
+  if(name.endsWith('.mp4')||name.endsWith('.avi')||name.endsWith('.mov')||name.endsWith('.wmv')) return 'video';
+  if(name.endsWith('.ppt')||name.endsWith('.pptx')) return 'ppt';
+  if(name.endsWith('.pdf')) return 'pdf';
+  if(name.endsWith('.doc')||name.endsWith('.docx')) return 'doc';
+  if(name.endsWith('.xls')||name.endsWith('.xlsx')) return 'excel';
+  if(name.endsWith('.mp3')||name.endsWith('.wav')) return 'audio';
+  return 'other';
+}
+
+function getFileIcon(type){
+  const icons={folder:'📁',video:'🎥',ppt:'📊',pdf:'📄',doc:'📝',excel:'📈',audio:'🎵',other:'🔗'};
+  return icons[type]||'📄';
+}
+
+function getFileColor(type){
+  const colors={folder:'#C17D0A',video:'#C0392B',ppt:'#D35400',pdf:'#C0392B',doc:'#1D6FA0',excel:'#2A6010',audio:'#6B5EA8',other:'#4A5878'};
+  return colors[type]||'#4A5878';
+}
+
+async function loadLibrary(folderUrl){
+  libLoaded=true;
+  const el=document.getElementById('lib-content'); if(!el) return;
+  el.innerHTML=`<div class="empty"><div style="font-size:36px;margin-bottom:12px;">⏳</div><div style="font-size:14px;font-weight:600;color:#000;">Loading from PLM Hub...</div></div>`;
+
+  try{
+    let apiUrl;
+    if(folderUrl){
+      // Browsing a subfolder
+      apiUrl=`${SP_CONTENT_SITE}/_api/web/lists/getbytitle('${SP_RESOURCES_LIBRARY}')/items?$select=Id,FileLeafRef,Title,FileRef,FileSystemObjectType,Modified,File_x0020_Size,EncodedAbsUrl&$filter=FileDirRef eq '${folderUrl}'&$orderby=FileSystemObjectType desc,FileLeafRef&$top=500`;
+    } else {
+      // Root of Resources library — top level only
+      apiUrl=`${SP_CONTENT_SITE}/_api/web/lists/getbytitle('${SP_RESOURCES_LIBRARY}')/items?$select=Id,FileLeafRef,Title,FileRef,FileSystemObjectType,Modified,File_x0020_Size,EncodedAbsUrl&$filter=FSObjType eq 1 or FSObjType eq 0&$orderby=FileSystemObjectType desc,FileLeafRef&$top=500`;
+    }
+
+    const r=await fetch(apiUrl,{
+      headers:{'Accept':'application/json;odata=verbose'},
+      credentials:'include'
+    });
+    if(!r.ok) throw new Error('SharePoint returned '+r.status+'. Ensure you have access to PLMHub.');
+    const data=await r.json();
+    libItems=data.d?.results||[];
+
+    // Filter to current folder level if at root
+    if(!folderUrl){
+      const rootPath='/sites/PLMHub/Resources';
+      libItems=libItems.filter(i=>{
+        const dir=(i.FileRef||'').replace('/'+i.FileLeafRef,'');
+        return dir===rootPath||dir===rootPath+'/';
+      });
+    }
+
+    renderLibrary();
+    renderBreadcrumb();
+
+  }catch(e){
+    el.innerHTML=`<div class="empty">
+      <div style="font-size:36px;margin-bottom:12px;">⚠️</div>
+      <div style="font-size:15px;font-weight:700;color:#000;margin-bottom:8px;">Unable to load PLM Hub content</div>
+      <div style="font-size:13px;color:#666;margin-bottom:16px;">Make sure you have access to the PLM Hub SharePoint site and are logged into Unilever M365.</div>
+      <div style="font-size:12px;color:#999;font-family:monospace;background:#f5f5f5;padding:10px;border-radius:8px;text-align:left;word-break:break-all;">${e.message}</div>
+      <button class="btn btn-p" style="margin-top:16px;" onclick="loadLibrary(null)">🔄 Try Again</button>
+    </div>`;
+  }
+}
+
+function renderLibrary(){
+  const el=document.getElementById('lib-content'); if(!el) return;
+  const search=(document.getElementById('lib-search')?.value||'').toLowerCase();
+
+  const filtered=libItems.filter(item=>{
+    const name=(item.FileLeafRef||item.Name||'').toLowerCase();
+    const title=(item.Title||'').toLowerCase();
+    const type=getFileType(item);
+    const matchSearch=!search||(name.includes(search)||title.includes(search));
+    const matchFilter=libFilter==='all'||type===libFilter;
+    return matchSearch&&matchFilter;
+  });
+
+  // Stats
+  const statsEl=document.getElementById('lib-stats');
+  if(statsEl){
+    const folders=filtered.filter(i=>getFileType(i)==='folder').length;
+    const files=filtered.length-folders;
+    statsEl.textContent=`${filtered.length} items — ${folders} folders, ${files} files`;
+  }
+
+  if(!filtered.length){
+    el.innerHTML=`<div class="empty"><div style="font-size:36px;margin-bottom:12px;">🔍</div><div style="font-size:14px;font-weight:600;color:#000;">No items found</div><div style="font-size:13px;color:#666;">Try a different search or filter</div></div>`;
+    return;
+  }
+
+  el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
+    ${filtered.map(item=>{
+      const type=getFileType(item);
+      const icon=getFileIcon(type);
+      const color=getFileColor(type);
+      const name=item.FileLeafRef||item.Name||'Unknown';
+      const title=item.Title||name;
+      const url=item.EncodedAbsUrl||item.FileRef||'';
+      const modified=item.Modified?new Date(item.Modified).toLocaleDateString():'';
+      const size=item.File_x0020_Size?formatSize(item.File_x0020_Size):'';
+      const isFolder=type==='folder';
+      const isVideo=type==='video';
+      const isStream=url.includes('microsoftstream')||url.includes('sharepoint.com/portals');
+
+      const action=isFolder
+        ?`onclick="openLibFolder('${item.FileRef||''}','${name.replace(/'/g,'\\\'')}')"` 
+        :isVideo||isStream
+        ?`onclick="openLibVideo('${url}','${title.replace(/'/g,'\\\'')}')"` 
+        :`onclick="window.open('${url}','_blank')"`;
+
+      return`<div ${action} style="background:#fff;border-radius:14px;padding:18px;border:1.5px solid #C8D6E5;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:10px;"
+        onmouseover="this.style.borderColor='${color}';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.1)'"
+        onmouseout="this.style.borderColor='#C8D6E5';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:44px;height:44px;border-radius:10px;background:${color}18;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;">${icon}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:700;color:#000;line-height:1.4;margin-bottom:4px;word-break:break-word;">${title||name}</div>
+            <div style="font-size:11px;color:#888;display:flex;gap:8px;flex-wrap:wrap;">
+              <span style="background:${color}18;color:${color};padding:2px 8px;border-radius:99px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:10px;">${type}</span>
+              ${size?`<span>${size}</span>`:''}
+              ${modified?`<span>${modified}</span>`:''}
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <span style="font-size:12px;font-weight:600;color:${color};">
+            ${isFolder?'Open folder →':isVideo||isStream?'▶ Play video':type==='pdf'?'↗ Open PDF':type==='ppt'?'↗ Open PPT':'↗ Open'}
+          </span>
+        </div>
+      </div>`;
+    }).join('')}
+  </div>`;
+}
+
+function formatSize(bytes){
+  if(!bytes||bytes===0) return '';
+  const mb=bytes/1024/1024;
+  if(mb>=1) return mb.toFixed(1)+' MB';
+  return Math.round(bytes/1024)+' KB';
+}
+
+function filterLibrary(){ renderLibrary(); }
+
+function setLibFilter(type){
+  libFilter=type;
+  // Update button styles
+  ['all','folder','video','ppt','pdf','doc','other'].forEach(t=>{
+    const btn=document.getElementById('lf-'+t);
+    if(!btn) return;
+    btn.className=t===type?'btn btn-p btn-sm':'btn btn-gh btn-sm';
+  });
+  renderLibrary();
+}
+
+function openLibFolder(fileRef, name){
+  if(!fileRef) return;
+  libPath.push({name, serverRelativeUrl:fileRef});
+  renderBreadcrumb();
+  loadLibrary(fileRef);
+}
+
+function renderBreadcrumb(){
+  const el=document.getElementById('lib-breadcrumb'); if(!el) return;
+  const crumbs=[{name:'📂 Resources', serverRelativeUrl:null}, ...libPath];
+  el.innerHTML=crumbs.map((c,i)=>{
+    const isLast=i===crumbs.length-1;
+    return isLast
+      ?`<span style="font-weight:700;color:#000;">${c.name}</span>`
+      :`<span onclick="navBreadcrumb(${i})" style="cursor:pointer;color:#1D6FA0;font-weight:600;">${c.name}</span><span style="color:#C8D6E5;">›</span>`;
+  }).join('');
+}
+
+function navBreadcrumb(idx){
+  if(idx===0){ libPath=[]; renderBreadcrumb(); loadLibrary(null); return; }
+  libPath=libPath.slice(0,idx);
+  renderBreadcrumb();
+  const current=libPath[libPath.length-1];
+  loadLibrary(current?.serverRelativeUrl||null);
+}
+
+function openLibVideo(url, title){
+  document.getElementById('lib-video-title').textContent=title;
+  document.getElementById('lib-video-frame').src=url;
+  const modal=document.getElementById('lib-video-player');
+  modal.style.display='flex';
+}
+
+function closeLibVideo(){
+  document.getElementById('lib-video-player').style.display='none';
+  document.getElementById('lib-video-frame').src='';
+}
+
+// ════════════════════════════
+// FAQ SYSTEM
+// ════════════════════════════
+let editFaqId = null;
+let activeFaqCat = 'All';
+
+function renderFAQPage(){
+  const list = document.getElementById('faq-list');
+  const catDiv = document.getElementById('faq-cats');
+  if(!list) return;
+
+  // Build categories
+  const cats = ['All',...new Set(faqs.map(f=>f.category))];
+  catDiv.innerHTML = cats.map(c=>`
+    <button onclick="setFaqCat('${c}')" style="padding:7px 16px;border-radius:99px;border:2px solid ${activeFaqCat===c?'#1D6FA0':'#C8D6E5'};background:${activeFaqCat===c?'#1D6FA0':'#fff'};color:${activeFaqCat===c?'#fff':'#000'};font-size:13px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;">
+      ${c}
+    </button>`).join('');
+
+  const search = document.getElementById('faq-search')?.value?.toLowerCase()||'';
+  const filtered = faqs
+    .filter(f=>(activeFaqCat==='All'||f.category===activeFaqCat))
+    .filter(f=>!search||(f.question.toLowerCase().includes(search)||f.answer.toLowerCase().includes(search)))
+    .sort((a,b)=>a.order-b.order);
+
+  if(!filtered.length){ list.innerHTML=`<div class="empty">No FAQs found. Try a different search or category.</div>`; return; }
+
+  list.innerHTML = filtered.map(f=>`
+    <div style="background:#fff;border-radius:14px;margin-bottom:10px;border:1.5px solid #C8D6E5;overflow:hidden;">
+      <button onclick="toggleFaq(${f.id})" style="width:100%;text-align:left;padding:18px 20px;background:none;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;display:flex;align-items:center;gap:12px;">
+        <span style="font-size:18px;flex-shrink:0;">❓</span>
+        <span style="font-size:14px;font-weight:700;color:#000;flex:1;">${f.question}</span>
+        <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;background:rgba(29,111,160,.1);color:#1D6FA0;padding:3px 10px;border-radius:99px;flex-shrink:0;">${f.category}</span>
+        <span id="faq-arrow-${f.id}" style="font-size:16px;color:#666;flex-shrink:0;transition:transform .2s;">▼</span>
+      </button>
+      <div id="faq-ans-${f.id}" style="display:none;padding:0 20px 18px 50px;font-size:14px;color:#333;line-height:1.7;">${f.answer}</div>
+    </div>`).join('');
+}
+
+function toggleFaq(id){
+  const ans = document.getElementById('faq-ans-'+id);
+  const arrow = document.getElementById('faq-arrow-'+id);
+  if(!ans) return;
+  const isOpen = ans.style.display!=='none';
+  ans.style.display = isOpen?'none':'block';
+  if(arrow) arrow.style.transform = isOpen?'':'rotate(180deg)';
+}
+
+function setFaqCat(cat){
+  activeFaqCat = cat;
+  renderFAQPage();
+}
+
+function filterFAQs(val){ renderFAQPage(); }
+
+// Admin FAQ functions
+function renderAdminFaqs(){
+  const el = document.getElementById('faqs-admin-list'); if(!el) return;
+  if(!faqs.length){el.innerHTML=`<div class="empty">No FAQs yet.</div>`;return;}
+  el.innerHTML = faqs.sort((a,b)=>a.order-b.order).map(f=>`
+    <div class="am-card">
+      <div style="font-size:20px;">❓</div>
+      <div class="ai">
+        <div class="at">${f.question}</div>
+        <div class="as">${f.category} · Order ${f.order}</div>
+      </div>
+      <div class="aa">
+        <button class="btn btn-gh btn-sm" onclick="editFaq(${f.id})">✏️ Edit</button>
+        <button class="btn btn-r btn-sm" onclick="deleteFaq(${f.id})">🗑</button>
+      </div>
+    </div>`).join('');
+}
+
+function showFaqForm(){
+  editFaqId=null;
+  document.getElementById('faq-form-ttl').textContent='Add New FAQ';
+  ['ff-q','ff-a'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ff-order').value=faqs.length+1;
+  document.getElementById('faq-form').style.display='block';
+}
+function cancelFaqForm(){document.getElementById('faq-form').style.display='none';editFaqId=null;}
+
+function editFaq(id){
+  const f=faqs.find(x=>x.id===id); if(!f) return;
+  editFaqId=id;
+  document.getElementById('faq-form-ttl').textContent='Edit FAQ';
+  document.getElementById('ff-q').value=f.question;
+  document.getElementById('ff-a').value=f.answer;
+  document.getElementById('ff-cat').value=f.category;
+  document.getElementById('ff-order').value=f.order;
+  document.getElementById('faq-form').style.display='block';
+}
+
+function saveFaq(){
+  const q=document.getElementById('ff-q').value.trim();
+  const a=document.getElementById('ff-a').value.trim();
+  if(!q||!a){alert('Please fill in the question and answer.');return;}
+  const faq={
+    id:editFaqId||Date.now(),
+    question:q, answer:a,
+    category:document.getElementById('ff-cat').value,
+    order:parseInt(document.getElementById('ff-order').value)||1
+  };
+  if(editFaqId){const idx=faqs.findIndex(f=>f.id===editFaqId);if(idx>-1)faqs[idx]=faq;}
+  else faqs.push(faq);
+  saveLocal(); cancelFaqForm(); renderAdminFaqs();
+  showToast('✅','FAQ Saved!',`"${q.substring(0,40)}..." saved.`);
+}
+
+function deleteFaq(id){
+  const f=faqs.find(x=>x.id===id);
+  if(!f||!confirm(`Delete this FAQ?`)) return;
+  faqs=faqs.filter(x=>x.id!==id);
+  saveLocal(); renderAdminFaqs();
+}
+
+// ════════════════════════════
 // START
 // ════════════════════════════
 boot();
 </script>
-
 </body>
 </html>

@@ -938,8 +938,10 @@ p, span, div, h1, h2, h3, h4, label, td, th, li { color:#000000; }
 // ════════════════════════════
 // CONFIG
 // ════════════════════════════
-const SP_SITE = 'https://unilever.sharepoint.com/sites/TestSiteHUB'; // app hosting + data lists
-const SP_CONTENT_SITE = 'https://unilever.sharepoint.com/sites/PLMHub'; // training content library
+const SP_SITE = 'https://unilever.sharepoint.com/sites/TestSiteHUB'; // app + data lists
+// For testing: content library reads from same site as the embed
+// For production: change both to PLMHub
+const SP_CONTENT_SITE = SP_SITE; // ← change to PLMHub URL when embedding on PLMHub
 const ADMIN_PW = 'PLMHub00';
 const SP_H = { 'Accept':'application/json;odata=verbose', 'Content-Type':'application/json;odata=verbose' };
 
@@ -2476,7 +2478,9 @@ function deleteUpdate(id){
 // ════════════════════════════
 // CONTENT LIBRARY
 // ════════════════════════════
-const SP_RESOURCES_LIBRARY = 'Resources';
+// Library name on PLMHub is 'Resources'
+// For testing on TestSiteHUB use 'Documents' or 'Shared Documents'
+const SP_RESOURCES_LIBRARY = SP_CONTENT_SITE.includes('PLMHub') ? 'Resources' : 'Documents';
 let libItems = [];
 let libFilter = 'all';
 let libPath = []; // breadcrumb stack [{name, serverRelativeUrl}]
@@ -2527,11 +2531,13 @@ async function loadLibrary(folderUrl){
     const data=await r.json();
     libItems=data.d?.results||[];
 
-    // Filter to current folder level if at root
+    // Filter to root level only
     if(!folderUrl){
-      const rootPath='/sites/PLMHub/Resources';
+      const sitePath = SP_CONTENT_SITE.replace('https://unilever.sharepoint.com','');
+      const rootPath = sitePath+'/'+SP_RESOURCES_LIBRARY;
       libItems=libItems.filter(i=>{
-        const dir=(i.FileRef||'').replace('/'+i.FileLeafRef,'');
+        const fileRef=(i.FileRef||'');
+        const dir=fileRef.substring(0,fileRef.lastIndexOf('/'));
         return dir===rootPath||dir===rootPath+'/';
       });
     }

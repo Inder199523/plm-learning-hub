@@ -2546,12 +2546,17 @@ async function loadLibrary(folderUrl){
     renderBreadcrumb();
 
   }catch(e){
+    const testUrl=`${SP_CONTENT_SITE}/_api/web/lists/getbytitle('${SP_RESOURCES_LIBRARY}')/items?$top=1`;
     el.innerHTML=`<div class="empty">
       <div style="font-size:36px;margin-bottom:12px;">⚠️</div>
-      <div style="font-size:15px;font-weight:700;color:#000;margin-bottom:8px;">Unable to load PLM Hub content</div>
-      <div style="font-size:13px;color:#666;margin-bottom:16px;">Make sure you have access to the PLM Hub SharePoint site and are logged into Unilever M365.</div>
-      <div style="font-size:12px;color:#999;font-family:monospace;background:#f5f5f5;padding:10px;border-radius:8px;text-align:left;word-break:break-all;">${e.message}</div>
-      <button class="btn btn-p" style="margin-top:16px;" onclick="loadLibrary(null)">🔄 Try Again</button>
+      <div style="font-size:15px;font-weight:700;color:#000;margin-bottom:8px;">Unable to load content</div>
+      <div style="font-size:13px;color:#666;margin-bottom:16px;">Make sure you have access to the SharePoint site and are logged into Unilever M365.</div>
+      <div style="font-size:12px;color:#999;font-family:monospace;background:#f5f5f5;padding:10px;border-radius:8px;text-align:left;word-break:break-all;margin-bottom:12px;">${e.message}</div>
+      <div style="font-size:12px;color:#666;margin-bottom:12px;">Trying to access: <strong>${SP_CONTENT_SITE}</strong><br>Library: <strong>${SP_RESOURCES_LIBRARY}</strong></div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn btn-p" onclick="loadLibrary(null)">🔄 Try Again</button>
+        <a href="${testUrl}" target="_blank" class="btn btn-gh">🔍 Test SP Access</a>
+      </div>
     </div>`;
   }
 }
